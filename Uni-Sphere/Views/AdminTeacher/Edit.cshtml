@@ -1,0 +1,136 @@
+﻿@using Uni_Sphere.Models.Domain
+@model Uni_Sphere.Models.ViewModels.EditTeacherRequest
+@{
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Student</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .image-preview {
+            min-height: 200px;
+            border: 2px dashed #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 15px;
+            /* Set a fixed size for the preview container */
+            width: 300px; /* Fixed width */
+            height: 300px; /* Fixed height */
+            overflow: hidden; /* Ensures that the content does not overflow */
+        }
+
+            .image-preview img {
+                display: none; /* Hide the img element by default */
+                max-width: 100%; /* Max width but allow scaling down */
+                max-height: 100%; /* Max height but allow scaling down */
+                object-fit: contain; /* Maintain aspect ratio */
+            }
+    </style>
+</head>
+<body>
+
+    <div class="bg-secondary bg-opacity-10 py-2">
+        <div class="container">
+            <h1 class="text-center">Edit Teacher</h1>
+        </div>
+    </div>
+
+    <div class="container py-5">
+        <div class="row">
+            <!-- Form Column -->
+            <div class="col-md-6">
+                @if(Model != null)
+                {
+                    <form method="post">
+                        <div class="mb-3">
+                            <label for="teacherId" class="form-label">Teacher ID</label>
+                            <input type="text" class="form-control" id="id" asp-for="Id" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="teacherName" class="form-label">Teacher Full Name</label>
+                            <input type="text" class="form-control" id="teacherName" asp-for="FullName" placeholder="Enter Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="teacherEmail" class="form-label">Teacher Email</label>
+                            <input type="email" class="form-control" id="teacherEmail" asp-for="Email" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Gender" class="form-label">Gender</label>
+                            <select class="form-select" id="Gender" asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()" required>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="teacherPhoneNo" class="form-label">Teacher PhoneNo.</label>
+                            <input type="text" class="form-control" id="teacher PhoneNo" asp-for="PhoneNo" placeholder="Enter PhoneNo." required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="DateOfBirth" class="form-label">Date of Birth</label>
+                            <input type="date" class="form-control" id="DateOfBirth" asp-for="DateOfBirth" value="2000-01-01" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="teacherDepartment" class="form-label">Teacher Department</label>
+                            <select class="form-select" id="teacherDepartment" asp-for="Department" required>
+                                <option selected>CS</option>
+                                <option value="AI">AI - Artificial Intelligence</option>
+                                <option value="DS">DS - Data Science</option>
+                                <option value="CS">CS - Computer Science</option>
+                                <option value="CY">CY - Cyber Security</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Designation" class="form-label">Designation</label>
+                            <select class="form-select" id="Designation" asp-for="Designation" asp-items="Html.GetEnumSelectList<JobTitle>()" required>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Salary" class="form-label">Salary</label>
+                            <input type="number" step="10" class="form-control" id="Salary" asp-for="Salary" placeholder="Enter Salary" required>
+                        </div>
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <p>Teacher Not Found!</p>
+                }
+            </div>
+
+            <!-- Image Upload and Preview Column -->
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="profileImageUpload" class="form-label">Upload Profile Image</label>
+                    <input class="form-control" type="file" id="profileImageUpload" accept="image/*" required>
+                </div>
+                <div class="image-preview" id="imagePreview">
+                    <img src="" alt="Image Preview">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('profileImageUpload').addEventListener('change', function (event) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                var output = document.getElementById('imagePreview').querySelector('img');
+                output.src = reader.result;
+                output.style.display = 'block';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        });
+    </script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- Bootstrap Bundle JS (includes Popper) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

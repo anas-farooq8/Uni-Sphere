@@ -13,6 +13,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("UniSphereConnect
 
 // Repository Injection
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
 
 var app = builder.Build();
 
