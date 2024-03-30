@@ -1,0 +1,57 @@
+﻿@model List<Uni_Sphere.Models.Domain.Students>
+@{
+}
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1 class="text-center">Students</h1>
+    </div>
+</div>
+
+<div class="container py-5">
+    @if (Model != null && Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Roll No</th>
+                    <th>Gender</th>
+                    <th>Email</th>
+                    <th>PhoneNo.</th>
+                    <th>Section</th>
+                    <th>Degree</th>
+                    <th>Degree Program</th>
+                    <th>Batch</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var student in Model)
+                {
+                    <tr>
+                        <td>@student.Id</td>
+                        <td>@student.FullName</td>
+                        <td>@student.RollNo</td>
+                        <td>@student.Gender</td>
+                        <td>@student.Email</td>
+                        <td>@student.PhoneNo</td>
+                        <td>@student.Section</td>
+                        <td>@student.Degree</td>
+                        <td>@student.DegreeProgram</td>
+                        <td>@student.Batch</td>
+                        <td>
+                            <a asp-area="" asp-controller="AdminStudent" asp-action="Edit" asp-route-id="@student.Id" class="btn btn-primary">Edit</a>
+                            <a asp-area="" asp-controller="AdminStudent" asp-action="Delete" asp-route-id="@student.Id" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No students found.</p>
+    }
+</div>

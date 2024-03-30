@@ -1,0 +1,155 @@
+﻿@using Uni_Sphere.Models.Domain
+@model Uni_Sphere.Models.ViewModels.EditStudentRequest
+@{
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Student</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .image-preview {
+            min-height: 200px;
+            border: 2px dashed #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 15px;
+            /* Set a fixed size for the preview container */
+            width: 300px; /* Fixed width */
+            height: 300px; /* Fixed height */
+            overflow: hidden; /* Ensures that the content does not overflow */
+        }
+
+            .image-preview img {
+                display: none; /* Hide the img element by default */
+                max-width: 100%; /* Max width but allow scaling down */
+                max-height: 100%; /* Max height but allow scaling down */
+                object-fit: contain; /* Maintain aspect ratio */
+            }
+    </style>
+</head>
+<body>
+
+    <div class="bg-secondary bg-opacity-10 py-2">
+        <div class="container">
+            <h1 class="text-center">Edit Student</h1>
+        </div>
+    </div>
+
+    <div class="container py-5">
+        <div class="row">
+            <!-- Form Column -->
+            <div class="col-md-6">
+                @if(Model != null)
+                {
+                    <form method="post">
+                        <div class="mb-3">
+                            <label for="studentId" class="form-label">Student ID</label>
+                            <input type="text" class="form-control" id="id" asp-for="Id" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="studentName" class="form-label">Student Full Name</label>
+                            <input type="text" class="form-control" id="studentName" asp-for="FullName" placeholder="Enter Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="studentRollNo" class="form-label">Student RollNo</label>
+                            <input type="text" class="form-control" id="studentRollNo" asp-for="RollNo" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Gender" class="form-label">Gender</label>
+                            <select class="form-select" id="Gender" asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()" required>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="studentEmail" class="form-label">Student Email</label>
+                            <input type="email" class="form-control" id="studentEmail" asp-for="Email" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="studentPhoneNo" class="form-label">Student PhoneNo.</label>
+                            <input type="text" class="form-control" id="studentPhoneNo" asp-for="PhoneNo" placeholder="Enter PhoneNo." required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="studentSection" class="form-label">Student Section</label>
+                            <input type="text" class="form-control" id="studentSection" asp-for="Section" placeholder="Enter Section" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="studentDegree" class="form-label">Student Degree</label>
+                            <select class="form-select" id="studentDegree" asp-for="Degree" required>
+                                <option selected>Choose...</option>
+                                <option value="BS">BS - Bachelor's</option>
+                                <option value="MS">MS - Master's</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="studentDegreeProgram" class="form-label">Student Degree Program</label>
+                            <select class="form-select" id="studentDegreeProgram" asp-for="DegreeProgram" required>
+                                <option selected>Choose...</option>
+                                <option value="AI">AI - Artificial Intelligence</option>
+                                <option value="DS">DS - Data Science</option>
+                                <option value="CS">CS - Computer Science</option>
+                                <option value="CY">CY - Cyber Security</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="studentBatch" class="form-label">Student Batch</label>
+                            <input type="text" class="form-control" id="studentBatch" asp-for="Batch" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="studentCurrentSemester" class="form-label">Student Current Semester</label>
+                            <input type="number" step="1" class="form-control" id="studentCurrentSemester" asp-for="CurrentSemester" placeholder="Enter Current Semester" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="studentGpa" class="form-label">Student Gpa</label>
+                            <input type="number" step="0.01" class="form-control" id="studentGpa" asp-for="Gpa" placeholder="Enter Gpa" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="studentCredits" class="form-label">Student Credits</label>
+                            <input type="number" step="1" class="form-control" id="studentCredits" asp-for="Gpa" placeholder="Enter Credits" required>
+                        </div>
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <p>Student Not Found!</p>
+                }
+            </div>
+
+            <!-- Image Upload and Preview Column -->
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="profileImageUpload" class="form-label">Upload Profile Image</label>
+                    <input class="form-control" type="file" id="profileImageUpload" accept="image/*" required>
+                </div>
+                <div class="image-preview" id="imagePreview">
+                    <img src="" alt="Image Preview">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('profileImageUpload').addEventListener('change', function (event) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                var output = document.getElementById('imagePreview').querySelector('img');
+                output.src = reader.result;
+                output.style.display = 'block';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        });
+    </script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- Bootstrap Bundle JS (includes Popper) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

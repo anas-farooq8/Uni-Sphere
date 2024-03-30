@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Uni_Sphere.Data;
+using Uni_Sphere.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,9 @@ builder.Services.AddControllersWithViews();
 // Injecting the DbContext into the services container
 builder.Services.AddDbContext<UniSphereDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("UniSphereConnectionString")));
+
+// Repository Injection
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 
 var app = builder.Build();
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Uni_Sphere.Models.Domain;
 
 namespace Uni_Sphere.Data
 {
@@ -13,6 +14,7 @@ namespace Uni_Sphere.Data
         {
 
         }
+        public DbSet<Students> Students { get; set; }
 
     }
 }
