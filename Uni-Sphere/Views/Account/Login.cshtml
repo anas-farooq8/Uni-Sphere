@@ -1,0 +1,31 @@
+﻿@using Uni_Sphere.Models.ViewModels
+@model Uni_Sphere.Models.ViewModels.LoginViewModel
+@{
+}
+
+<div class="container mx-auto">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-6">
+
+            <h1 class="mt-3 mb-3 h3">
+                Login
+            </h1>
+
+            <form method="post">
+                <div class="mb-3">
+                    <label class="form-label">Username/Email</label>
+                    <input type="text" id="username" class="form-control" asp-for="Username" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" id="password" class="form-control" asp-for="Password"/>
+                </div>
+
+                <div class="mb-3">
+					<button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
+
+</div>

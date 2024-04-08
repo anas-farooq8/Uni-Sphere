@@ -10,7 +10,8 @@ using Uni_Sphere.Repositories;
 
 namespace Uni_Sphere.Controllers
 {
-    public class AdminStudentController(IStudentRepository studentRepository, IDepartmentRepository departmentRepository) : Controller
+    public class AdminStudentController(IStudentRepository studentRepository, IDepartmentRepository departmentRepository,
+        UserManager<IdentityUser> _userManager) : Controller
     {
         private readonly IStudentRepository _studentRepository = studentRepository;
         private readonly IDepartmentRepository _departmentRepository = departmentRepository;
@@ -62,13 +63,27 @@ namespace Uni_Sphere.Controllers
 
             await _studentRepository.AddAsync(student);
 
-/*            var identityUser = new IdentityUser
+            // Authorization & Authentication
+            var identityUser = new IdentityUser
             {
-                UserName = addStudentRequest.Username,
+                UserName = email,
                 Email = email,
             };
 
-            await UserManager.*/
+            var password = rollNo;
+            var identityResult = await _userManager.CreateAsync(identityUser, password);
+
+            if(identityResult.Succeeded)
+            {
+                // Assigning Student Role
+                var roleIdentityResult = await _userManager.AddToRoleAsync(identityUser, "Student");
+
+                if(roleIdentityResult.Succeeded)
+                {
+                    // Success
+                    return RedirectToAction("List");
+                }
+            }
 
             return RedirectToAction("List");
         }

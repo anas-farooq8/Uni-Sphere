@@ -15,7 +15,7 @@ namespace Uni_Sphere.Models.Domain
         public string Code { get; set; }
 
         [Required, MaxLength(350)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
 
         // Many to One Relationship with Students and Teachers

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Storage.Json;
 using Uni_Sphere.Models.Domain;
@@ -7,7 +8,8 @@ using Uni_Sphere.Repositories;
 
 namespace Uni_Sphere.Controllers
 {
-    public class AdminTeacherController(ITeacherRepository teacherRepository, IDepartmentRepository departmentRepository) : Controller
+    public class AdminTeacherController(ITeacherRepository teacherRepository, IDepartmentRepository departmentRepository,
+                UserManager<IdentityUser> _userManager) : Controller
     {
         private readonly ITeacherRepository _teacherRepository = teacherRepository;
         private readonly IDepartmentRepository _departmentRepository = departmentRepository;
@@ -47,6 +49,29 @@ namespace Uni_Sphere.Controllers
             };
 
             await _teacherRepository.AddAsync(teacher);
+
+
+            // Authorization & Authentication
+            var identityUser = new IdentityUser
+            {
+                UserName = addTeacherRequest.Email,
+                Email = addTeacherRequest.Email,
+            };
+
+            var password = addTeacherRequest.Email;
+            var identityResult = await _userManager.CreateAsync(identityUser, password);
+
+            if (identityResult.Succeeded)
+            {
+                // Assigning Student Role
+                var roleIdentityResult = await _userManager.AddToRoleAsync(identityUser, "Student");
+
+                if (roleIdentityResult.Succeeded)
+                {
+                    // Success
+                    return RedirectToAction("List");
+                }
+            }
 
             return RedirectToAction("List");
         }
