@@ -127,10 +127,7 @@ namespace Uni_Sphere.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DepartmentsId")
+                    b.Property<int>("DepartmentsId")
                         .HasColumnType("int");
 
                     b.Property<string>("Designation")
@@ -185,7 +182,9 @@ namespace Uni_Sphere.Migrations
                 {
                     b.HasOne("Uni_Sphere.Models.Domain.Departments", null)
                         .WithMany("Teachers")
-                        .HasForeignKey("DepartmentsId");
+                        .HasForeignKey("DepartmentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Uni_Sphere.Models.Domain.Departments", b =>

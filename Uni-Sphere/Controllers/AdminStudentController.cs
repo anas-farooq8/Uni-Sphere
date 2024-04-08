@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.Json;
@@ -60,6 +61,14 @@ namespace Uni_Sphere.Controllers
             };
 
             await _studentRepository.AddAsync(student);
+
+/*            var identityUser = new IdentityUser
+            {
+                UserName = addStudentRequest.Username,
+                Email = email,
+            };
+
+            await UserManager.*/
 
             return RedirectToAction("List");
         }

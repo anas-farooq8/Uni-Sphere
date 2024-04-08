@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Uni_Sphere.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialTables : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,17 +34,17 @@ namespace Uni_Sphere.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FullName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     RollNo = table.Column<string>(type: "varchar(8)", maxLength: 8, nullable: false),
-                    Gender = table.Column<string>(type: "varchar(6)", maxLength: 6, nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(6)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PhoneNo = table.Column<string>(type: "varchar(12)", maxLength: 12, nullable: false),
-                    Section = table.Column<string>(type: "char(1)", maxLength: 1, nullable: false),
+                    Section = table.Column<string>(type: "char(1)", nullable: false),
                     Degree = table.Column<string>(type: "varchar(2)", maxLength: 2, nullable: false),
                     Batch = table.Column<int>(type: "int", nullable: false),
                     CurrentSemester = table.Column<short>(type: "smallint", nullable: false),
                     Gpa = table.Column<float>(type: "real", nullable: false),
                     Credits = table.Column<int>(type: "int", nullable: false),
-                    DepartmentId = table.Column<int>(type: "int", nullable: false),
-                    DepartmentsId = table.Column<int>(type: "int", nullable: true)
+                    ProfileImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DepartmentsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,7 +53,8 @@ namespace Uni_Sphere.Migrations
                         name: "FK_Students_Departments_DepartmentsId",
                         column: x => x.DepartmentsId,
                         principalTable: "Departments",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,15 +65,14 @@ namespace Uni_Sphere.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FullName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Gender = table.Column<string>(type: "varchar(6)", maxLength: 6, nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(6)", nullable: false),
                     PhoneNo = table.Column<string>(type: "varchar(12)", maxLength: 12, nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Department = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Designation = table.Column<int>(type: "int", maxLength: 50, nullable: false),
+                    Designation = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     JoiningDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Salary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    DepartmentId = table.Column<int>(type: "int", nullable: false),
-                    DepartmentsId = table.Column<int>(type: "int", nullable: true)
+                    ProfileImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DepartmentsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -81,7 +81,8 @@ namespace Uni_Sphere.Migrations
                         name: "FK_Teachers_Departments_DepartmentsId",
                         column: x => x.DepartmentsId,
                         principalTable: "Departments",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

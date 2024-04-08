@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Uni_Sphere.Data;
 using Uni_Sphere.Repositories;
@@ -10,6 +11,12 @@ builder.Services.AddControllersWithViews();
 // Injecting the DbContext into the services container
 builder.Services.AddDbContext<UniSphereDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("UniSphereConnectionString")));
+
+builder.Services.AddDbContext<AuthDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("UniSphereAuthDbConnectionString")));
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<AuthDbContext>();
 
 // Repository Injection
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
@@ -33,6 +40,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
