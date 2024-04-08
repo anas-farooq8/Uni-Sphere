@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Storage.Json;
@@ -8,6 +9,8 @@ using Uni_Sphere.Repositories;
 
 namespace Uni_Sphere.Controllers
 {
+
+    [Authorize(Roles = "Admin")]
     public class AdminTeacherController(ITeacherRepository teacherRepository, IDepartmentRepository departmentRepository,
                 UserManager<IdentityUser> _userManager) : Controller
     {

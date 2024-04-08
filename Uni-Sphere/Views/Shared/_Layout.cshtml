@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,36 +29,68 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Manage Students
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-area="" asp-controller="AdminStudent" asp-action="Add">Add Student</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="AdminStudent" asp-action="List">View Students</a>
-                            </div>
-                        </li>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Manage Teachers
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-area="" asp-controller="AdminTeacher" asp-action="Add">Add Teacher</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="AdminTeacher" asp-action="List">View Teachers</a>
-                            </div>
-                        </li>
+                        <!--Admin Functionality-->
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Manage Students
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" asp-area="" asp-controller="AdminStudent" asp-action="Add">Add Student</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="AdminStudent" asp-action="List">View Students</a>
+                                </div>
+                            </li>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Manage Departments
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-area="" asp-controller="AdminDepartment" asp-action="Add">Add Department</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="AdminDepartment" asp-action="List">View Departments</a>
-                            </div>
-                        </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Manage Teachers
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" asp-area="" asp-controller="AdminTeacher" asp-action="Add">Add Teacher</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="AdminTeacher" asp-action="List">View Teachers</a>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Manage Departments
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" asp-area="" asp-controller="AdminDepartment" asp-action="Add">Add Department</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="AdminDepartment" asp-action="List">View Departments</a>
+                                </div>
+                            </li>
+                        }
+
                     </ul>
+
+                    <div class="d-flex align-items-center">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <div class="me-3 text-light">
+                                @User?.Identity?.Name
+                            </div>
+
+                            <a class="btn btn-dark"
+                               asp-area=""
+                               asp-controller="Account"
+                               asp-action="Logout">
+                                Logout
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-dark me-3"
+                            asp-area=""
+                            asp-controller="Account"
+                            asp-action="Login">
+                                Login
+                            </a>
+                        }
+                    </div>
+
                 </div>
             </div>
         </nav>

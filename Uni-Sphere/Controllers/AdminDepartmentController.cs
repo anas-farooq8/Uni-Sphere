@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Uni_Sphere.Models.Domain;
 using Uni_Sphere.Models.ViewModels;
 using Uni_Sphere.Repositories;
 
 namespace Uni_Sphere.Controllers
 {
+
+    [Authorize(Roles = "Admin")]
     public class AdminDepartmentController : Controller
     {
         private readonly IDepartmentRepository _departmentRepository;
