@@ -74,18 +74,17 @@
                         </div>
                         <div class="mb-3">
                             <label for="teacherDepartment" class="form-label">Teacher Department</label>
-                            <select class="form-select" id="teacherDepartment" asp-for="Department" required>
-                                <option selected>CS</option>
-                                <option value="AI">AI - Artificial Intelligence</option>
-                                <option value="DS">DS - Data Science</option>
-                                <option value="CS">CS - Computer Science</option>
-                                <option value="CY">CY - Cyber Security</option>
+                            <select class="form-select" asp-items="Model.Departments" asp-for="DepartmentId" required>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="Designation" class="form-label">Designation</label>
                             <select class="form-select" id="Designation" asp-for="Designation" asp-items="Html.GetEnumSelectList<JobTitle>()" required>
                             </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="JoiningDate" class="form-label">Joining Date</label>
+                            <input type="date" class="form-control" id="JoiningDate" asp-for="JoiningDate" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="Salary" class="form-label">Salary</label>

@@ -57,10 +57,10 @@ namespace Uni_Sphere.Repositories
                 existingStudent.PhoneNo = student.PhoneNo;
                 existingStudent.Section = student.Section;
                 existingStudent.Degree = student.Degree;
-                existingStudent.DegreeProgram = student.DegreeProgram;
                 existingStudent.CurrentSemester = student.CurrentSemester;
                 existingStudent.Gpa = student.Gpa;
                 existingStudent.Credits = student.Credits;
+                existingStudent.DepartmentId = student.DepartmentId;
 
                 await _uniSphereDbContext.SaveChangesAsync();
                 return existingStudent;

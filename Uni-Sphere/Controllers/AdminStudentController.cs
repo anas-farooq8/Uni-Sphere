@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.Json;
 using Uni_Sphere.Data;
 using Uni_Sphere.Models.Domain;
 using Uni_Sphere.Models.ViewModels;
@@ -7,13 +9,10 @@ using Uni_Sphere.Repositories;
 
 namespace Uni_Sphere.Controllers
 {
-    public class AdminStudentController : Controller
+    public class AdminStudentController(IStudentRepository studentRepository, IDepartmentRepository departmentRepository) : Controller
     {
-        private readonly IStudentRepository _studentRepository;
-        public AdminStudentController(IStudentRepository studentRepository)
-        {
-            _studentRepository = studentRepository;
-        }
+        private readonly IStudentRepository _studentRepository = studentRepository;
+        private readonly IDepartmentRepository _departmentRepository = departmentRepository;
 
         private string getBatch()
         {
@@ -23,9 +22,19 @@ namespace Uni_Sphere.Controllers
         }
 
         [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
-            return View();
+            var departments = await _departmentRepository.GetAllAsync();
+            var model = new AddStudentRequest
+            {
+                Departments = departments.Select(x=> new SelectListItem
+                {
+                    Text = x.Code + " - " + x.Name,
+                    Value = x.Id.ToString()
+                })
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -45,8 +54,8 @@ namespace Uni_Sphere.Controllers
                 PhoneNo = addStudentRequest.PhoneNo,
                 Section = char.ToUpper(addStudentRequest.Section),
                 Degree = addStudentRequest.Degree,
-                DegreeProgram = addStudentRequest.DegreeProgram,
                 Batch = int.Parse(batch),
+                DepartmentId = addStudentRequest.DepartmentId,
             };
 
             await _studentRepository.AddAsync(student);
@@ -65,6 +74,8 @@ namespace Uni_Sphere.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
+            var departments = await _departmentRepository.GetAllAsync();
+
             var student = await _studentRepository.GetAsync(id);
             if (student != null)
             {
@@ -78,11 +89,16 @@ namespace Uni_Sphere.Controllers
                     PhoneNo = student.PhoneNo,
                     Section = student.Section,
                     Degree = student.Degree,
-                    DegreeProgram = student.DegreeProgram,
                     Batch = student.Batch,
                     CurrentSemester = student.CurrentSemester,
                     Gpa = student.Gpa,
-                    Credits = student.Credits
+                    Credits = student.Credits,
+                    Departments = departments.Select(x => new SelectListItem
+                    {
+                        Text = x.Code + " - " + x.Name,
+                        Value = x.Id.ToString()
+                    }),
+                    DepartmentId = student.DepartmentId,
                 };
                 return View(editStudentRequest);
             }
@@ -100,10 +116,10 @@ namespace Uni_Sphere.Controllers
                 PhoneNo = editStudentRequest.PhoneNo,
                 Section = char.ToUpper(editStudentRequest.Section),
                 Degree = editStudentRequest.Degree,
-                DegreeProgram = editStudentRequest.DegreeProgram,
                 CurrentSemester = editStudentRequest.CurrentSemester,
                 Gpa = editStudentRequest.Gpa,
                 Credits = editStudentRequest.Credits,
+                DepartmentId = editStudentRequest.DepartmentId,
             };
 
             var updatedStudent = await _studentRepository.UpdateAsync(student);

@@ -84,16 +84,11 @@
                                 <option value="MS">MS - Master's</option>
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label for="studentDegreeProgram" class="form-label">Student Degree Program</label>
-                            <select class="form-select" id="studentDegreeProgram" asp-for="DegreeProgram" required>
-                                <option selected>Choose...</option>
-                                <option value="AI">AI - Artificial Intelligence</option>
-                                <option value="DS">DS - Data Science</option>
-                                <option value="CS">CS - Computer Science</option>
-                                <option value="CY">CY - Cyber Security</option>
-                            </select>
-                        </div>
+                    <div class="mb-3">
+                        <label for="studentDegreeProgram" class="form-label">Student Degree Program</label>
+                        <select class="form-select" asp-items="Model.Departments" asp-for="DepartmentId" required>
+                        </select>
+                    </div>
                         <div class="mb-3">
                             <label for="studentBatch" class="form-label">Student Batch</label>
                             <input type="text" class="form-control" id="studentBatch" asp-for="Batch" readonly>

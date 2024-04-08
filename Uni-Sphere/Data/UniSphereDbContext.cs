@@ -16,6 +16,7 @@ namespace Uni_Sphere.Data
         }
         public DbSet<Students> Students { get; set; }
         public DbSet<Teachers> Teachers { get; set; }
+        public DbSet<Departments> Departments { get; set; }
 
     }
 }

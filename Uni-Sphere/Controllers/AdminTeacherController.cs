@@ -1,22 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Storage.Json;
 using Uni_Sphere.Models.Domain;
 using Uni_Sphere.Models.ViewModels;
 using Uni_Sphere.Repositories;
 
 namespace Uni_Sphere.Controllers
 {
-    public class AdminTeacherController : Controller
+    public class AdminTeacherController(ITeacherRepository teacherRepository, IDepartmentRepository departmentRepository) : Controller
     {
-        private readonly ITeacherRepository _teacherRepository;
-        public AdminTeacherController(ITeacherRepository teacherRepository)
-        {
-            _teacherRepository = teacherRepository;
-        }
+        private readonly ITeacherRepository _teacherRepository = teacherRepository;
+        private readonly IDepartmentRepository _departmentRepository = departmentRepository;
+        
 
         [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
-            return View();
+            var departments = await _departmentRepository.GetAllAsync();
+            var model = new AddTeacherRequest
+            {
+                Departments = departments.Select(x => new SelectListItem
+                {
+                    Text = x.Code + " - " + x.Name,
+                    Value = x.Id.ToString()
+                })
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -29,9 +39,10 @@ namespace Uni_Sphere.Controllers
                 Gender = addTeacherRequest.Gender,
                 PhoneNo = addTeacherRequest.PhoneNo,
                 DateOfBirth = addTeacherRequest.DateOfBirth,
-                Department = addTeacherRequest.Department,
                 Designation = addTeacherRequest.Designation,
+                JoiningDate = DateTime.Now,
                 Salary = addTeacherRequest.Salary,
+                DepartmentId = addTeacherRequest.DepartmentId,
             };
 
             await _teacherRepository.AddAsync(teacher);
@@ -50,6 +61,8 @@ namespace Uni_Sphere.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
+            var departments = await _departmentRepository.GetAllAsync();
+
             var teacher = await _teacherRepository.GetAsync(id);
             if (teacher != null)
             {
@@ -61,9 +74,15 @@ namespace Uni_Sphere.Controllers
                     Gender = teacher.Gender,
                     PhoneNo = teacher.PhoneNo,
                     DateOfBirth = teacher.DateOfBirth,
-                    Department = teacher.Department,
                     Designation = teacher.Designation,
-                    Salary = teacher.Salary
+                    JoiningDate = teacher.JoiningDate,
+                    Salary = teacher.Salary,
+                    Departments = departments.Select(x => new SelectListItem
+                    {
+                        Text = x.Code + " - " + x.Name,
+                        Value = x.Id.ToString()
+                    }),
+                    DepartmentId = teacher.DepartmentId,
                 };
                 return View(editTeacherRequest);
             }
@@ -80,9 +99,9 @@ namespace Uni_Sphere.Controllers
                 Gender = editTeacherRequest.Gender,
                 PhoneNo = editTeacherRequest.PhoneNo,
                 DateOfBirth = editTeacherRequest.DateOfBirth,
-                Department = editTeacherRequest.Department,
                 Designation = editTeacherRequest.Designation,
                 Salary = editTeacherRequest.Salary,
+                DepartmentId = editTeacherRequest.DepartmentId,
             };
 
             var updatedTeacher= await _teacherRepository.UpdateAsync(teacher);

@@ -12,8 +12,8 @@ using Uni_Sphere.Data;
 namespace Uni_Sphere.Migrations
 {
     [DbContext(typeof(UniSphereDbContext))]
-    [Migration("20240330122759_Teacher Table")]
-    partial class TeacherTable
+    [Migration("20240330191811_Initial Tables")]
+    partial class InitialTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,34 @@ namespace Uni_Sphere.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Uni_Sphere.Models.Domain.Departments", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Departments");
+                });
 
             modelBuilder.Entity("Uni_Sphere.Models.Domain.Students", b =>
                 {
@@ -44,40 +72,51 @@ namespace Uni_Sphere.Migrations
 
                     b.Property<string>("Degree")
                         .IsRequired()
-                        .HasColumnType("nvarchar(2)");
+                        .HasMaxLength(2)
+                        .HasColumnType("varchar(2)");
 
-                    b.Property<string>("DegreeProgram")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(10)");
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DepartmentsId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("FullName")
                         .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Gender")
                         .IsRequired()
-                        .HasColumnType("nvarchar(6)");
+                        .HasMaxLength(6)
+                        .HasColumnType("varchar(6)");
 
                     b.Property<float>("Gpa")
                         .HasColumnType("real");
 
                     b.Property<string>("PhoneNo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(12)");
+                        .HasMaxLength(12)
+                        .HasColumnType("varchar(12)");
 
                     b.Property<string>("RollNo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(8)");
+                        .HasMaxLength(8)
+                        .HasColumnType("varchar(8)");
 
                     b.Property<string>("Section")
                         .IsRequired()
-                        .HasColumnType("char");
+                        .HasMaxLength(1)
+                        .HasColumnType("char(1)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DepartmentsId");
 
                     b.ToTable("Students");
                 });
@@ -95,37 +134,71 @@ namespace Uni_Sphere.Migrations
 
                     b.Property<string>("Department")
                         .IsRequired()
+                        .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<string>("Designation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DepartmentsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Designation")
+                        .HasMaxLength(50)
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("FullName")
                         .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Gender")
                         .IsRequired()
-                        .HasColumnType("nvarchar(6)");
+                        .HasMaxLength(6)
+                        .HasColumnType("varchar(6)");
 
                     b.Property<DateTime>("JoiningDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PhoneNo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(12)");
+                        .HasMaxLength(12)
+                        .HasColumnType("varchar(12)");
 
                     b.Property<decimal>("Salary")
                         .HasColumnType("decimal(18, 2)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DepartmentsId");
+
                     b.ToTable("Teachers");
+                });
+
+            modelBuilder.Entity("Uni_Sphere.Models.Domain.Students", b =>
+                {
+                    b.HasOne("Uni_Sphere.Models.Domain.Departments", null)
+                        .WithMany("Students")
+                        .HasForeignKey("DepartmentsId");
+                });
+
+            modelBuilder.Entity("Uni_Sphere.Models.Domain.Teachers", b =>
+                {
+                    b.HasOne("Uni_Sphere.Models.Domain.Departments", null)
+                        .WithMany("Teachers")
+                        .HasForeignKey("DepartmentsId");
+                });
+
+            modelBuilder.Entity("Uni_Sphere.Models.Domain.Departments", b =>
+                {
+                    b.Navigation("Students");
+
+                    b.Navigation("Teachers");
                 });
 #pragma warning restore 612, 618
         }

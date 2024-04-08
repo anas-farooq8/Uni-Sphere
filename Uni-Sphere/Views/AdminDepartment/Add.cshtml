@@ -1,0 +1,30 @@
+﻿@using Uni_Sphere.Models.Domain
+@model Uni_Sphere.Models.ViewModels.AddDepartmentRequest
+@{
+}
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1 class="text-center">Add Department</h1>
+    </div>
+</div>
+
+<div class="container py-3">
+    <form method="post">
+        <div class="mb-3">
+            <label for="Name" class="form-label">Student Name</label>
+            <input type="text" class="form-control" id="Name" asp-for="Name" placeholder="Enter Department Name" required>
+        </div>
+        <div class="mb-3">
+            <label for="Code" class="form-label">Code</label>
+            <input type="text" class="form-control" id="Code" asp-for="Code" placeholder="Enter Department Code" required>
+        </div>
+        <div class="mb-3">
+            <label for="Description" class="form-label">Description</label>
+            <textarea class="form-control" id="Description" asp-for="Description" placeholder="Enter Description (Less than 350 characters)" required></textarea>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,55 @@
+﻿@model List<Uni_Sphere.Models.Domain.Departments>
+@{
+}
+
+<style>
+    .description {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 250px; /* Adjust based on your layout */
+        display: block;
+    }
+</style>
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1 class="text-center">Departments</h1>
+    </div>
+</div>
+
+<div class="container py-5">
+    @if (Model != null && Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Code</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var department in Model)
+                {
+                    <tr>
+                        <td>@department.Id</td>
+                        <td>@department.Name</td>
+                        <td>@department.Code</td>
+                        <td><div class="description">@department.Description</div></td>
+                        <td>
+                            <a asp-area="" asp-controller="AdminDepartment" asp-action="Edit" asp-route-id="@department.Id" class="btn btn-primary">Edit</a>
+                            <a asp-area="" asp-controller="AdminDepartment" asp-action="Delete" asp-route-id="@department.Id" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No Departments found.</p>
+    }
+</div>

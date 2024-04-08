@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Uni_Sphere.Models.Domain;
 
@@ -9,32 +10,32 @@ namespace Uni_Sphere.Models.ViewModels
         [Key]
         public int Id { get; set; }
 
-        [Column(TypeName = "nvarchar(50)")]
+        [Required, MaxLength(50)]
         public string FullName { get; set; }
 
         // 21u-0000
-        [Column(TypeName = "nvarchar(8)")]
+        [Required, MaxLength(8)]
+        [Column(TypeName = "varchar(8)")]
         public string RollNo { get; set; }
 
+        [Required]
         [Column(TypeName = "nvarchar(6)")]
         public Gender Gender { get; set; }
 
-        [EmailAddress]
-        [Column(TypeName = "nvarchar(50)")]
+        [Required, EmailAddress, MaxLength(50)]
         public string Email { get; set; }
 
-        [Phone]
-        [Column(TypeName = "nvarchar(12)")]
+        [Required, Phone, MaxLength(12)]
+        [Column(TypeName = "varchar(12)")]
         public string PhoneNo { get; set; }
 
-        [Column(TypeName = "char")]
+        [Required]
+        [Column(TypeName = "char(1)")]
         public char Section { get; set; }
 
-        [Column(TypeName = "nvarchar(2)")]
+        [Required, MaxLength(2)]
+        [Column(TypeName = "varchar(2)")]
         public string Degree { get; set; }
-
-        [Column(TypeName = "nvarchar(10)")]
-        public string DegreeProgram { get; set; }
 
         public int Batch { get; set; }
 
@@ -43,5 +44,11 @@ namespace Uni_Sphere.Models.ViewModels
         public float Gpa { get; set; } = 0.0F;
 
         public int Credits { get; set; } = 0;
+
+
+        // Display Departments in a dropdown list
+        public IEnumerable<SelectListItem> Departments { get; set; }
+        // Selected Department
+        public int DepartmentId { get; set; }
     }
 }

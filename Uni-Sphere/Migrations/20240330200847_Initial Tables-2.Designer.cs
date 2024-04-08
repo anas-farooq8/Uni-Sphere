@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Uni_Sphere.Data;
 
@@ -11,9 +12,11 @@ using Uni_Sphere.Data;
 namespace Uni_Sphere.Migrations
 {
     [DbContext(typeof(UniSphereDbContext))]
-    partial class UniSphereDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240330200847_Initial Tables-2")]
+    partial class InitialTables2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

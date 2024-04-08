@@ -1,27 +1,43 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Uni_Sphere.Models.Domain;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Uni_Sphere.Models.ViewModels
 {
     public class AddStudentRequest
     {
-        [Column(TypeName = "nvarchar(50)")]
+        [Required, MaxLength(50)]
         public string FullName { get; set; }
 
+        // 21u-0000
+        [Required, MaxLength(8)]
+        [Column(TypeName = "varchar(8)")]
+        public string RollNo { get; set; }
+
+        [Required]
         [Column(TypeName = "nvarchar(6)")]
         public Gender Gender { get; set; }
 
-        [Column(TypeName = "nvarchar(12)")]
+        [Required, EmailAddress, MaxLength(50)]
+        public string Email { get; set; }
+
+        [Required, Phone, MaxLength(12)]
+        [Column(TypeName = "varchar(12)")]
         public string PhoneNo { get; set; }
 
-        [Column(TypeName = "char")]
-        public char Section { get; set; }
+        [Required]
+        [Column(TypeName = "char(1)")]
+        public char Section { get; set; } = 'A';
 
-        [Column(TypeName = "nvarchar(2)")]
+        [Required, MaxLength(2)]
+        [Column(TypeName = "varchar(2)")]
         public string Degree { get; set; }
 
-        [Column(TypeName = "nvarchar(10)")]
-        public string DegreeProgram { get; set; }
+
+        // Display Departments in a dropdown list
+        public IEnumerable<SelectListItem> Departments { get; set; }
+        // Selected Department
+        public int DepartmentId { get; set; }
     }
 }
