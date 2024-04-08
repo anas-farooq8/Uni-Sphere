@@ -74,7 +74,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="teacherDepartment" class="form-label">Teacher Department</label>
-                            <select class="form-select" asp-items="Model.Departments" asp-for="DepartmentId" required>
+                            <select class="form-select" asp-items="Model.Departments" asp-for="DepartmentsId" required>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -89,6 +89,10 @@
                         <div class="mb-3">
                             <label for="Salary" class="form-label">Salary</label>
                             <input type="number" step="10" class="form-control" id="Salary" asp-for="Salary" placeholder="Enter Salary" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="profileImageUrl" class="form-label">Profile Image Url</label>
+                            <input type="text" class="form-control" id="profileImageUrl" asp-for="ProfileImageUrl" readonly>
                         </div>
                         <div class="mt-3">
                             <button type="submit" class="btn btn-primary">Update</button>
@@ -115,15 +119,38 @@
     </div>
 
     <script>
-        document.getElementById('profileImageUpload').addEventListener('change', function (event) {
-            var reader = new FileReader();
-            reader.onload = function () {
-                var output = document.getElementById('imagePreview').querySelector('img');
-                output.src = reader.result;
-                output.style.display = 'block';
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        });
+        const profileImageUpload = document.getElementById('profileImageUpload');
+        const imagePreview = document.getElementById('imagePreview').querySelector('img');
+        const profileImageUrl = document.getElementById('profileImageUrl');
+
+        async function uploadProfileImage(e) {
+            let data = new FormData();
+            data.append('file', e.target.files[0]);
+
+            // Display image preview
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block'; // Making sure the image is visible
+                };
+                reader.readAsDataURL(file);
+            }
+
+            await fetch('/api/images', {
+                method: 'POST',
+                headers: {
+                    'Accept': '*/*',
+                },
+                body: data
+            }).then(response => response.json())
+                .then(result => {
+                    profileImageUrl.value = result.link;
+                });
+        }
+
+        profileImageUpload.addEventListener('change', uploadProfileImage);
     </script>
 
     <!-- jQuery -->

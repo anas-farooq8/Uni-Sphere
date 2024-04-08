@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Uni_Sphere.Data;
 
@@ -11,9 +12,11 @@ using Uni_Sphere.Data;
 namespace Uni_Sphere.Migrations
 {
     [DbContext(typeof(UniSphereDbContext))]
-    partial class UniSphereDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240408105728_Image Url Columns")]
+    partial class ImageUrlColumns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,7 +75,10 @@ namespace Uni_Sphere.Migrations
                         .HasMaxLength(2)
                         .HasColumnType("varchar(2)");
 
-                    b.Property<int>("DepartmentsId")
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DepartmentsId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -176,9 +182,7 @@ namespace Uni_Sphere.Migrations
                 {
                     b.HasOne("Uni_Sphere.Models.Domain.Departments", null)
                         .WithMany("Students")
-                        .HasForeignKey("DepartmentsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DepartmentsId");
                 });
 
             modelBuilder.Entity("Uni_Sphere.Models.Domain.Teachers", b =>

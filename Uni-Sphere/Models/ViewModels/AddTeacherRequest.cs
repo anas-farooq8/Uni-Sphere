@@ -32,10 +32,11 @@ namespace Uni_Sphere.Models.ViewModels
         [Required, Column(TypeName = "decimal(18, 2)")]
         public decimal Salary { get; set; }
 
+        public string? ProfileImageUrl { get; set; }
 
         // Display Departments in a dropdown list
         public IEnumerable<SelectListItem> Departments { get; set; }
         // Selected Department
-        public int DepartmentId { get; set; }
+        public int DepartmentsId { get; set; }
     }
 }

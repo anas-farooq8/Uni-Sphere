@@ -55,7 +55,8 @@ namespace Uni_Sphere.Controllers
                 Section = char.ToUpper(addStudentRequest.Section),
                 Degree = addStudentRequest.Degree,
                 Batch = int.Parse(batch),
-                DepartmentId = addStudentRequest.DepartmentId,
+                ProfileImageUrl = addStudentRequest.ProfileImageUrl,
+                DepartmentsId = addStudentRequest.DepartmentsId,
             };
 
             await _studentRepository.AddAsync(student);
@@ -93,12 +94,13 @@ namespace Uni_Sphere.Controllers
                     CurrentSemester = student.CurrentSemester,
                     Gpa = student.Gpa,
                     Credits = student.Credits,
+                    ProfileImageUrl = student.ProfileImageUrl,
                     Departments = departments.Select(x => new SelectListItem
                     {
                         Text = x.Code + " - " + x.Name,
                         Value = x.Id.ToString()
                     }),
-                    DepartmentId = student.DepartmentId,
+                    DepartmentsId = student.DepartmentsId,
                 };
                 return View(editStudentRequest);
             }
@@ -119,7 +121,8 @@ namespace Uni_Sphere.Controllers
                 CurrentSemester = editStudentRequest.CurrentSemester,
                 Gpa = editStudentRequest.Gpa,
                 Credits = editStudentRequest.Credits,
-                DepartmentId = editStudentRequest.DepartmentId,
+                ProfileImageUrl = editStudentRequest.ProfileImageUrl,
+                DepartmentsId = editStudentRequest.DepartmentsId,
             };
 
             var updatedStudent = await _studentRepository.UpdateAsync(student);

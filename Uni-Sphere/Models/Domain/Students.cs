@@ -43,9 +43,10 @@ namespace Uni_Sphere.Models.Domain
 
         public int Credits { get; set; } = 0;
 
+        public string? ProfileImageUrl { get; set; }
 
         // One to Many Relationship with Departments
-        public int DepartmentId { get; set; }
+        public int DepartmentsId { get; set; }
 
     }
 }

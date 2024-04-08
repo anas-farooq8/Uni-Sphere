@@ -34,10 +34,12 @@ namespace Uni_Sphere.Models.ViewModels
         [Column(TypeName = "varchar(2)")]
         public string Degree { get; set; }
 
+        public string? ProfileImageUrl { get; set; }
+
 
         // Display Departments in a dropdown list
         public IEnumerable<SelectListItem> Departments { get; set; }
         // Selected Department
-        public int DepartmentId { get; set; }
+        public int DepartmentsId { get; set; }
     }
 }

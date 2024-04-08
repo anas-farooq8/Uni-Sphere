@@ -42,7 +42,8 @@ namespace Uni_Sphere.Controllers
                 Designation = addTeacherRequest.Designation,
                 JoiningDate = DateTime.Now,
                 Salary = addTeacherRequest.Salary,
-                DepartmentId = addTeacherRequest.DepartmentId,
+                ProfileImageUrl = addTeacherRequest.ProfileImageUrl,
+                DepartmentsId = addTeacherRequest.DepartmentsId,
             };
 
             await _teacherRepository.AddAsync(teacher);
@@ -77,12 +78,13 @@ namespace Uni_Sphere.Controllers
                     Designation = teacher.Designation,
                     JoiningDate = teacher.JoiningDate,
                     Salary = teacher.Salary,
+                    ProfileImageUrl = teacher.ProfileImageUrl,
                     Departments = departments.Select(x => new SelectListItem
                     {
                         Text = x.Code + " - " + x.Name,
                         Value = x.Id.ToString()
                     }),
-                    DepartmentId = teacher.DepartmentId,
+                    DepartmentsId = teacher.DepartmentsId,
                 };
                 return View(editTeacherRequest);
             }
@@ -101,7 +103,8 @@ namespace Uni_Sphere.Controllers
                 DateOfBirth = editTeacherRequest.DateOfBirth,
                 Designation = editTeacherRequest.Designation,
                 Salary = editTeacherRequest.Salary,
-                DepartmentId = editTeacherRequest.DepartmentId,
+                ProfileImageUrl = editTeacherRequest.ProfileImageUrl,
+                DepartmentsId = editTeacherRequest.DepartmentsId,
             };
 
             var updatedTeacher= await _teacherRepository.UpdateAsync(teacher);

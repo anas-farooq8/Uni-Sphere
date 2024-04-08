@@ -58,7 +58,7 @@ namespace Uni_Sphere.Repositories
                 existingTeacher.DateOfBirth = teacher.DateOfBirth;
                 existingTeacher.Designation = teacher.Designation;
                 existingTeacher.Salary = teacher.Salary;
-                existingTeacher.DepartmentId = teacher.DepartmentId;
+                existingTeacher.DepartmentsId = teacher.DepartmentsId;
 
                 await _uniSphereDbContext.SaveChangesAsync();
                 return existingTeacher;

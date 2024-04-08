@@ -60,7 +60,7 @@ namespace Uni_Sphere.Repositories
                 existingStudent.CurrentSemester = student.CurrentSemester;
                 existingStudent.Gpa = student.Gpa;
                 existingStudent.Credits = student.Credits;
-                existingStudent.DepartmentId = student.DepartmentId;
+                existingStudent.DepartmentsId = student.DepartmentsId;
 
                 await _uniSphereDbContext.SaveChangesAsync();
                 return existingStudent;

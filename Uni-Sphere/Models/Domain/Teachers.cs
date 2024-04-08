@@ -34,9 +34,11 @@ namespace Uni_Sphere.Models.Domain
         [Required, Column(TypeName = "decimal(18, 2)")]
         public decimal Salary { get; set; }
 
+        public string? ProfileImageUrl { get; set; }
+
 
         // One to Many Relationship with Departments
-        public int DepartmentId { get; set; }
+        public int DepartmentsId { get; set; }
 
     }
 }
