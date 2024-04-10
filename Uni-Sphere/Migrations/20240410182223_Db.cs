@@ -19,7 +19,7 @@ namespace Uni_Sphere.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Code = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(350)", maxLength: 350, nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(350)", maxLength: 350, nullable: true)
                 },
                 constraints: table =>
                 {

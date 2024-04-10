@@ -18,14 +18,16 @@
         <div class="mb-3">
             <label for="Name" class="form-label">Student Name</label>
             <input type="text" class="form-control" id="Name" asp-for="Name" placeholder="Enter Department Name" required>
+            <span class="text-danger" asp-validation-for="Name"></span>
         </div>
         <div class="mb-3">
             <label for="Code" class="form-label">Code</label>
             <input type="text" class="form-control" id="Code" asp-for="Code" placeholder="Enter Department Code" required>
+            <span class="text-danger" asp-validation-for="Code"></span>
         </div>
         <div class="mb-3">
             <label for="Description" class="form-label">Description</label>
-            <textarea class="form-control" id="Description" asp-for="Description" placeholder="Enter Description (Less than 350 characters)" required></textarea>
+            <textarea class="form-control" id="Description" asp-for="Description" placeholder="Enter Description (Less than 350 characters)"></textarea>
         </div>
         <div class="mb-3">
             <button type="submit" class="btn btn-primary">Submit</button>

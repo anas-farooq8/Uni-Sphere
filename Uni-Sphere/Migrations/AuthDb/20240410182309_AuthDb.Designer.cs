@@ -12,7 +12,7 @@ using Uni_Sphere.Data;
 namespace Uni_Sphere.Migrations.AuthDb
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20240410153937_AuthDb")]
+    [Migration("20240410182309_AuthDb")]
     partial class AuthDb
     {
         /// <inheritdoc />
@@ -169,15 +169,15 @@ namespace Uni_Sphere.Migrations.AuthDb
                         {
                             Id = "2082dbd3-90ce-428c-98bd-53deaf2baad6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f7e5edd0-227c-4933-a80e-e95e42d9053d",
+                            ConcurrencyStamp = "69b36ae2-d26b-4302-9eaf-5f383fe6454f",
                             Email = "admin@unisphere.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@UNISPHERE.COM",
                             NormalizedUserName = "ADMIN@UNISPHERE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGuyToMUFUMMeUQmLoqr5GdQyXE1lAMg57Bo0cF/ny8aACr9bUjtKmKT0SzxlT/Lvw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHerCHo0r/Po2wyGRqwbb1np/nkegHDP3bFXsvML8wqowLszSaeLQOnxPsFUkdBO7A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c4a05d8d-e256-42fa-870c-2216666c20b8",
+                            SecurityStamp = "2883f9a5-a801-4638-bc90-d864d32e7c29",
                             TwoFactorEnabled = false,
                             UserName = "admin@unisphere.com"
                         });

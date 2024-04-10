@@ -48,6 +48,7 @@
                     <div class="mb-3">
                         <label for="TeacherName" class="form-label">Teacher Full Name</label>
                         <input type="text" class="form-control" id="teacherName" name="FullName" oninput="generateEmail()" asp-for="FullName" placeholder="Enter Name" required>
+                        <span class="text-danger" asp-validation-for="FullName"></span>
                     </div>
                     <div class="mb-3">
                         <label for="TeacherEmail" class="form-label">Teacher Email</label>
@@ -55,30 +56,36 @@
                     </div>
                     <div class="mb-3">
                         <label for="Gender" class="form-label">Gender</label>
-                        <select class="form-select" id="Gender" asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()" required>
+                        <select class="form-select" id="Gender" asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()">
                         </select>
+                        <span class="text-danger" asp-validation-for="Gender"></span>
                     </div>
                     <div class="mb-3">
                         <label for="teacherPhoneNo" class="form-label">Teacher PhoneNo.</label>
                         <input type="text" class="form-control" id="teacherPhoneNo" asp-for="PhoneNo" placeholder="Enter PhoneNo." required>
+                        <span class="text-danger" asp-validation-for="PhoneNo"></span>
                     </div>
                     <div class="mb-3">
                         <label for="DateOfBirth" class="form-label">Date of Birth</label>
                         <input type="date" class="form-control" id="DateOfBirth" asp-for="DateOfBirth" value="2000-01-01" required>
+                        <span class="text-danger" asp-validation-for="DateOfBirth"></span>
                     </div>
                     <div class="mb-3">
                         <label for="teacherDepartment" class="form-label">Teacher Department</label>
-                        <select class="form-select" asp-items="Model.Departments" asp-for="DepartmentsId" required>
+                        <select class="form-select" asp-items="Model.Departments" asp-for="DepartmentsId">
                         </select>
+                        <span class="text-danger" asp-validation-for="DepartmentsId"></span>
                     </div>
                     <div class="mb-3">
                         <label for="Designation" class="form-label">Designation</label>
-                        <select class="form-select" id="Designation" asp-for="Designation" asp-items="Html.GetEnumSelectList<JobTitle>()" required>
+                        <select class="form-select" id="Designation" asp-for="Designation" asp-items="Html.GetEnumSelectList<JobTitle>()">
                         </select>
+                        <span class="text-danger" asp-validation-for="Designation"></span>
                     </div>
                     <div class="mb-3">
                         <label for="Salary" class="form-label">Salary</label>
                         <input type="number" step="10" class="form-control" id="Salary" asp-for="Salary" placeholder="Enter Salary" required>
+                        <span class="text-danger" asp-validation-for="Salary"></span>
                     </div>
                     <div class="mb-3">
                         <label for="profileImageUrl" class="form-label">Profile Image Url</label>
@@ -94,7 +101,7 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="profileImageUpload" class="form-label">Upload Profile Image</label>
-                    <input class="form-control" type="file" id="profileImageUpload" accept="image/*" required>
+                    <input class="form-control" type="file" id="profileImageUpload" accept="image/*">
                 </div>
                 <div class="image-preview" id="imagePreview">
                     <img src="" alt="Image Preview">

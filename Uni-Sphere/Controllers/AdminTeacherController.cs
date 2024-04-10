@@ -36,32 +36,35 @@ namespace Uni_Sphere.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddTeacherRequest addTeacherRequest)
         {
-            var email = addTeacherRequest.Email;
+/*            if(ModelState.IsValid)
+            {*/
+                var email = addTeacherRequest.Email;
 
-            var teacher = new Teachers
-            {
-                FullName = addTeacherRequest.FullName,
-                Email = addTeacherRequest.Email,
-                Gender = addTeacherRequest.Gender,
-                PhoneNo = addTeacherRequest.PhoneNo,
-                DateOfBirth = addTeacherRequest.DateOfBirth,
-                Designation = addTeacherRequest.Designation,
-                JoiningDate = DateTime.Now,
-                Salary = addTeacherRequest.Salary,
-                ProfileImageUrl = addTeacherRequest.ProfileImageUrl,
-                DepartmentsId = addTeacherRequest.DepartmentsId,
-            };
+                var teacher = new Teachers
+                {
+                    FullName = addTeacherRequest.FullName,
+                    Email = addTeacherRequest.Email,
+                    Gender = addTeacherRequest.Gender,
+                    PhoneNo = addTeacherRequest.PhoneNo,
+                    DateOfBirth = addTeacherRequest.DateOfBirth,
+                    Designation = addTeacherRequest.Designation,
+                    JoiningDate = DateTime.Now,
+                    Salary = addTeacherRequest.Salary,
+                    ProfileImageUrl = addTeacherRequest.ProfileImageUrl,
+                    DepartmentsId = addTeacherRequest.DepartmentsId,
+                };
 
-            await _teacherRepository.AddAsync(teacher);
+                await _teacherRepository.AddAsync(teacher);
 
-            // Create Account (username, email, password)
-            var status = await _teacherRepository.CreateAccount(email, email, email);
-            if (status)
-            {
-                return RedirectToAction("List");
-            }
+                // Create Account (username, email, password)
+                var status = await _teacherRepository.CreateAccount(email, email, email);
+                if (status)
+                {
+                    return RedirectToAction("List");
+                }
+            //}
 
-            return RedirectToAction("List");
+            return View();
         }
 
         [HttpGet]
@@ -107,31 +110,35 @@ namespace Uni_Sphere.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditTeacherRequest editTeacherRequest)
         {
-            var teacher = new Teachers
-            {
-                Id = editTeacherRequest.Id,
-                FullName = editTeacherRequest.FullName,
-                Gender = editTeacherRequest.Gender,
-                PhoneNo = editTeacherRequest.PhoneNo,
-                DateOfBirth = editTeacherRequest.DateOfBirth,
-                Designation = editTeacherRequest.Designation,
-                Salary = editTeacherRequest.Salary,
-                ProfileImageUrl = editTeacherRequest.ProfileImageUrl,
-                DepartmentsId = editTeacherRequest.DepartmentsId,
-            };
+/*            if(ModelState.IsValid)
+            {*/
+                var teacher = new Teachers
+                {
+                    Id = editTeacherRequest.Id,
+                    FullName = editTeacherRequest.FullName,
+                    Gender = editTeacherRequest.Gender,
+                    PhoneNo = editTeacherRequest.PhoneNo,
+                    DateOfBirth = editTeacherRequest.DateOfBirth,
+                    Designation = editTeacherRequest.Designation,
+                    Salary = editTeacherRequest.Salary,
+                    ProfileImageUrl = editTeacherRequest.ProfileImageUrl,
+                    DepartmentsId = editTeacherRequest.DepartmentsId,
+                };
 
-            var updatedTeacher= await _teacherRepository.UpdateAsync(teacher);
-            if (updatedTeacher != null)
-            {
-                // success
-                return RedirectToAction("List");
-            }
-            else
-            {
-                // error
-            }
+                var updatedTeacher = await _teacherRepository.UpdateAsync(teacher);
+                if (updatedTeacher != null)
+                {
+                    // success
+                    return RedirectToAction("List");
+                }
+                else
+                {
+                    // error
+                }
+            //}
 
-            return RedirectToAction("Edit", new { id = editTeacherRequest.Id });
+            // return RedirectToAction("Edit", new { id = editTeacherRequest.Id });
+            return View();
         }
 
         [HttpGet]

@@ -14,7 +14,7 @@ namespace Uni_Sphere.Models.ViewModels
         public string FullName { get; set; }
 
         // 21u-0000
-        [Required, MaxLength(8)]
+        [MaxLength(8)]
         [Column(TypeName = "varchar(8)")]
         public string RollNo { get; set; }
 
@@ -22,7 +22,7 @@ namespace Uni_Sphere.Models.ViewModels
         [Column(TypeName = "nvarchar(6)")]
         public Gender Gender { get; set; }
 
-        [Required, EmailAddress, MaxLength(50)]
+        [MaxLength(50)]
         public string Email { get; set; }
 
         [Required, Phone, MaxLength(12)]
@@ -51,6 +51,7 @@ namespace Uni_Sphere.Models.ViewModels
         // Display Departments in a dropdown list
         public IEnumerable<SelectListItem> Departments { get; set; }
         // Selected Department
+        [Required]
         public int DepartmentsId { get; set; }
     }
 }

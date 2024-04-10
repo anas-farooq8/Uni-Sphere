@@ -11,7 +11,7 @@ namespace Uni_Sphere.Models.ViewModels
         [Required, MaxLength(10)]
         public string Code { get; set; }
 
-        [Required, MaxLength(350)]
+        [MaxLength(350)]
         public string? Description { get; set; }
     }
 }

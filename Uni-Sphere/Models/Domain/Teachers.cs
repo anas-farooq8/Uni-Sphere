@@ -11,7 +11,7 @@ namespace Uni_Sphere.Models.Domain
         [Required, MaxLength(50)]
         public string FullName { get; set; }
 
-        [Required, EmailAddress, MaxLength(50)]
+        [EmailAddress, MaxLength(50)]
         public string Email { get; set; }
 
         [Required]
@@ -38,6 +38,7 @@ namespace Uni_Sphere.Models.Domain
 
 
         // One to Many Relationship with Departments
+        [Required]
         public int DepartmentsId { get; set; }
 
     }

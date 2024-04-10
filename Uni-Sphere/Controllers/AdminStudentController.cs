@@ -44,35 +44,44 @@ namespace Uni_Sphere.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddStudentRequest addStudentRequest)
         {
-            var count = await _studentRepository.Count();
-            var batch = getBatch();
-            var rollNo = $"{batch}u-{(count + 1).ToString("D4")}"; // This will give "21u-0001" if the count was 0
-            var email = $"{rollNo}@unishere.edu.pk";
+/*            if(ModelState.IsValid)
+            {*/
+                var count = await _studentRepository.Count();
+                var batch = getBatch();
+                var rollNo = $"{batch}u-{(count + 1).ToString("D4")}"; // This will give "21u-0001" if the count was 0
+                var email = $"{rollNo}@unishere.edu.pk";
 
-            var student = new Students
+                var student = new Students
+                {
+                    FullName = addStudentRequest.FullName,
+                    RollNo = rollNo,
+                    Gender = addStudentRequest.Gender,
+                    Email = email,
+                    PhoneNo = addStudentRequest.PhoneNo,
+                    Section = char.ToUpper(addStudentRequest.Section),
+                    Degree = addStudentRequest.Degree,
+                    Batch = int.Parse(batch),
+                    ProfileImageUrl = addStudentRequest.ProfileImageUrl,
+                    DepartmentsId = addStudentRequest.DepartmentsId,
+                };
+
+                await _studentRepository.AddAsync(student);
+
+                // Create Account (username, email, password)
+                var status = await _studentRepository.CreateAccount(email, email, rollNo);
+                if (status)
+                {
+                    return RedirectToAction("List");
+                }
+            //}
+
+/*            var departments = await _departmentRepository.GetAllAsync();
+            addStudentRequest.Departments = departments.Select(x => new SelectListItem
             {
-                FullName = addStudentRequest.FullName,
-                RollNo = rollNo,
-                Gender = addStudentRequest.Gender,
-                Email = email,
-                PhoneNo = addStudentRequest.PhoneNo,
-                Section = char.ToUpper(addStudentRequest.Section),
-                Degree = addStudentRequest.Degree,
-                Batch = int.Parse(batch),
-                ProfileImageUrl = addStudentRequest.ProfileImageUrl,
-                DepartmentsId = addStudentRequest.DepartmentsId,
-            };
-
-            await _studentRepository.AddAsync(student);
-
-            // Create Account (username, email, password)
-            var status = await _studentRepository.CreateAccount(email, email, rollNo);
-            if(status)
-            {
-                return RedirectToAction("List");
-            }
-
-            return RedirectToAction("List");
+                Text = x.Code + " - " + x.Name,
+                Value = x.Id.ToString()
+            });*/
+            return View(addStudentRequest);
         }
 
         [HttpGet]
@@ -121,33 +130,37 @@ namespace Uni_Sphere.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditStudentRequest editStudentRequest)
         {
-            var student = new Students
-            {
-                Id = editStudentRequest.Id,
-                FullName = editStudentRequest.FullName,
-                Gender = editStudentRequest.Gender,
-                PhoneNo = editStudentRequest.PhoneNo,
-                Section = char.ToUpper(editStudentRequest.Section),
-                Degree = editStudentRequest.Degree,
-                CurrentSemester = editStudentRequest.CurrentSemester,
-                Gpa = editStudentRequest.Gpa,
-                Credits = editStudentRequest.Credits,
-                ProfileImageUrl = editStudentRequest.ProfileImageUrl,
-                DepartmentsId = editStudentRequest.DepartmentsId,
-            };
+/*            if(ModelState.IsValid)
+            {*/
+                var student = new Students
+                {
+                    Id = editStudentRequest.Id,
+                    FullName = editStudentRequest.FullName,
+                    Gender = editStudentRequest.Gender,
+                    PhoneNo = editStudentRequest.PhoneNo,
+                    Section = char.ToUpper(editStudentRequest.Section),
+                    Degree = editStudentRequest.Degree,
+                    CurrentSemester = editStudentRequest.CurrentSemester,
+                    Gpa = editStudentRequest.Gpa,
+                    Credits = editStudentRequest.Credits,
+                    ProfileImageUrl = editStudentRequest.ProfileImageUrl,
+                    DepartmentsId = editStudentRequest.DepartmentsId,
+                };
 
-            var updatedStudent = await _studentRepository.UpdateAsync(student);
-            if(updatedStudent != null)
-            {
-                // success
-                return RedirectToAction("List");
-            }
-            else
-            {
-                // error
-            }
+                var updatedStudent = await _studentRepository.UpdateAsync(student);
+                if (updatedStudent != null)
+                {
+                    // success
+                    return RedirectToAction("List");
+                }
+                else
+                {
+                    // error
+                }
+            //}
 
-            return RedirectToAction("Edit", new {id = editStudentRequest.Id});
+            // return RedirectToAction("Edit", new {id = editStudentRequest.Id});
+            return View();
         }
 
         [HttpGet]

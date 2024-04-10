@@ -11,7 +11,7 @@ namespace Uni_Sphere.Models.ViewModels
         [Required, MaxLength(50)]
         public string FullName { get; set; }
 
-        [Required, EmailAddress, MaxLength(50)]
+        [EmailAddress, MaxLength(50)]
         public string Email { get; set; }
 
         [Required]
@@ -37,6 +37,7 @@ namespace Uni_Sphere.Models.ViewModels
         // Display Departments in a dropdown list
         public IEnumerable<SelectListItem> Departments { get; set; }
         // Selected Department
+        [Required]
         public int DepartmentsId { get; set; }
     }
 }

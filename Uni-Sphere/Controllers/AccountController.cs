@@ -24,12 +24,15 @@ namespace Uni_Sphere.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
-            var signInResult = await _signInManager.PasswordSignInAsync(loginViewModel.Username,
-                loginViewModel.Password, false, false);
-
-            if(signInResult != null && signInResult.Succeeded)
+            if(ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Home");
+                var signInResult = await _signInManager.PasswordSignInAsync(loginViewModel.Username,
+                    loginViewModel.Password, false, false);
+
+                if (signInResult != null && signInResult.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
 
             // Show error

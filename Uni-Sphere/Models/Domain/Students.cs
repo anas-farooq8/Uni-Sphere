@@ -12,7 +12,7 @@ namespace Uni_Sphere.Models.Domain
         public string FullName { get; set; }
 
         // 21u-0000
-        [Required, MaxLength(8)]
+        [MaxLength(8)]
         [Column(TypeName = "varchar(8)")]
         public string RollNo { get; set; }
 
@@ -20,7 +20,7 @@ namespace Uni_Sphere.Models.Domain
         [Column(TypeName = "nvarchar(6)")]
         public Gender Gender { get; set; }
 
-        [Required, EmailAddress, MaxLength(50)]
+        [MaxLength(50)]
         public string Email { get; set; }
 
         [Required, Phone, MaxLength(12)]
@@ -46,6 +46,7 @@ namespace Uni_Sphere.Models.Domain
         public string? ProfileImageUrl { get; set; }
 
         // One to Many Relationship with Departments
+        [Required]
         public int DepartmentsId { get; set; }
 
     }

@@ -8,7 +8,7 @@ namespace Uni_Sphere.Repositories
         Task<Teachers?> GetAsync(int id);
         Task<Teachers> AddAsync(Teachers teacher);
         Task<bool> CreateAccount(string username, string email, string password);
-        Task<bool> DeleteAccount(string id);
+        Task<bool> DeleteAccount(string username);
         Task<Teachers?> UpdateAsync(Teachers teacher);
         Task<Teachers?> DeleteAsync(int id);
         Task<int> Count();

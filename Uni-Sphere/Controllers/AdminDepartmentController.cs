@@ -25,17 +25,24 @@ namespace Uni_Sphere.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddDepartmentRequest addDepartmentRequest)
         {
-            var department = new Departments
+            if(ModelState.IsValid)
             {
-                Name = addDepartmentRequest.Name,
-                Code = addDepartmentRequest.Code,
-                Description = addDepartmentRequest.Description.Trim(),
-            };
+                // if the provided description is null, set it to an empty string
+                addDepartmentRequest.Description ??= "";
+
+                var department = new Departments
+                {
+                    Name = addDepartmentRequest.Name,
+                    Code = addDepartmentRequest.Code,
+                    Description = addDepartmentRequest.Description.Trim(),
+                };
 
 
-            await _departmentRepository.AddAsync(department);
+                await _departmentRepository.AddAsync(department);
+                return RedirectToAction("List");
+            }
 
-            return RedirectToAction("List");
+            return View();
         }
 
 
@@ -65,6 +72,7 @@ namespace Uni_Sphere.Controllers
                 };
                 return View(editDepartmentRequest);
             }
+
             return View(null);
         }
 
@@ -73,26 +81,33 @@ namespace Uni_Sphere.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditDepartmentRequest editDepartmentRequest)
         {
-            var department = new Departments
+            if(ModelState.IsValid)
             {
-                Id = editDepartmentRequest.Id,
-                Name = editDepartmentRequest.Name,
-                Code = editDepartmentRequest.Code,
-                Description = editDepartmentRequest.Description.Trim(),
-            };
+                // if the provided description is null, set it to an empty string
+                editDepartmentRequest.Description ??= "";
 
-            var updatedTeacher = await _departmentRepository.UpdateAsync(department);
-            if (updatedTeacher != null)
-            {
-                // success
-                return RedirectToAction("List");
-            }
-            else
-            {
-                // error
+                var department = new Departments
+                {
+                    Id = editDepartmentRequest.Id,
+                    Name = editDepartmentRequest.Name,
+                    Code = editDepartmentRequest.Code,
+                    Description = editDepartmentRequest.Description.Trim(),
+                };
+
+                var updatedTeacher = await _departmentRepository.UpdateAsync(department);
+                if (updatedTeacher != null)
+                {
+                    // success
+                    return RedirectToAction("List");
+                }
+                else
+                {
+                    // error
+                }
             }
 
-            return RedirectToAction("Edit", new { id = editDepartmentRequest.Id });
+            // return RedirectToAction("Edit", new { id = editDepartmentRequest.Id });
+            return View();
         }
 
 

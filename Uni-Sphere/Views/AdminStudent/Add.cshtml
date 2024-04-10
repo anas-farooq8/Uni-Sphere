@@ -48,32 +48,38 @@
                     <div class="mb-3">
                         <label for="studentName" class="form-label">Student Full Name</label>
                         <input type="text" class="form-control" id="studentName" asp-for="FullName" placeholder="Enter Name" required>
+                        <span class="text-danger" asp-validation-for="FullName"></span>
                     </div>
                     <div class="mb-3">
                         <label for="Gender" class="form-label">Gender</label>
-                        <select class="form-select" id="Gender" asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()" required>
+                        <select class="form-select" id="Gender" asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()">
                         </select>
+                        <span class="text-danger" asp-validation-for="Gender"></span>
                     </div>
                     <div class="mb-3">
                         <label for="studentPhoneNo" class="form-label">Student PhoneNo.</label>
                         <input type="text" class="form-control" id="studentPhoneNo" asp-for="PhoneNo" placeholder="Enter PhoneNo." required>
+                        <span class="text-danger" asp-validation-for="PhoneNo"></span>
                     </div>
                     <div class="mb-3">
                         <label for="studentSection" class="form-label">Student Section</label>
                         <input type="text" class="form-control" id="studentSection" asp-for="Section" placeholder="Enter Section" required>
+                        <span class="text-danger" asp-validation-for="Section"></span>
                     </div>
                     <div class="mb-3">
                         <label for="studentDegree" class="form-label">Student Degree</label>
-                        <select class="form-select" id="studentDegree" asp-for="Degree" required>
+                        <select class="form-select" id="studentDegree" asp-for="Degree">
                             <option selected>BS</option>
                             <option value="BS">BS - Bachelor's</option>
                             <option value="MS">MS - Master's</option>
                         </select>
+                        <span class="text-danger" asp-validation-for="Degree"></span>
                     </div>
                     <div class="mb-3">
                         <label for="studentDegreeProgram" class="form-label">Student Degree Program</label>
-                        <select class="form-select" asp-items="Model.Departments" asp-for="DepartmentsId" required>
+                        <select class="form-select" asp-items="Model.Departments" asp-for="DepartmentsId">
                         </select>
+                        <span class="text-danger" asp-validation-for="DepartmentsId"></span>
                     </div>
                     <div class="mb-3">
                         <label for="profileImageUrl" class="form-label">Profile Image Url</label>
@@ -89,7 +95,7 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="profileImageUpload" class="form-label">Upload Profile Image</label>
-                    <input class="form-control" type="file" id="profileImageUpload" accept="image/*" required>
+                    <input class="form-control" type="file" id="profileImageUpload" accept="image/*">
                 </div>
                 <div class="image-preview" id="imagePreview">
                     <img src="" alt="Image Preview">

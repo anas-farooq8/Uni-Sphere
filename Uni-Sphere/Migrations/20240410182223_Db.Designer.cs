@@ -12,7 +12,7 @@ using Uni_Sphere.Data;
 namespace Uni_Sphere.Migrations
 {
     [DbContext(typeof(UniSphereDbContext))]
-    [Migration("20240410153841_Db")]
+    [Migration("20240410182223_Db")]
     partial class Db
     {
         /// <inheritdoc />
@@ -39,7 +39,6 @@ namespace Uni_Sphere.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(350)
                         .HasColumnType("nvarchar(350)");
 
