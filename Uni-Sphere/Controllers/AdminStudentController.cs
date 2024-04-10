@@ -13,8 +13,7 @@ namespace Uni_Sphere.Controllers
 {
 
     [Authorize(Roles = "Admin")]
-    public class AdminStudentController(IStudentRepository studentRepository, IDepartmentRepository departmentRepository,
-        UserManager<IdentityUser> _userManager) : Controller
+    public class AdminStudentController(IStudentRepository studentRepository, IDepartmentRepository departmentRepository) : Controller
     {
         private readonly IStudentRepository _studentRepository = studentRepository;
         private readonly IDepartmentRepository _departmentRepository = departmentRepository;
@@ -66,26 +65,11 @@ namespace Uni_Sphere.Controllers
 
             await _studentRepository.AddAsync(student);
 
-            // Authorization & Authentication
-            var identityUser = new IdentityUser
+            // Create Account (username, email, password)
+            var status = await _studentRepository.CreateAccount(email, email, rollNo);
+            if(status)
             {
-                UserName = email,
-                Email = email,
-            };
-
-            var password = rollNo;
-            var identityResult = await _userManager.CreateAsync(identityUser, password);
-
-            if(identityResult.Succeeded)
-            {
-                // Assigning Student Role
-                var roleIdentityResult = await _userManager.AddToRoleAsync(identityUser, "Student");
-
-                if(roleIdentityResult.Succeeded)
-                {
-                    // Success
-                    return RedirectToAction("List");
-                }
+                return RedirectToAction("List");
             }
 
             return RedirectToAction("List");
@@ -172,6 +156,7 @@ namespace Uni_Sphere.Controllers
             var student = await _studentRepository.DeleteAsync(id);
             if(student != null)
             {
+                await _studentRepository.DeleteAccount(student.Email);
                 // success
             }
             else

@@ -11,8 +11,7 @@ namespace Uni_Sphere.Controllers
 {
 
     [Authorize(Roles = "Admin")]
-    public class AdminTeacherController(ITeacherRepository teacherRepository, IDepartmentRepository departmentRepository,
-                UserManager<IdentityUser> _userManager) : Controller
+    public class AdminTeacherController(ITeacherRepository teacherRepository, IDepartmentRepository departmentRepository) : Controller
     {
         private readonly ITeacherRepository _teacherRepository = teacherRepository;
         private readonly IDepartmentRepository _departmentRepository = departmentRepository;
@@ -37,6 +36,8 @@ namespace Uni_Sphere.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddTeacherRequest addTeacherRequest)
         {
+            var email = addTeacherRequest.Email;
+
             var teacher = new Teachers
             {
                 FullName = addTeacherRequest.FullName,
@@ -53,27 +54,11 @@ namespace Uni_Sphere.Controllers
 
             await _teacherRepository.AddAsync(teacher);
 
-
-            // Authorization & Authentication
-            var identityUser = new IdentityUser
+            // Create Account (username, email, password)
+            var status = await _teacherRepository.CreateAccount(email, email, email);
+            if (status)
             {
-                UserName = addTeacherRequest.Email,
-                Email = addTeacherRequest.Email,
-            };
-
-            var password = addTeacherRequest.Email;
-            var identityResult = await _userManager.CreateAsync(identityUser, password);
-
-            if (identityResult.Succeeded)
-            {
-                // Assigning Student Role
-                var roleIdentityResult = await _userManager.AddToRoleAsync(identityUser, "Student");
-
-                if (roleIdentityResult.Succeeded)
-                {
-                    // Success
-                    return RedirectToAction("List");
-                }
+                return RedirectToAction("List");
             }
 
             return RedirectToAction("List");
@@ -155,6 +140,7 @@ namespace Uni_Sphere.Controllers
             var teacher = await _teacherRepository.DeleteAsync(id);
             if (teacher != null)
             {
+                await _teacherRepository.DeleteAccount(teacher.Email);
                 // success
             }
             else

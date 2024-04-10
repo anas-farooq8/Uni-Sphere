@@ -7,6 +7,8 @@ namespace Uni_Sphere.Repositories
         Task<IEnumerable<Students>> GetAllAsync();
         Task<Students?> GetAsync(int id);
         Task<Students> AddAsync(Students student);
+        Task<bool> CreateAccount(string username, string email, string password);
+        Task<bool> DeleteAccount(string id);
         Task<Students?> UpdateAsync(Students student);
         Task<Students?> DeleteAsync(int id);
         Task<int> Count();

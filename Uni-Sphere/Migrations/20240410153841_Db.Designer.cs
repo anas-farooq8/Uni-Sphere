@@ -12,8 +12,8 @@ using Uni_Sphere.Data;
 namespace Uni_Sphere.Migrations
 {
     [DbContext(typeof(UniSphereDbContext))]
-    [Migration("20240408165759_Initial Migration")]
-    partial class InitialMigration
+    [Migration("20240410153841_Db")]
+    partial class Db
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -136,6 +136,12 @@
         }
 
         profileImageUpload.addEventListener('change', uploadProfileImage);
+
+        function generateEmail() {
+            var name = document.getElementById('teacherName').value.replace(/\s+/g, '').toLowerCase();
+            var email = name + ".@@unisphere.edu.pk";
+            document.getElementById('emailInput').value = email;
+        }
     </script>
 
     <!-- jQuery -->
