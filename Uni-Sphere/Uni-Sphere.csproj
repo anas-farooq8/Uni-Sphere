@@ -17,4 +17,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\StudentControllers\" />
+    <Folder Include="Controllers\TeacherControllers\" />
+  </ItemGroup>
+
 </Project>

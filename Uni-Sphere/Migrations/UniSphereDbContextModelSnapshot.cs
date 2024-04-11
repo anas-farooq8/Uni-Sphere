@@ -86,10 +86,10 @@ namespace Uni_Sphere.Migrations
 
                     b.Property<string>("Gender")
                         .IsRequired()
-                        .HasColumnType("nvarchar(6)");
+                        .HasColumnType("varchar(6)");
 
-                    b.Property<float>("Gpa")
-                        .HasColumnType("real");
+                    b.Property<double>("Gpa")
+                        .HasColumnType("float");
 
                     b.Property<string>("PhoneNo")
                         .IsRequired()
@@ -145,7 +145,7 @@ namespace Uni_Sphere.Migrations
 
                     b.Property<string>("Gender")
                         .IsRequired()
-                        .HasColumnType("nvarchar(6)");
+                        .HasColumnType("varchar(6)");
 
                     b.Property<DateTime>("JoiningDate")
                         .HasColumnType("datetime2");

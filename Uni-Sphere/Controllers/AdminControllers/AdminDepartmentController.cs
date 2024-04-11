@@ -4,7 +4,7 @@ using Uni_Sphere.Models.Domain;
 using Uni_Sphere.Models.ViewModels;
 using Uni_Sphere.Repositories;
 
-namespace Uni_Sphere.Controllers
+namespace Uni_Sphere.Controllers.AdminControllers
 {
 
     [Authorize(Roles = "Admin")]
@@ -25,7 +25,7 @@ namespace Uni_Sphere.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddDepartmentRequest addDepartmentRequest)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 // if the provided description is null, set it to an empty string
                 addDepartmentRequest.Description ??= "";
@@ -50,7 +50,7 @@ namespace Uni_Sphere.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            // read all the students from the database
+            // Read all the Departments from the database
             var departments = await _departmentRepository.GetAllAsync();
             return View(departments);
         }
@@ -81,7 +81,7 @@ namespace Uni_Sphere.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditDepartmentRequest editDepartmentRequest)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 // if the provided description is null, set it to an empty string
                 editDepartmentRequest.Description ??= "";

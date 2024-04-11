@@ -9,7 +9,7 @@ using Uni_Sphere.Models.Domain;
 using Uni_Sphere.Models.ViewModels;
 using Uni_Sphere.Repositories;
 
-namespace Uni_Sphere.Controllers
+namespace Uni_Sphere.Controllers.AdminControllers
 {
 
     [Authorize(Roles = "Admin")]
@@ -31,7 +31,7 @@ namespace Uni_Sphere.Controllers
             var departments = await _departmentRepository.GetAllAsync();
             var model = new AddStudentRequest
             {
-                Departments = departments.Select(x=> new SelectListItem
+                Departments = departments.Select(x => new SelectListItem
                 {
                     Text = x.Code + " - " + x.Name,
                     Value = x.Id.ToString()
@@ -44,44 +44,38 @@ namespace Uni_Sphere.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddStudentRequest addStudentRequest)
         {
-/*            if(ModelState.IsValid)
-            {*/
-                var count = await _studentRepository.Count();
-                var batch = getBatch();
-                var rollNo = $"{batch}u-{(count + 1).ToString("D4")}"; // This will give "21u-0001" if the count was 0
-                var email = $"{rollNo}@unishere.edu.pk";
-
-                var student = new Students
-                {
-                    FullName = addStudentRequest.FullName,
-                    RollNo = rollNo,
-                    Gender = addStudentRequest.Gender,
-                    Email = email,
-                    PhoneNo = addStudentRequest.PhoneNo,
-                    Section = char.ToUpper(addStudentRequest.Section),
-                    Degree = addStudentRequest.Degree,
-                    Batch = int.Parse(batch),
-                    ProfileImageUrl = addStudentRequest.ProfileImageUrl,
-                    DepartmentsId = addStudentRequest.DepartmentsId,
-                };
-
-                await _studentRepository.AddAsync(student);
-
-                // Create Account (username, email, password)
-                var status = await _studentRepository.CreateAccount(email, email, rollNo);
-                if (status)
-                {
-                    return RedirectToAction("List");
-                }
-            //}
-
-/*            var departments = await _departmentRepository.GetAllAsync();
-            addStudentRequest.Departments = departments.Select(x => new SelectListItem
+            if (ModelState.IsValid)
             {
-                Text = x.Code + " - " + x.Name,
-                Value = x.Id.ToString()
-            });*/
-            return View(addStudentRequest);
+                var count = await _studentRepository.Count();
+            var batch = getBatch();
+            var rollNo = $"{batch}u-{(count + 1).ToString("D4")}"; // This will give "21u-0001" if the count was 0
+            var email = $"{rollNo}@unishere.edu.pk";
+
+            var student = new Students
+            {
+                FullName = addStudentRequest.FullName,
+                RollNo = rollNo,
+                Gender = addStudentRequest.Gender,
+                Email = email,
+                PhoneNo = addStudentRequest.PhoneNo,
+                Section = char.ToUpper(addStudentRequest.Section),
+                Degree = addStudentRequest.Degree,
+                Batch = int.Parse(batch),
+                ProfileImageUrl = addStudentRequest.ProfileImageUrl,
+                DepartmentsId = addStudentRequest.DepartmentsId,
+            };
+
+            await _studentRepository.AddAsync(student);
+
+            // Create Account (username, email, password)
+            var status = await _studentRepository.CreateAccount(email, email, rollNo);
+            if (status)
+            {
+                return RedirectToAction("List");
+            }
+            }
+
+            return RedirectToAction("Add");
         }
 
         [HttpGet]
@@ -130,9 +124,9 @@ namespace Uni_Sphere.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditStudentRequest editStudentRequest)
         {
-/*            if(ModelState.IsValid)
-            {*/
-                var student = new Students
+            if (ModelState.IsValid)
+            {
+                    var student = new Students
                 {
                     Id = editStudentRequest.Id,
                     FullName = editStudentRequest.FullName,
@@ -157,17 +151,17 @@ namespace Uni_Sphere.Controllers
                 {
                     // error
                 }
-            //}
+            }
 
-            // return RedirectToAction("Edit", new {id = editStudentRequest.Id});
-            return View();
+            return RedirectToAction("Edit", new {id = editStudentRequest.Id});
+            //return View();
         }
 
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             var student = await _studentRepository.DeleteAsync(id);
-            if(student != null)
+            if (student != null)
             {
                 await _studentRepository.DeleteAccount(student.Email);
                 // success

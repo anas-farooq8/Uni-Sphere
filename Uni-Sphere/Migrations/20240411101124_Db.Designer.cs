@@ -12,7 +12,7 @@ using Uni_Sphere.Data;
 namespace Uni_Sphere.Migrations
 {
     [DbContext(typeof(UniSphereDbContext))]
-    [Migration("20240410182223_Db")]
+    [Migration("20240411101124_Db")]
     partial class Db
     {
         /// <inheritdoc />
@@ -89,10 +89,10 @@ namespace Uni_Sphere.Migrations
 
                     b.Property<string>("Gender")
                         .IsRequired()
-                        .HasColumnType("nvarchar(6)");
+                        .HasColumnType("varchar(6)");
 
-                    b.Property<float>("Gpa")
-                        .HasColumnType("real");
+                    b.Property<double>("Gpa")
+                        .HasColumnType("float");
 
                     b.Property<string>("PhoneNo")
                         .IsRequired()
@@ -148,7 +148,7 @@ namespace Uni_Sphere.Migrations
 
                     b.Property<string>("Gender")
                         .IsRequired()
-                        .HasColumnType("nvarchar(6)");
+                        .HasColumnType("varchar(6)");
 
                     b.Property<DateTime>("JoiningDate")
                         .HasColumnType("datetime2");

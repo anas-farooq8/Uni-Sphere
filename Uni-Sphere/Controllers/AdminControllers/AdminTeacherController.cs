@@ -7,7 +7,7 @@ using Uni_Sphere.Models.Domain;
 using Uni_Sphere.Models.ViewModels;
 using Uni_Sphere.Repositories;
 
-namespace Uni_Sphere.Controllers
+namespace Uni_Sphere.Controllers.AdminControllers
 {
 
     [Authorize(Roles = "Admin")]
@@ -15,7 +15,7 @@ namespace Uni_Sphere.Controllers
     {
         private readonly ITeacherRepository _teacherRepository = teacherRepository;
         private readonly IDepartmentRepository _departmentRepository = departmentRepository;
-        
+
 
         [HttpGet]
         public async Task<IActionResult> Add()
@@ -36,8 +36,8 @@ namespace Uni_Sphere.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddTeacherRequest addTeacherRequest)
         {
-/*            if(ModelState.IsValid)
-            {*/
+            if (ModelState.IsValid)
+            {
                 var email = addTeacherRequest.Email;
 
                 var teacher = new Teachers
@@ -62,9 +62,9 @@ namespace Uni_Sphere.Controllers
                 {
                     return RedirectToAction("List");
                 }
-            //}
+            }
 
-            return View();
+            return RedirectToAction("Add");
         }
 
         [HttpGet]
@@ -110,9 +110,9 @@ namespace Uni_Sphere.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditTeacherRequest editTeacherRequest)
         {
-/*            if(ModelState.IsValid)
-            {*/
-                var teacher = new Teachers
+            if (ModelState.IsValid)
+            {
+                    var teacher = new Teachers
                 {
                     Id = editTeacherRequest.Id,
                     FullName = editTeacherRequest.FullName,
@@ -135,10 +135,10 @@ namespace Uni_Sphere.Controllers
                 {
                     // error
                 }
-            //}
+            }
 
-            // return RedirectToAction("Edit", new { id = editTeacherRequest.Id });
-            return View();
+            return RedirectToAction("Edit", new { id = editTeacherRequest.Id });
+            //return View();
         }
 
         [HttpGet]

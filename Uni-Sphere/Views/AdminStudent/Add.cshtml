@@ -139,6 +139,13 @@
         profileImageUpload.addEventListener('change', uploadProfileImage);
     </script>
 
+    @* Client Side Validation using jScript *@
+    @section Scripts {
+        @{
+            <partial name="_ValidationScriptsPartial" />
+        }
+    }
+
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <!-- Bootstrap Bundle JS (includes Popper) -->

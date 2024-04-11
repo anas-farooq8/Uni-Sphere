@@ -166,15 +166,15 @@ namespace Uni_Sphere.Migrations.AuthDb
                         {
                             Id = "2082dbd3-90ce-428c-98bd-53deaf2baad6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "69b36ae2-d26b-4302-9eaf-5f383fe6454f",
+                            ConcurrencyStamp = "1ead13f1-7e18-4f14-a9fe-ff48d4733675",
                             Email = "admin@unisphere.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@UNISPHERE.COM",
                             NormalizedUserName = "ADMIN@UNISPHERE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHerCHo0r/Po2wyGRqwbb1np/nkegHDP3bFXsvML8wqowLszSaeLQOnxPsFUkdBO7A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIGZ7gpW8F8bj+4MbU/R4c0IrSFBHBtpCtyJ3MPy2eEBKelSPq2bpv86YDEr3hdpwg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2883f9a5-a801-4638-bc90-d864d32e7c29",
+                            SecurityStamp = "fca43065-521d-4843-bfcf-48ae897ff1c6",
                             TwoFactorEnabled = false,
                             UserName = "admin@unisphere.com"
                         });

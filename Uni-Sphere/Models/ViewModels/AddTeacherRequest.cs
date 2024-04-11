@@ -15,7 +15,7 @@ namespace Uni_Sphere.Models.ViewModels
         public string Email { get; set; }
 
         [Required]
-        [Column(TypeName = "nvarchar(6)")]
+        [Column(TypeName = "varchar(6)")]
         public Gender Gender { get; set; }
 
         [Required, Phone, MaxLength(12)]
@@ -35,7 +35,7 @@ namespace Uni_Sphere.Models.ViewModels
         public string? ProfileImageUrl { get; set; }
 
         // Display Departments in a dropdown list
-        public IEnumerable<SelectListItem> Departments { get; set; }
+        public IEnumerable<SelectListItem>? Departments { get; set; }
         // Selected Department
         [Required]
         public int DepartmentsId { get; set; }

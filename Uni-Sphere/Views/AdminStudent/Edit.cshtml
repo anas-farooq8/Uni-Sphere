@@ -111,7 +111,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="studentCredits" class="form-label">Student Credits</label>
-                            <input type="number" step="1" class="form-control" id="studentCredits" asp-for="Gpa" placeholder="Enter Credits" required>
+                            <input type="number" step="1" class="form-control" id="studentCredits" asp-for="Credits" placeholder="Enter Credits" required>
                             <span class="text-danger" asp-validation-for="Credits"></span>
                         </div>
                         <div class="mb-3">
@@ -188,6 +188,13 @@
 
         profileImageUpload.addEventListener('change', uploadProfileImage);
     </script>
+
+    @* Client Side Validation using jScript *@
+    @section Scripts {
+        @{
+            <partial name="_ValidationScriptsPartial" />
+        }
+    }
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

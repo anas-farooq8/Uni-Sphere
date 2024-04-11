@@ -17,7 +17,7 @@ namespace Uni_Sphere.Models.Domain
         public string RollNo { get; set; }
 
         [Required]
-        [Column(TypeName = "nvarchar(6)")]
+        [Column(TypeName = "varchar(6)")]
         public Gender Gender { get; set; }
 
         [MaxLength(50)]
@@ -39,7 +39,9 @@ namespace Uni_Sphere.Models.Domain
 
         public short CurrentSemester { get; set; } = 1;
 
-        public float Gpa { get; set; } = 0.0F;
+        // Custom error message
+        [Range(0.0, 4.0, ErrorMessage = "GPA must be between 0.0 and 4.0")]
+        public double Gpa { get; set; } = 0.00;
 
         public int Credits { get; set; } = 0;
 

@@ -15,7 +15,7 @@ namespace Uni_Sphere.Models.Domain
         public string Email { get; set; }
 
         [Required]
-        [Column(TypeName = "nvarchar(6)")]
+        [Column(TypeName = "varchar(6)")]
         public Gender Gender { get; set; }
 
         [Required, Phone, MaxLength(12)]
@@ -30,6 +30,8 @@ namespace Uni_Sphere.Models.Domain
         public JobTitle Designation { get; set; }
 
         public DateTime JoiningDate { get; set; }
+
+        // ensure it is greater than 0
 
         [Required, Column(TypeName = "decimal(18, 2)")]
         public decimal Salary { get; set; }
