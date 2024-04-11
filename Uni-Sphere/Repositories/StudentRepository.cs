@@ -1,4 +1,4 @@
-﻿using Uni_Sphere.Data;
+﻿using Uni_Sphere.DataAccess.Data;
 using Uni_Sphere.Models.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;

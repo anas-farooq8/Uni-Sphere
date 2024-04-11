@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Uni_Sphere.Data;
+using Uni_Sphere.DataAccess.Data;
 
 #nullable disable
 
-namespace Uni_Sphere.Migrations
+namespace Uni_Sphere.DataAccess.Migrations
 {
     [DbContext(typeof(UniSphereDbContext))]
-    partial class UniSphereDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240411101124_Db")]
+    partial class Db
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

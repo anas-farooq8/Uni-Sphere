@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Uni_Sphere.Data
+namespace Uni_Sphere.DataAccess.Data
 {
     public class AuthDbContext: IdentityDbContext
     {

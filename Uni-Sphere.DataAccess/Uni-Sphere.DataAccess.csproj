@@ -1,14 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <RootNamespace>Uni_Sphere.DataAccess</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>Uni_Sphere</RootNamespace>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CloudinaryDotNet" Version="1.26.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.3">
@@ -18,14 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\StudentControllers\" />
-    <Folder Include="Controllers\TeacherControllers\" />
-    <Folder Include="Controllers\AdminControllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Uni-Sphere.DataAccess\Uni-Sphere.DataAccess.csproj" />
     <ProjectReference Include="..\Uni-Sphere.Models\Uni-Sphere.Models.csproj" />
+    <ProjectReference Include="..\Uni-Sphere.Utility\Uni-Sphere.Utility.csproj" />
   </ItemGroup>
 
 </Project>

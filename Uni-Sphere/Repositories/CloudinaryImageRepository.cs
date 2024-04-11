@@ -1,5 +1,4 @@
-﻿
-using CloudinaryDotNet;
+﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 
 namespace Uni_Sphere.Repositories

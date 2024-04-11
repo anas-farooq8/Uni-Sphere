@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.Json;
-using Uni_Sphere.Data;
+using Uni_Sphere.DataAccess.Data;
 using Uni_Sphere.Models.Domain;
 using Uni_Sphere.Models.ViewModels;
 using Uni_Sphere.Repositories;
@@ -71,11 +71,11 @@ namespace Uni_Sphere.Controllers.AdminControllers
                 var status = await _studentRepository.CreateAccount(email, email, rollNo);
                 if (status)
                 {
-                    TempData["Message"] = "Student added successfully!";
+                    TempData["Success"] = "Student added successfully!";
                 }
                 else
                 {
-                    TempData["Message"] = "An error occurred while adding the student!";
+                    TempData["Error"] = "An error occurred while adding the student!";
                 }
                 return RedirectToAction("List");
             }

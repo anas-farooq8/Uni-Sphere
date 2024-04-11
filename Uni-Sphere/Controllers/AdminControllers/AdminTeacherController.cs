@@ -60,11 +60,11 @@ namespace Uni_Sphere.Controllers.AdminControllers
                 var status = await _teacherRepository.CreateAccount(email, email, email);
                 if (status)
                 {
-                    TempData["Message"] = "Teacher added successfully";
+                    TempData["Success"] = "Teacher added successfully";
                 }
                 else
                 {
-                    TempData["Message"] = "An error occurred while adding the teacher!";
+                    TempData["Error"] = "An error occurred while adding the teacher!";
                 }
                 return RedirectToAction("List");
             }
@@ -133,11 +133,11 @@ namespace Uni_Sphere.Controllers.AdminControllers
                 var updatedTeacher = await _teacherRepository.UpdateAsync(teacher);
                 if (updatedTeacher != null)
                 {
-                    TempData["Message"] = "Teacher updated successfully";
+                    TempData["Success"] = "Teacher updated successfully";
                 }
                 else
                 {
-                    TempData["Message"] = "An error occurred while updating the teacher!";
+                    TempData["Error"] = "An error occurred while updating the teacher!";
                 }
                 return RedirectToAction("List");
             }
@@ -153,11 +153,11 @@ namespace Uni_Sphere.Controllers.AdminControllers
             if (teacher != null)
             {
                 await _teacherRepository.DeleteAccount(teacher.Email);
-                TempData["Message"] = "Teacher deleted successfully";
+                TempData["Success"] = "Teacher deleted successfully";
             }
             else
             {
-                TempData["Message"] = "An error occurred while deleting the teacher!";
+                TempData["Error"] = "An error occurred while deleting the teacher!";
             }
 
             return RedirectToAction("List");

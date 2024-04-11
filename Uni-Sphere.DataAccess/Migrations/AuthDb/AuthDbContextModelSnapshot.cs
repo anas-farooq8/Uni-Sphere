@@ -3,20 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Uni_Sphere.Data;
+using Uni_Sphere.DataAccess.Data;
 
 #nullable disable
 
-namespace Uni_Sphere.Migrations.AuthDb
+namespace Uni_Sphere.DataAccess.Migrations.AuthDb
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20240411101306_AuthDb")]
-    partial class AuthDb
+    partial class AuthDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

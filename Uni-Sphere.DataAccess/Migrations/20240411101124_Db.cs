@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Uni_Sphere.Migrations
+namespace Uni_Sphere.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class Db : Migration

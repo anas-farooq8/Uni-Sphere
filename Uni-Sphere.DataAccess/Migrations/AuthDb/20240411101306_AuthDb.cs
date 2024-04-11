@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace Uni_Sphere.Migrations.AuthDb
+namespace Uni_Sphere.DataAccess.Migrations.AuthDb
 {
     /// <inheritdoc />
     public partial class AuthDb : Migration

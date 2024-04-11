@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Uni_Sphere.Models.Domain;
 
-namespace Uni_Sphere.Data
+namespace Uni_Sphere.DataAccess.Data
 {
     public class UniSphereDbContext: DbContext
     {
