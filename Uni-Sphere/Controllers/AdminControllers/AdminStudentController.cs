@@ -47,32 +47,37 @@ namespace Uni_Sphere.Controllers.AdminControllers
             if (ModelState.IsValid)
             {
                 var count = await _studentRepository.Count();
-            var batch = getBatch();
-            var rollNo = $"{batch}u-{(count + 1).ToString("D4")}"; // This will give "21u-0001" if the count was 0
-            var email = $"{rollNo}@unishere.edu.pk";
+                var batch = getBatch();
+                var rollNo = $"{batch}u-{(count + 1).ToString("D4")}"; // This will give "21u-0001" if the count was 0
+                var email = $"{rollNo}@unishere.edu.pk";
 
-            var student = new Students
-            {
-                FullName = addStudentRequest.FullName,
-                RollNo = rollNo,
-                Gender = addStudentRequest.Gender,
-                Email = email,
-                PhoneNo = addStudentRequest.PhoneNo,
-                Section = char.ToUpper(addStudentRequest.Section),
-                Degree = addStudentRequest.Degree,
-                Batch = int.Parse(batch),
-                ProfileImageUrl = addStudentRequest.ProfileImageUrl,
-                DepartmentsId = addStudentRequest.DepartmentsId,
-            };
+                var student = new Students
+                {
+                    FullName = addStudentRequest.FullName,
+                    RollNo = rollNo,
+                    Gender = addStudentRequest.Gender,
+                    Email = email,
+                    PhoneNo = addStudentRequest.PhoneNo,
+                    Section = char.ToUpper(addStudentRequest.Section),
+                    Degree = addStudentRequest.Degree,
+                    Batch = int.Parse(batch),
+                    ProfileImageUrl = addStudentRequest.ProfileImageUrl,
+                    DepartmentsId = addStudentRequest.DepartmentsId,
+                };
 
-            await _studentRepository.AddAsync(student);
+                await _studentRepository.AddAsync(student);
 
-            // Create Account (username, email, password)
-            var status = await _studentRepository.CreateAccount(email, email, rollNo);
-            if (status)
-            {
+                // Create Account (username, email, password)
+                var status = await _studentRepository.CreateAccount(email, email, rollNo);
+                if (status)
+                {
+                    TempData["Message"] = "Student added successfully!";
+                }
+                else
+                {
+                    TempData["Message"] = "An error occurred while adding the student!";
+                }
                 return RedirectToAction("List");
-            }
             }
 
             return RedirectToAction("Add");
@@ -144,13 +149,13 @@ namespace Uni_Sphere.Controllers.AdminControllers
                 var updatedStudent = await _studentRepository.UpdateAsync(student);
                 if (updatedStudent != null)
                 {
-                    // success
-                    return RedirectToAction("List");
+                    TempData["Success"] = "Student updated successfully";
                 }
                 else
                 {
-                    // error
+                    TempData["Error"] = "An error occurred while updating the student";
                 }
+                return RedirectToAction("List");
             }
 
             return RedirectToAction("Edit", new {id = editStudentRequest.Id});
@@ -164,11 +169,11 @@ namespace Uni_Sphere.Controllers.AdminControllers
             if (student != null)
             {
                 await _studentRepository.DeleteAccount(student.Email);
-                // success
+                TempData["Success"] = "Student deleted successfully";
             }
             else
             {
-                // error
+                TempData["Error"] = "An error occurred while deleting the student";
             }
 
             return RedirectToAction("List");

@@ -31,10 +31,12 @@ namespace Uni_Sphere.Controllers
 
                 if (signInResult != null && signInResult.Succeeded)
                 {
+                    TempData["Success"] = "You have successfully logged in";
                     return RedirectToAction("Index", "Home");
                 }
             }
 
+            TempData["Error"] = "Invalid username or password";
             // Show error
             return View();
         }
@@ -43,6 +45,7 @@ namespace Uni_Sphere.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+            TempData["Success"] = "You have successfully logged out";
             return RedirectToAction("Index", "Home");
         }
 

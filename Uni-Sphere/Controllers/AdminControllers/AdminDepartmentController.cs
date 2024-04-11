@@ -38,7 +38,15 @@ namespace Uni_Sphere.Controllers.AdminControllers
                 };
 
 
-                await _departmentRepository.AddAsync(department);
+                var newDepartment = await _departmentRepository.AddAsync(department);
+                if(newDepartment != null)
+                {
+                    TempData["Success"] = "Department added successfully";
+                }
+                else
+                {
+                    TempData["Error"] = "An error occurred while adding the department";
+                }
                 return RedirectToAction("List");
             }
 
@@ -97,13 +105,13 @@ namespace Uni_Sphere.Controllers.AdminControllers
                 var updatedTeacher = await _departmentRepository.UpdateAsync(department);
                 if (updatedTeacher != null)
                 {
-                    // success
-                    return RedirectToAction("List");
+                    TempData["Success"] = "Department updated successfully";
                 }
                 else
                 {
-                    // error
+                    TempData["Error"] = "An error occurred while updating the department";
                 }
+                return RedirectToAction("List");
             }
 
             // return RedirectToAction("Edit", new { id = editDepartmentRequest.Id });
@@ -117,11 +125,11 @@ namespace Uni_Sphere.Controllers.AdminControllers
             var department = await _departmentRepository.DeleteAsync(id);
             if (department != null)
             {
-                // success
+                TempData["Success"] = "Department deleted successfully";
             }
             else
             {
-                // error
+                TempData["Error"] = "An error occurred while deleting the department";
             }
 
             return RedirectToAction("List");
