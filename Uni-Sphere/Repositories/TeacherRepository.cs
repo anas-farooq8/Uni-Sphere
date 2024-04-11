@@ -2,6 +2,7 @@
 using Uni_Sphere.Models.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Uni_Sphere.Repositories.IRepositories;
 
 namespace Uni_Sphere.Repositories
 {

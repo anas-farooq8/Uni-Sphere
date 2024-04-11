@@ -1,6 +1,6 @@
 ﻿using Uni_Sphere.Models.Domain;
 
-namespace Uni_Sphere.Repositories
+namespace Uni_Sphere.Repositories.IRepositories
 {
     public interface ITeacherRepository
     {

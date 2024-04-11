@@ -5,11 +5,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Storage.Json;
 using Uni_Sphere.Models.Domain;
 using Uni_Sphere.Models.ViewModels;
-using Uni_Sphere.Repositories;
+using Uni_Sphere.Repositories.IRepositories;
 
-namespace Uni_Sphere.Controllers.AdminControllers
+namespace Uni_Sphere.Areas.Admin.Controllers
 {
 
+    [Area("Admin")]
     [Authorize(Roles = "Admin")]
     public class AdminTeacherController(ITeacherRepository teacherRepository, IDepartmentRepository departmentRepository) : Controller
     {
@@ -117,7 +118,7 @@ namespace Uni_Sphere.Controllers.AdminControllers
         {
             if (ModelState.IsValid)
             {
-                    var teacher = new Teachers
+                var teacher = new Teachers
                 {
                     Id = editTeacherRequest.Id,
                     FullName = editTeacherRequest.FullName,

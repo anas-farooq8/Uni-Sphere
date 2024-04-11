@@ -2,8 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Uni_Sphere.Models;
 
-namespace Uni_Sphere.Controllers
+namespace Uni_Sphere.Areas.Shared.Controllers
 {
+    [Area("Shared")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Uni_Sphere.DataAccess.Data;
 using Uni_Sphere.Models.Domain;
+using Uni_Sphere.Repositories.IRepositories;
 
 namespace Uni_Sphere.Repositories
 {

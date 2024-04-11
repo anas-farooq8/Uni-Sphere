@@ -15,12 +15,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\StudentControllers\" />
-    <Folder Include="Controllers\TeacherControllers\" />
-    <Folder Include="Controllers\AdminControllers\" />
+    <Folder Include="Areas\Student\Controllers\" />
+    <Folder Include="Areas\Teacher\Controllers\" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
   <ItemGroup>

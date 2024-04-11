@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Uni_Sphere.DataAccess.Data;
 using Uni_Sphere.Repositories;
+using Uni_Sphere.Repositories.IRepositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,6 +57,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{area=Shared}/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

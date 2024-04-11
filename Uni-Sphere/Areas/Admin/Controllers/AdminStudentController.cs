@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Storage.Json;
 using Uni_Sphere.DataAccess.Data;
 using Uni_Sphere.Models.Domain;
 using Uni_Sphere.Models.ViewModels;
-using Uni_Sphere.Repositories;
+using Uni_Sphere.Repositories.IRepositories;
 
-namespace Uni_Sphere.Controllers.AdminControllers
+namespace Uni_Sphere.Areas.Admin.Controllers
 {
-
+    [Area("Admin")]
     [Authorize(Roles = "Admin")]
     public class AdminStudentController(IStudentRepository studentRepository, IDepartmentRepository departmentRepository) : Controller
     {
@@ -131,7 +131,7 @@ namespace Uni_Sphere.Controllers.AdminControllers
         {
             if (ModelState.IsValid)
             {
-                    var student = new Students
+                var student = new Students
                 {
                     Id = editStudentRequest.Id,
                     FullName = editStudentRequest.FullName,
@@ -158,7 +158,7 @@ namespace Uni_Sphere.Controllers.AdminControllers
                 return RedirectToAction("List");
             }
 
-            return RedirectToAction("Edit", new {id = editStudentRequest.Id});
+            return RedirectToAction("Edit", new { id = editStudentRequest.Id });
             //return View();
         }
 

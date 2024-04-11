@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Uni_Sphere.Models.ViewModels;
 
-namespace Uni_Sphere.Controllers
+namespace Uni_Sphere.Areas.Shared.Controllers
 {
+    [Area("Shared")]
     public class AccountController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
@@ -24,7 +25,7 @@ namespace Uni_Sphere.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var signInResult = await _signInManager.PasswordSignInAsync(loginViewModel.Username,
                     loginViewModel.Password, false, false);

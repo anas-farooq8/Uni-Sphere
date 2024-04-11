@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using Uni_Sphere.Repositories;
+using Uni_Sphere.Repositories.IRepositories;
 
-namespace Uni_Sphere.Controllers
+namespace Uni_Sphere.Areas.Shared.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -16,11 +16,17 @@ namespace Uni_Sphere.Controllers
             _ImageRepository = ImageRepository;
         }
 
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return Ok("Images Controller");
+        }
+
         [HttpPost]
         public async Task<IActionResult> UploadAsync(IFormFile file)
         {
             var imageUrl = await _ImageRepository.UploadAsync(file);
-            if(imageUrl == null )
+            if (imageUrl == null)
             {
                 return Problem("Something Went Wrong!", null, (int)HttpStatusCode.InternalServerError);
             }

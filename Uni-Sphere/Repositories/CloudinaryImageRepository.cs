@@ -1,5 +1,6 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using Uni_Sphere.Repositories.IRepositories;
 
 namespace Uni_Sphere.Repositories
 {
@@ -16,9 +17,10 @@ namespace Uni_Sphere.Repositories
                 _configuration.GetSection("Cloudinary")["ApiKey"],
                 _configuration.GetSection("Cloudinary")["ApiSecret"]
               );
-        }   
+        }
 
-        public async Task<string> UploadAsync(IFormFile file)
+        [Obsolete]
+        public async Task<string?> UploadAsync(IFormFile file)
         {
             var client = new Cloudinary(cloudinaryAccount);
 

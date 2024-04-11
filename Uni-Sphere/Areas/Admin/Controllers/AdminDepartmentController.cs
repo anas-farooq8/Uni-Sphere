@@ -2,11 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Uni_Sphere.Models.Domain;
 using Uni_Sphere.Models.ViewModels;
-using Uni_Sphere.Repositories;
+using Uni_Sphere.Repositories.IRepositories;
 
-namespace Uni_Sphere.Controllers.AdminControllers
+namespace Uni_Sphere.Areas.Admin.Controllers
 {
 
+    [Area("Admin")]
     [Authorize(Roles = "Admin")]
     public class AdminDepartmentController : Controller
     {

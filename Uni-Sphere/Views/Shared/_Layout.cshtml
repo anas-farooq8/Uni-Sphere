@@ -39,30 +39,45 @@
                                 <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Manage Students
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" asp-area="" asp-controller="AdminStudent" asp-action="Add">Add Student</a>
-                                    <a class="dropdown-item" asp-area="" asp-controller="AdminStudent" asp-action="List">View Students</a>
-                                </div>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="AdminStudent" asp-action="Add">Add Student</a>
+                                    </li>
+                                    <li> <hr class="dropdown-divider"> </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="AdminStudent" asp-action="List">View Students</a>
+                                    </li>
+                                </ul>
                             </li>
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Manage Teachers
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" asp-area="" asp-controller="AdminTeacher" asp-action="Add">Add Teacher</a>
-                                    <a class="dropdown-item" asp-area="" asp-controller="AdminTeacher" asp-action="List">View Teachers</a>
-                                </div>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="AdminTeacher" asp-action="Add">Add Teacher</a>
+                                    </li>
+                                    <li> <hr class="dropdown-divider"> </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="AdminTeacher" asp-action="List">View Teachers</a>
+                                    </li>
+                                </ul>
                             </li>
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Manage Departments
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" asp-area="" asp-controller="AdminDepartment" asp-action="Add">Add Department</a>
-                                    <a class="dropdown-item" asp-area="" asp-controller="AdminDepartment" asp-action="List">View Departments</a>
-                                </div>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="AdminDepartment" asp-action="Add">Add Department</a>
+                                    </li>
+                                    <li> <hr class="dropdown-divider"> </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="AdminDepartment" asp-action="List">View Departments</a>
+                                    </li>
+                                </ul>
                             </li>
                         }
 
@@ -76,7 +91,7 @@
                             </div>
 
                             <a class="btn btn-dark"
-                               asp-area=""
+                               asp-area="Shared"
                                asp-controller="Account"
                                asp-action="Logout">
                                 Logout
@@ -85,7 +100,7 @@
                         else
                         {
                             <a class="btn btn-dark me-3"
-                            asp-area=""
+                            asp-area="Shared"
                             asp-controller="Account"
                             asp-action="Login">
                                 Login
