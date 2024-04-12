@@ -1,10 +1,11 @@
 ﻿using Uni_Sphere.Models.Domain;
+using Uni_Sphere.Models.DTO;
 
 namespace Uni_Sphere.Repositories.IRepositories
 {
     public interface ITeacherRepository
     {
-        Task<IEnumerable<Teachers>> GetAllAsync();
+        Task<IEnumerable<TeacherDTO>> GetAllAsync();
         Task<Teachers?> GetAsync(int id);
         Task<Teachers> AddAsync(Teachers teacher);
         Task<bool> CreateAccount(string username, string email, string password);

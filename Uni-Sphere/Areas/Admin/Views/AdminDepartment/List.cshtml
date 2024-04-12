@@ -1,5 +1,6 @@
-﻿@model List<Uni_Sphere.Models.Domain.Departments>
+﻿@model List<Uni_Sphere.Models.DTO.DepartmentDTO>
 @{
+    ViewData["Title"] = "Departments";
 }
 
 <style>
@@ -21,7 +22,7 @@
 <div class="container py-5">
     @if (Model != null && Model.Any())
     {
-        <table class="table">
+        <table id="tblDataDepartment" class="table table-bordered">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -32,19 +33,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var department in Model)
-                {
-                    <tr>
-                        <td>@department.Id</td>
-                        <td>@department.Name</td>
-                        <td>@department.Code</td>
-                        <td><div class="description">@department.Description</div></td>
-                        <td>
-                            <a asp-area="" asp-controller="AdminDepartment" asp-action="Edit" asp-route-id="@department.Id" class="btn btn-primary">Edit</a>
-                            <a asp-area="" asp-controller="AdminDepartment" asp-action="Delete" asp-route-id="@department.Id" class="btn btn-danger">Delete</a>
-                        </td>
-                    </tr>
-                }
+
             </tbody>
         </table>
     }
@@ -53,3 +42,9 @@
         <p>No Departments found.</p>
     }
 </div>
+
+
+@section Scripts {
+    <script src="~/js/department.js">
+    </script>
+}

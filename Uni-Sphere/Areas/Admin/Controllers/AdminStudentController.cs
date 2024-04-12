@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.Json;
+using System.Text.Json;
 using Uni_Sphere.DataAccess.Data;
 using Uni_Sphere.Models.Domain;
 using Uni_Sphere.Models.ViewModels;
@@ -86,7 +87,7 @@ namespace Uni_Sphere.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            // read all the students from the database
+            // Read all the students from the database
             var students = await _studentRepository.GetAllAsync();
             return View(students);
         }
@@ -178,6 +179,15 @@ namespace Uni_Sphere.Areas.Admin.Controllers
 
             return RedirectToAction("List");
         }
+
+        #region API CALLS
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var students = await _studentRepository.GetAllAsync();
+            return Json(new { data = students });
+        }
+        #endregion
     }
 }
 

@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using Uni_Sphere.Models.Domain;
 using Uni_Sphere.Models.ViewModels;
+using Uni_Sphere.Repositories;
 using Uni_Sphere.Repositories.IRepositories;
 
 namespace Uni_Sphere.Areas.Admin.Controllers
@@ -54,8 +56,6 @@ namespace Uni_Sphere.Areas.Admin.Controllers
             return View();
         }
 
-
-
         [HttpGet]
         public async Task<IActionResult> List()
         {
@@ -63,7 +63,6 @@ namespace Uni_Sphere.Areas.Admin.Controllers
             var departments = await _departmentRepository.GetAllAsync();
             return View(departments);
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
@@ -136,5 +135,13 @@ namespace Uni_Sphere.Areas.Admin.Controllers
             return RedirectToAction("List");
         }
 
+        #region API CALLS
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var departments = await _departmentRepository.GetAllAsync();
+            return Json(new { data = departments });
+        }
+        #endregion
     }
 }

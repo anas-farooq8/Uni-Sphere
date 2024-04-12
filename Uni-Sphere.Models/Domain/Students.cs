@@ -51,5 +51,8 @@ namespace Uni_Sphere.Models.Domain
         [Required]
         public int DepartmentsId { get; set; }
 
+        [ForeignKey("DepartmentsId")]
+        public Departments Department { get; set; }
+
     }
 }

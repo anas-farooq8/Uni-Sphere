@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Storage.Json;
+using System.Text.Json;
 using Uni_Sphere.Models.Domain;
 using Uni_Sphere.Models.ViewModels;
+using Uni_Sphere.Repositories;
 using Uni_Sphere.Repositories.IRepositories;
 
 namespace Uni_Sphere.Areas.Admin.Controllers
@@ -164,5 +166,13 @@ namespace Uni_Sphere.Areas.Admin.Controllers
             return RedirectToAction("List");
         }
 
+        #region API CALLS
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var teachers = await _teacherRepository.GetAllAsync();
+            return Json(new { data = teachers });
+        }
+        #endregion
     }
 }

@@ -3,6 +3,7 @@ using Uni_Sphere.Models.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Uni_Sphere.Repositories.IRepositories;
+using Uni_Sphere.Models.DTO;
 
 namespace Uni_Sphere.Repositories
 {
@@ -82,9 +83,32 @@ namespace Uni_Sphere.Repositories
             return null;
         }
 
-        public async Task<IEnumerable<Teachers>> GetAllAsync()
+        public async Task<IEnumerable<TeacherDTO>> GetAllAsync()
         {
-            return await _uniSphereDbContext.Teachers.ToListAsync();
+            var teachersDTO = await _uniSphereDbContext.Teachers
+                .Include(x => x.Department)
+                .Select(x => new TeacherDTO
+                {
+                    Id = x.Id,
+                    FullName = x.FullName,
+                    Email = x.Email,
+                    Gender = x.Gender,
+                    PhoneNo = x.PhoneNo,
+                    DateOfBirth = x.DateOfBirth,
+                    Designation = x.Designation,
+                    JoiningDate = x.JoiningDate,
+                    Salary = x.Salary,
+                    ProfileImageUrl = x.ProfileImageUrl,
+                    Department = new DepartmentDTO
+                    {
+                        Id = x.Department.Id,
+                        Name = x.Department.Name,
+                        Code = x.Department.Code,
+                        Description = x.Department.Description
+                    }
+                })
+                .ToListAsync();
+            return teachersDTO;
         }
 
         public async Task<Teachers?> GetAsync(int id)

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Uni_Sphere.DataAccess.Data;
 using Uni_Sphere.Models.Domain;
+using Uni_Sphere.Models.DTO;
 using Uni_Sphere.Repositories.IRepositories;
 
 namespace Uni_Sphere.Repositories
@@ -38,9 +39,17 @@ namespace Uni_Sphere.Repositories
             return null;
         }
 
-        public async Task<IEnumerable<Departments>> GetAllAsync()
+        public async Task<IEnumerable<DepartmentDTO>> GetAllAsync()
         {
-            return await _uniSphereDbContext.Departments.ToListAsync();
+            var departmentsDTO = await _uniSphereDbContext.Departments.Select(x => new DepartmentDTO
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Code = x.Code,
+                Description = x.Description
+            }).ToListAsync();
+
+            return departmentsDTO;
         }
 
         public async Task<Departments?> GetAsync(int id)

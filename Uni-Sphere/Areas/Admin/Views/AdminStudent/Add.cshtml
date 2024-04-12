@@ -109,6 +109,7 @@
         const profileImageUrl = document.getElementById('profileImageUrl');
 
         async function uploadProfileImage(e) {
+            console.log(e.target.files[0])
             let data = new FormData();
             data.append('file', e.target.files[0]);
 
@@ -131,7 +132,8 @@
                 body: data
             }).then(response => response.json())
             .then(result => {
-                    profileImageUrl.value = result.link;
+                console.log(result);
+                profileImageUrl.value = result.link;
             });
         }
 

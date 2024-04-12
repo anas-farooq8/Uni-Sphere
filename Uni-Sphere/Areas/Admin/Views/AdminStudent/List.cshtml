@@ -1,4 +1,4 @@
-﻿@model List<Uni_Sphere.Models.Domain.Students>
+﻿@model List<Uni_Sphere.Models.DTO.StudentDTO>
 @{
 }
 
@@ -11,7 +11,7 @@
 <div class="container py-5">
     @if (Model != null && Model.Any())
     {
-        <table class="table">
+        <table id="tblDataStudent" class="table table-bordered">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -28,25 +28,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var student in Model)
-                {
-                    <tr>
-                        <td>@student.Id</td>
-                        <td>@student.FullName</td>
-                        <td>@student.RollNo</td>
-                        <td>@student.Gender</td>
-                        <td>@student.Email</td>
-                        <td>@student.PhoneNo</td>
-                        <td>@student.Section</td>
-                        <td>@student.Degree</td>
-                        <td>@student.DepartmentsId</td>
-                        <td>@student.Batch</td>
-                        <td>
-                            <a asp-area="" asp-controller="AdminStudent" asp-action="Edit" asp-route-id="@student.Id" class="btn btn-primary">Edit</a>
-                            <a asp-area="" asp-controller="AdminStudent" asp-action="Delete" asp-route-id="@student.Id" class="btn btn-danger">Delete</a>
-                        </td>
-                    </tr>
-                }
+
             </tbody>
         </table>
     }
@@ -55,3 +37,9 @@
         <p>No Students found.</p>
     }
 </div>
+
+
+@section Scripts {
+    <script src="~/js/student.js">
+    </script>
+}
