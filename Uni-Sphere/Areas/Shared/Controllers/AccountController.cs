@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Uni_Sphere.Models.Domain;
 using Uni_Sphere.Models.ViewModels;
 
 namespace Uni_Sphere.Areas.Shared.Controllers
@@ -46,8 +47,9 @@ namespace Uni_Sphere.Areas.Shared.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            TempData["Success"] = "You have successfully logged out";
-            return RedirectToAction("Index", "Home");
+            TempData["Success"] = "You have successfully logged out.";
+            return RedirectToAction("Index", "Home", new { area = "Shared" });
+
         }
 
         [HttpGet]

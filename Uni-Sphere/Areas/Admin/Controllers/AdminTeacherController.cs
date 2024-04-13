@@ -78,7 +78,7 @@ namespace Uni_Sphere.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            // read all the students from the database
+            // Read all the teachers from the database
             var teachers = await _teacherRepository.GetAllAsync();
             return View(teachers);
         }
@@ -149,21 +149,19 @@ namespace Uni_Sphere.Areas.Admin.Controllers
             //return View();
         }
 
-        [HttpGet]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             var teacher = await _teacherRepository.DeleteAsync(id);
             if (teacher != null)
             {
                 await _teacherRepository.DeleteAccount(teacher.Email);
-                TempData["Success"] = "Teacher deleted successfully";
+                return Json(new { success = true, message = "Teacher deleted successfully" });
             }
             else
             {
-                TempData["Error"] = "An error occurred while deleting the teacher!";
+                return Json(new { success = false, message = "An error occurred while deleting the teacher" });
             }
-
-            return RedirectToAction("List");
         }
 
         #region API CALLS

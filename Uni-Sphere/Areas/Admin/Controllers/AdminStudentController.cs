@@ -163,21 +163,19 @@ namespace Uni_Sphere.Areas.Admin.Controllers
             //return View();
         }
 
-        [HttpGet]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             var student = await _studentRepository.DeleteAsync(id);
             if (student != null)
             {
                 await _studentRepository.DeleteAccount(student.Email);
-                TempData["Success"] = "Student deleted successfully";
+                return Json(new { success = true, message = "Student deleted successfully" });
             }
             else
             {
-                TempData["Error"] = "An error occurred while deleting the student";
+                return Json(new { success = false, message = "An error occurred while deleting the student" });
             }
-
-            return RedirectToAction("List");
         }
 
         #region API CALLS

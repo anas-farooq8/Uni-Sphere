@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Uni_Sphere.Repositories.IRepositories;
 using Uni_Sphere.Models.DTO;
+using Uni_Sphere.Utility;
 
 namespace Uni_Sphere.Repositories
 {
@@ -92,10 +93,10 @@ namespace Uni_Sphere.Repositories
                     Id = x.Id,
                     FullName = x.FullName,
                     Email = x.Email,
-                    Gender = x.Gender,
+                    Gender = x.Gender.ToString(),
                     PhoneNo = x.PhoneNo,
                     DateOfBirth = x.DateOfBirth,
-                    Designation = x.Designation,
+                    Designation = SD.AddSpacesToPascalCase(x.Designation.ToString()),
                     JoiningDate = x.JoiningDate,
                     Salary = x.Salary,
                     ProfileImageUrl = x.ProfileImageUrl,

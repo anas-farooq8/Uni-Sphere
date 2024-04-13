@@ -90,7 +90,7 @@ namespace Uni_Sphere.Repositories
                     Id = x.Id,
                     FullName = x.FullName,
                     RollNo = x.RollNo,
-                    Gender = x.Gender,
+                    Gender = x.Gender.ToString(),
                     Email = x.Email,
                     PhoneNo = x.PhoneNo,
                     Section = x.Section,

@@ -1,22 +1,20 @@
-﻿$(document).ready(function () {
+﻿var dataTableStudent;
+
+$(document).ready(function () {
     loadDataTable();
 });
 function loadDataTable() {
-    dataTable = $('#tblDataStudent').DataTable({
+    dataTableStudent = $('#tblDataStudent').DataTable({
         "ajax": {
             "url": "/admin/adminstudent/getall",
             "type": "GET",
-            "datatype": "json"
+            "dataType": "json"
         },
         "columns": [
             { "data": "id" },
             { "data": "fullName"},
             { "data": "rollNo" },
-            {
-                "data": "gender", "render": function (data) {
-                    return data === 0 ? 'Male' : 'Female';  // 0 is Male, 1 is Female
-                }
-            },
+            { "data": "gender" },
             { "data": "email"},
             { "data": "phoneNo" },
             { "data": "section" },
@@ -32,7 +30,7 @@ function loadDataTable() {
                                 <i class="fas fa-edit"></i> Edit
                             </a>
                             &nbsp;
-                            <a href="/admin/adminstudent/Delete/${data}" class="btn btn-danger text-white" style="cursor:pointer; width:70px;">
+                            <a onClick=Delete('/admin/adminstudent/Delete/${data}') class="btn btn-danger text-white" style="cursor:pointer; width:70px;">
                                 <i class="fas fa-trash-alt"></i> Delete
                             </a>
                         </div>
@@ -43,6 +41,35 @@ function loadDataTable() {
         ],
         "language": {
             "emptyTable": "No data available in table"
+        }
+    });
+}
+
+
+function Delete(url) {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "DELETE",
+                url: url,
+                success: function (data) {
+                    if (data.success) {
+                        toastr.success(data.message);
+                        dataTableStudent.ajax.reload();
+                    }
+                    else {
+                        toastr.error(data.message);
+                    }
+                }
+            });
         }
     });
 }

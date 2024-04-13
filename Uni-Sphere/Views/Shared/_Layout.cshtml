@@ -94,11 +94,10 @@
                             </div>
 
                             <a class="btn btn-dark"
-                               asp-area="Shared"
-                               asp-controller="Account"
-                               asp-action="Logout">
+                               href="/shared/account/Logout/" onclick="event.preventDefault(); logout('@Url.Action("Logout", "Account", new { area = "Shared" })');">
                                 Logout
                             </a>
+
                         }
                         else
                         {
@@ -130,6 +129,26 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function logout(logoutUrl) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You will be logged out!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, Logout!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Perform the logout operation
+                    window.location.href = logoutUrl;
+                }
+            });
+        }
+
+    </script>
     <script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

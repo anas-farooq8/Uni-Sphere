@@ -1,7 +1,9 @@
 ﻿@using Uni_Sphere.Models.Domain
 @model Uni_Sphere.Models.ViewModels.EditTeacherRequest
 @{
+    ViewData["Title"] = "Edit Teacher";
 }
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -94,7 +96,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="Salary" class="form-label">Salary</label>
-                            <input type="number" step="10" class="form-control" id="Salary" asp-for="Salary" placeholder="Enter Salary" required>
+                            <input type="number" class="form-control" id="Salary" asp-for="Salary" placeholder="Enter Salary" required>
                             <span class="text-danger" asp-validation-for="Salary"></span>
                         </div>
                         <div class="mb-3">

@@ -59,7 +59,7 @@ namespace Uni_Sphere.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            // Read all the Departments from the database
+            // Read all the departments from the database
             var departments = await _departmentRepository.GetAllAsync();
             return View(departments);
         }
@@ -119,20 +119,19 @@ namespace Uni_Sphere.Areas.Admin.Controllers
         }
 
 
-        [HttpGet]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             var department = await _departmentRepository.DeleteAsync(id);
             if (department != null)
             {
-                TempData["Success"] = "Department deleted successfully";
+                return Json(new { success = true, message = "Department deleted successfully" });
             }
             else
             {
-                TempData["Error"] = "An error occurred while deleting the department";
+                return Json(new { success = false, message = "An error occurred while deleting the department" });
             }
 
-            return RedirectToAction("List");
         }
 
         #region API CALLS
