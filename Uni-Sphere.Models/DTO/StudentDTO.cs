@@ -15,7 +15,6 @@ namespace Uni_Sphere.Models.DTO
         public string Gender { get; set; }
         public string Email { get; set; }
         public string PhoneNo { get; set; }
-        public char Section { get; set; }
         public string Degree { get; set; }
         public int Batch { get; set; }
         public short CurrentSemester { get; set; }
@@ -23,5 +22,6 @@ namespace Uni_Sphere.Models.DTO
         public int Credits { get; set; }
         public string? ProfileImageUrl { get; set; }
         public DepartmentDTO Department { get; set; }
+        public SectionDTO Section { get; set; }
     }
 }

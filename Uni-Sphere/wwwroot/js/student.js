@@ -17,7 +17,7 @@ function loadDataTable() {
             { "data": "gender" },
             { "data": "email"},
             { "data": "phoneNo" },
-            { "data": "section" },
+            { "data": "section.name" },
             { "data": "degree" },
             { "data": "department.name", },
             { "data": "batch" },
@@ -62,8 +62,8 @@ function Delete(url) {
                 url: url,
                 success: function (data) {
                     if (data.success) {
-                        toastr.success(data.message);
                         dataTableStudent.ajax.reload();
+                        toastr.success(data.message);
                     }
                     else {
                         toastr.error(data.message);

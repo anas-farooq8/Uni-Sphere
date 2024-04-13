@@ -12,8 +12,8 @@ using Uni_Sphere.DataAccess.Data;
 namespace Uni_Sphere.DataAccess.Migrations.AuthDb
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20240411101306_AuthDb")]
-    partial class AuthDb
+    [Migration("20240413150423_Auth")]
+    partial class Auth
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -169,15 +169,15 @@ namespace Uni_Sphere.DataAccess.Migrations.AuthDb
                         {
                             Id = "2082dbd3-90ce-428c-98bd-53deaf2baad6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1ead13f1-7e18-4f14-a9fe-ff48d4733675",
+                            ConcurrencyStamp = "d3ff8aff-1a41-4deb-bff2-0181b1174912",
                             Email = "admin@unisphere.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@UNISPHERE.COM",
                             NormalizedUserName = "ADMIN@UNISPHERE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIGZ7gpW8F8bj+4MbU/R4c0IrSFBHBtpCtyJ3MPy2eEBKelSPq2bpv86YDEr3hdpwg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIck5jCqIrkY9yCmFynPqfVQ7AmsZFkHwpnX0UveUSmCY/3hJTBiqZkbacLKQiOypQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "fca43065-521d-4843-bfcf-48ae897ff1c6",
+                            SecurityStamp = "ead3680c-a781-44ca-95f0-623f949ccd4d",
                             TwoFactorEnabled = false,
                             UserName = "admin@unisphere.com"
                         });

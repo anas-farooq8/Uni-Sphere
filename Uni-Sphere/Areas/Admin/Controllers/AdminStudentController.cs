@@ -30,11 +30,17 @@ namespace Uni_Sphere.Areas.Admin.Controllers
         public async Task<IActionResult> Add()
         {
             var departments = await _departmentRepository.GetAllAsync();
+            var sections = await _departmentRepository.GetAllSectionsAsync();
             var model = new AddStudentRequest
             {
                 Departments = departments.Select(x => new SelectListItem
                 {
                     Text = x.Code + " - " + x.Name,
+                    Value = x.Id.ToString()
+                }),
+                Sections = sections.Select(x => new SelectListItem
+                {
+                    Text = x.Name,
                     Value = x.Id.ToString()
                 })
             };
@@ -59,11 +65,11 @@ namespace Uni_Sphere.Areas.Admin.Controllers
                     Gender = addStudentRequest.Gender,
                     Email = email,
                     PhoneNo = addStudentRequest.PhoneNo,
-                    Section = char.ToUpper(addStudentRequest.Section),
                     Degree = addStudentRequest.Degree,
                     Batch = int.Parse(batch),
                     ProfileImageUrl = addStudentRequest.ProfileImageUrl,
                     DepartmentsId = addStudentRequest.DepartmentsId,
+                    SectionsId = addStudentRequest.SectionsId,
                 };
 
                 await _studentRepository.AddAsync(student);
@@ -96,6 +102,7 @@ namespace Uni_Sphere.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var departments = await _departmentRepository.GetAllAsync();
+            var sections = await _departmentRepository.GetAllSectionsAsync();
 
             var student = await _studentRepository.GetAsync(id);
             if (student != null)
@@ -108,7 +115,6 @@ namespace Uni_Sphere.Areas.Admin.Controllers
                     Gender = student.Gender,
                     Email = student.Email,
                     PhoneNo = student.PhoneNo,
-                    Section = student.Section,
                     Degree = student.Degree,
                     Batch = student.Batch,
                     CurrentSemester = student.CurrentSemester,
@@ -121,6 +127,12 @@ namespace Uni_Sphere.Areas.Admin.Controllers
                         Value = x.Id.ToString()
                     }),
                     DepartmentsId = student.DepartmentsId,
+                    Sections = sections.Select(x => new SelectListItem
+                    {
+                        Text = x.Name,
+                        Value = x.Id.ToString()
+                    }),
+                    SectionsId = student.SectionsId,
                 };
                 return View(editStudentRequest);
             }
@@ -138,13 +150,13 @@ namespace Uni_Sphere.Areas.Admin.Controllers
                     FullName = editStudentRequest.FullName,
                     Gender = editStudentRequest.Gender,
                     PhoneNo = editStudentRequest.PhoneNo,
-                    Section = char.ToUpper(editStudentRequest.Section),
                     Degree = editStudentRequest.Degree,
                     CurrentSemester = editStudentRequest.CurrentSemester,
                     Gpa = editStudentRequest.Gpa,
                     Credits = editStudentRequest.Credits,
                     ProfileImageUrl = editStudentRequest.ProfileImageUrl,
                     DepartmentsId = editStudentRequest.DepartmentsId,
+                    SectionsId = editStudentRequest.SectionsId,
                 };
 
                 var updatedStudent = await _studentRepository.UpdateAsync(student);

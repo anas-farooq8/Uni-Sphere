@@ -16,7 +16,21 @@ namespace Uni_Sphere.Repositories
 
         public async Task<Departments> AddAsync(Departments department)
         {
+            // Add the Department
             await _uniSphereDbContext.Departments.AddAsync(department);
+            await _uniSphereDbContext.SaveChangesAsync();
+
+            // Fetch all sections
+            var sections = await _uniSphereDbContext.Sections.ToListAsync();
+
+            // Associate all sections with the new department
+            foreach (var section in sections)
+            {
+                _uniSphereDbContext.Entry(department).Collection(d => d.Sections).Load();
+                department.Sections.Add(section);
+            }
+
+            // Save changes
             await _uniSphereDbContext.SaveChangesAsync();
 
             return department;
@@ -50,6 +64,17 @@ namespace Uni_Sphere.Repositories
             }).ToListAsync();
 
             return departmentsDTO;
+        }
+
+        public async Task<IEnumerable<SectionDTO>> GetAllSectionsAsync()
+        {
+            var sectionsDTO = await _uniSphereDbContext.Sections.Select(x => new SectionDTO
+            {
+                Id = x.Id,
+                Name = x.Name
+            }).ToListAsync();
+
+            return sectionsDTO;
         }
 
         public async Task<Departments?> GetAsync(int id)

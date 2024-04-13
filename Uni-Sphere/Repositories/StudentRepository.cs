@@ -93,7 +93,6 @@ namespace Uni_Sphere.Repositories
                     Gender = x.Gender.ToString(),
                     Email = x.Email,
                     PhoneNo = x.PhoneNo,
-                    Section = x.Section,
                     Degree = x.Degree,
                     Batch = x.Batch,
                     CurrentSemester = x.CurrentSemester,
@@ -106,6 +105,11 @@ namespace Uni_Sphere.Repositories
                         Name = x.Department.Name,
                         Code = x.Department.Code,
                         Description = x.Department.Description
+                    },
+                    Section = new SectionDTO
+                    {
+                        Id = x.Section.Id,
+                        Name = x.Section.Name
                     }
                 })
                 .ToListAsync();

@@ -27,10 +27,6 @@ namespace Uni_Sphere.Models.Domain
         [Column(TypeName = "varchar(12)")]
         public string PhoneNo { get; set; }
 
-        [Required]
-        [Column(TypeName = "char(1)")]
-        public char Section { get; set; }
-
         [Required, MaxLength(2)]
         [Column(TypeName = "varchar(2)")]
         public string Degree { get; set; }
@@ -53,6 +49,11 @@ namespace Uni_Sphere.Models.Domain
 
         [ForeignKey("DepartmentsId")]
         public Departments Department { get; set; }
+
+        // One to One Relationship with Sections
+        public int SectionsId { get; set; }
+        [ForeignKey("SectionsId")]
+        public Sections Section { get; set; }
 
     }
 }

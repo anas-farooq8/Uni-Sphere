@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Uni_Sphere.Models.Domain
 {
@@ -19,9 +18,11 @@ namespace Uni_Sphere.Models.Domain
 
 
         // Many to One Relationship with Students and Teachers
-        public virtual ICollection<Students> Students { get; set; }
-        public virtual ICollection<Teachers> Teachers { get; set; }
+        public ICollection<Students> Students { get; set; }
+        public ICollection<Teachers> Teachers { get; set; }
 
+        // Many to Many Relationship with Sections
+        public ICollection<Sections> Sections { get; set; }
 
     }
 }

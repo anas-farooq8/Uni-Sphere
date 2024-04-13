@@ -43,5 +43,12 @@ namespace Uni_Sphere.Models.ViewModels
         // Selected Department
         [Required]
         public int DepartmentsId { get; set; }
+
+
+        // Display Sections in a dropdown list
+        public IEnumerable<SelectListItem>? Sections { get; set; }
+        // Selected Section
+        [Required]
+        public int SectionsId { get; set; }
     }
 }

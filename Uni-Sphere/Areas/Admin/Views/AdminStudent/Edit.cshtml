@@ -76,11 +76,6 @@
                             <span class="text-danger" asp-validation-for="PhoneNo"></span>
                         </div>
                         <div class="mb-3">
-                            <label for="studentSection" class="form-label">Student Section</label>
-                            <input type="text" class="form-control" id="studentSection" asp-for="Section" placeholder="Enter Section" required>
-                            <span class="text-danger" asp-validation-for="Section"></span>
-                        </div>
-                        <div class="mb-3">
                             <label for="studentDegree" class="form-label">Student Degree</label>
                             <select class="form-select" id="studentDegree" asp-for="Degree">
                                 <option selected>Choose...</option>
@@ -95,6 +90,12 @@
                         </select>
                         <span class="text-danger" asp-validation-for="DepartmentsId"></span>
                     </div>
+                        <div class="mb-3">
+                            <label for="studentSection" class="form-label">Student Section</label>
+                            <select class="form-select" asp-items="Model.Sections" asp-for="SectionsId">
+                            </select>
+                            <span class="text-danger" asp-validation-for="SectionsId"></span>
+                        </div>
                         <div class="mb-3">
                             <label for="studentBatch" class="form-label">Student Batch</label>
                             <input type="text" class="form-control" id="studentBatch" asp-for="Batch" readonly>
