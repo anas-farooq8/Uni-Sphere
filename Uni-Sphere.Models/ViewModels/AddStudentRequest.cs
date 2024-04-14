@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using Uni_Sphere.Models.Domain;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Uni_Sphere.Models.Enum;
 
 namespace Uni_Sphere.Models.ViewModels
 {

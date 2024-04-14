@@ -12,8 +12,8 @@ using Uni_Sphere.DataAccess.Data;
 namespace Uni_Sphere.DataAccess.Migrations
 {
     [DbContext(typeof(UniSphereDbContext))]
-    [Migration("20240413145926_Initial")]
-    partial class Initial
+    [Migration("20240414060545_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,36 @@ namespace Uni_Sphere.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CoursesDepartments", b =>
+                {
+                    b.Property<int>("CoursesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DepartmentsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CoursesId", "DepartmentsId");
+
+                    b.HasIndex("DepartmentsId");
+
+                    b.ToTable("CoursesDepartments");
+                });
+
+            modelBuilder.Entity("CoursesStudents", b =>
+                {
+                    b.Property<int>("CoursesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CoursesId", "StudentsId");
+
+                    b.HasIndex("StudentsId");
+
+                    b.ToTable("CoursesStudents");
+                });
 
             modelBuilder.Entity("DepartmentsSections", b =>
                 {
@@ -692,6 +722,43 @@ namespace Uni_Sphere.DataAccess.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Uni_Sphere.Models.Domain.Courses", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)");
+
+                    b.Property<string>("CourseType")
+                        .IsRequired()
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<int>("CreditHours")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsLab")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Courses");
+                });
+
             modelBuilder.Entity("Uni_Sphere.Models.Domain.Departments", b =>
                 {
                     b.Property<int>("Id")
@@ -973,6 +1040,34 @@ namespace Uni_Sphere.DataAccess.Migrations
                     b.ToTable("Students");
                 });
 
+            modelBuilder.Entity("Uni_Sphere.Models.Domain.TeacherCourseSection", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SectionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("SectionId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("TeacherCourseSections");
+                });
+
             modelBuilder.Entity("Uni_Sphere.Models.Domain.Teachers", b =>
                 {
                     b.Property<int>("Id")
@@ -1026,6 +1121,36 @@ namespace Uni_Sphere.DataAccess.Migrations
                     b.ToTable("Teachers");
                 });
 
+            modelBuilder.Entity("CoursesDepartments", b =>
+                {
+                    b.HasOne("Uni_Sphere.Models.Domain.Courses", null)
+                        .WithMany()
+                        .HasForeignKey("CoursesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Uni_Sphere.Models.Domain.Departments", null)
+                        .WithMany()
+                        .HasForeignKey("DepartmentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CoursesStudents", b =>
+                {
+                    b.HasOne("Uni_Sphere.Models.Domain.Courses", null)
+                        .WithMany()
+                        .HasForeignKey("CoursesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Uni_Sphere.Models.Domain.Students", null)
+                        .WithMany()
+                        .HasForeignKey("StudentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DepartmentsSections", b =>
                 {
                     b.HasOne("Uni_Sphere.Models.Domain.Departments", null)
@@ -1058,6 +1183,33 @@ namespace Uni_Sphere.DataAccess.Migrations
                     b.Navigation("Department");
 
                     b.Navigation("Section");
+                });
+
+            modelBuilder.Entity("Uni_Sphere.Models.Domain.TeacherCourseSection", b =>
+                {
+                    b.HasOne("Uni_Sphere.Models.Domain.Courses", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Uni_Sphere.Models.Domain.Sections", "Section")
+                        .WithMany()
+                        .HasForeignKey("SectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Uni_Sphere.Models.Domain.Teachers", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Section");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("Uni_Sphere.Models.Domain.Teachers", b =>

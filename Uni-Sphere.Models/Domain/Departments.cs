@@ -16,13 +16,15 @@ namespace Uni_Sphere.Models.Domain
         [MaxLength(350)]
         public string? Description { get; set; }
 
-
         // Many to One Relationship with Students and Teachers
         public ICollection<Students> Students { get; set; }
         public ICollection<Teachers> Teachers { get; set; }
 
         // Many to Many Relationship with Sections
         public ICollection<Sections> Sections { get; set; }
+
+        // Many to Many Relationship with Courses
+        public ICollection<Courses> Courses { get; set; }
 
     }
 }

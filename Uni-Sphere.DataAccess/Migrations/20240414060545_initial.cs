@@ -8,11 +8,29 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Uni_Sphere.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Courses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
+                    CreditHours = table.Column<int>(type: "int", nullable: false),
+                    CourseType = table.Column<string>(type: "varchar(10)", nullable: false),
+                    IsLab = table.Column<bool>(type: "bit", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Courses", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Departments",
                 columns: table => new
@@ -39,6 +57,30 @@ namespace Uni_Sphere.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sections", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CoursesDepartments",
+                columns: table => new
+                {
+                    CoursesId = table.Column<int>(type: "int", nullable: false),
+                    DepartmentsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CoursesDepartments", x => new { x.CoursesId, x.DepartmentsId });
+                    table.ForeignKey(
+                        name: "FK_CoursesDepartments_Courses_CoursesId",
+                        column: x => x.CoursesId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CoursesDepartments_Departments_DepartmentsId",
+                        column: x => x.DepartmentsId,
+                        principalTable: "Departments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -126,6 +168,63 @@ namespace Uni_Sphere.DataAccess.Migrations
                         name: "FK_Students_Sections_SectionsId",
                         column: x => x.SectionsId,
                         principalTable: "Sections",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TeacherCourseSections",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TeacherId = table.Column<int>(type: "int", nullable: false),
+                    CourseId = table.Column<int>(type: "int", nullable: false),
+                    SectionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TeacherCourseSections", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TeacherCourseSections_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TeacherCourseSections_Sections_SectionId",
+                        column: x => x.SectionId,
+                        principalTable: "Sections",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TeacherCourseSections_Teachers_TeacherId",
+                        column: x => x.TeacherId,
+                        principalTable: "Teachers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CoursesStudents",
+                columns: table => new
+                {
+                    CoursesId = table.Column<int>(type: "int", nullable: false),
+                    StudentsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CoursesStudents", x => new { x.CoursesId, x.StudentsId });
+                    table.ForeignKey(
+                        name: "FK_CoursesStudents_Courses_CoursesId",
+                        column: x => x.CoursesId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CoursesStudents_Students_StudentsId",
+                        column: x => x.StudentsId,
+                        principalTable: "Students",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -313,6 +412,16 @@ namespace Uni_Sphere.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_CoursesDepartments_DepartmentsId",
+                table: "CoursesDepartments",
+                column: "DepartmentsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CoursesStudents_StudentsId",
+                table: "CoursesStudents",
+                column: "StudentsId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DepartmentsSections_SectionsId",
                 table: "DepartmentsSections",
                 column: "SectionsId");
@@ -328,6 +437,21 @@ namespace Uni_Sphere.DataAccess.Migrations
                 column: "SectionsId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TeacherCourseSections_CourseId",
+                table: "TeacherCourseSections",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TeacherCourseSections_SectionId",
+                table: "TeacherCourseSections",
+                column: "SectionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TeacherCourseSections_TeacherId",
+                table: "TeacherCourseSections",
+                column: "TeacherId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Teachers_DepartmentsId",
                 table: "Teachers",
                 column: "DepartmentsId");
@@ -337,10 +461,22 @@ namespace Uni_Sphere.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "CoursesDepartments");
+
+            migrationBuilder.DropTable(
+                name: "CoursesStudents");
+
+            migrationBuilder.DropTable(
                 name: "DepartmentsSections");
 
             migrationBuilder.DropTable(
+                name: "TeacherCourseSections");
+
+            migrationBuilder.DropTable(
                 name: "Students");
+
+            migrationBuilder.DropTable(
+                name: "Courses");
 
             migrationBuilder.DropTable(
                 name: "Teachers");

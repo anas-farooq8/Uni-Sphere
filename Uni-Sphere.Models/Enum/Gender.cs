@@ -1,4 +1,4 @@
-﻿namespace Uni_Sphere.Models.Domain
+﻿namespace Uni_Sphere.Models.Enum
 {
     public enum Gender
     {
