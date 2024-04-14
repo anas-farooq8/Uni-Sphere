@@ -1,18 +1,22 @@
 ﻿@using Uni_Sphere.Models.Domain
 @using Uni_Sphere.Models.Enum
-@model Uni_Sphere.Models.ViewModels.AddCourseRequest
+@model Uni_Sphere.Models.ViewModels.EditCourseRequest
 @{
-    ViewData["Title"] = "Add Course";
+    ViewData["Title"] = "Edit Course";
 }
 
 <div class="bg-secondary bg-opacity-10 py-2">
     <div class="container">
-        <h1 class="text-center">Add Course</h1>
+        <h1 class="text-center">Edit Course</h1>
     </div>
 </div>
 
 <div class="container py-3">
     <form method="post">
+        <div class="mb-3">
+            <label for="Id" class="form-label">ID</label>
+            <input type="text" class="form-control" id="Id" asp-for="Id" readonly>
+        </div>
         <div class="mb-3">
             <label for="Name" class="form-label">Course Name</label>
             <input type="text" class="form-control" id="Name" asp-for="Name" placeholder="Enter Course Name" required>
@@ -35,11 +39,11 @@
             </select>
         </div>
         <div class="mb-3">
-			<label for="IsLab" class="form-label">IsLab</label>
-			<select class="form-select" id="IsLab" asp-for="IsLab">
-				<option value="true">Yes</option>
-				<option value="false">No</option>
-			</select>
+            <label for="IsLab" class="form-label">IsLab</label>
+            <select class="form-select" id="IsLab" asp-for="IsLab">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
         </div>
         <div class="mb-3">
             <label for="Description" class="form-label">Description</label>
@@ -48,10 +52,10 @@
         <div class="mb-3">
             <label class="form-label">Departments</label>
             <select class="form-select"
-            asp-for="selectedDepartments"
-					asp-items="@Model.Departments"
-					required>
-                </select>
+                    asp-for="selectedDepartments"
+                    asp-items="@Model.Departments"
+                    required>
+            </select>
             <span class="text-danger" asp-validation-for="selectedDepartments"></span>
         </div>
         <div class="mb-3">

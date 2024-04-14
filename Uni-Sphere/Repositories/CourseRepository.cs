@@ -47,7 +47,7 @@ namespace Uni_Sphere.Repositories
                 Name = x.Name,
                 Code = x.Code,
                 CreditHours = x.CreditHours,
-                CourseType = "x.CourseType.ToString()",
+                CourseType = x.CourseType.ToString(),
                 IsLab = x.IsLab,
                 Description = x.Description
             }).ToListAsync();
@@ -57,12 +57,29 @@ namespace Uni_Sphere.Repositories
 
         public async Task<Courses?> GetAsync(int id)
         {
-            return await _uniSphereDbContext.Courses.FindAsync(id);
+            return await _uniSphereDbContext.Courses.Include(x => x.Departments).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<Courses?> UpdateAsync(Courses course)
         {
-            throw new NotImplementedException();
+            var existingCourse = await _uniSphereDbContext.Courses.Include(x => x.Departments).
+                FirstOrDefaultAsync(x => x.Id == course.Id);
+
+            if (existingCourse != null)
+            {
+                existingCourse.Name = course.Name;
+                existingCourse.Code = course.Code;
+                existingCourse.CreditHours = course.CreditHours;
+                existingCourse.CourseType = course.CourseType;
+                existingCourse.IsLab = course.IsLab;
+                existingCourse.Description = course.Description;
+                existingCourse.Departments = course.Departments;
+
+                await _uniSphereDbContext.SaveChangesAsync();
+                return existingCourse;
+            }
+
+            return null;
         }
     }
 }

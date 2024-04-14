@@ -85,7 +85,6 @@ namespace Uni_Sphere.Areas.Admin.Controllers
         }
 
 
-
         [HttpPost]
         public async Task<IActionResult> Edit(EditDepartmentRequest editDepartmentRequest)
         {

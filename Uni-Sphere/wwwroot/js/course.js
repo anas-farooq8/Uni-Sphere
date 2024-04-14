@@ -15,8 +15,8 @@ function loadDataTable() {
             { "data": "name" },
             { "data": "code" },
             { "data": "creditHours" },
-            //{ "data": "courseType" },
-            //{ "data": "lab" },
+            { "data": "courseType" },
+            { "data": "isLab" },
             { "data": "description" },
             {
                 data: "id",

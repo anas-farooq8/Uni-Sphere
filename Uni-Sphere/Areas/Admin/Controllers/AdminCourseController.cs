@@ -51,8 +51,17 @@ namespace Uni_Sphere.Areas.Admin.Controllers
                 };
 
                 // Mapping departments from the selected department ids
-                course.Departments = addCourseRequest.selectedDepartments
-                                        .Select(x => new Departments { Id = x }).ToList();
+                var selectedDepartments = new List<Departments>();
+                foreach(var departmentId in addCourseRequest.selectedDepartments)
+                {
+                    var department = await _departmentRepository.GetAsync(departmentId);
+                    if (department != null)
+                    {
+                        selectedDepartments.Add(department);
+                    }
+                }
+
+                course.Departments = selectedDepartments;
 
                 var newCourse = await _courseRepository.AddAsync(course);
                 if (newCourse != null)
@@ -78,6 +87,79 @@ namespace Uni_Sphere.Areas.Admin.Controllers
             return View(courses);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var departments = await _departmentRepository.GetAllAsync();
+
+            var course = await _courseRepository.GetAsync(id);
+            if (course != null)
+            {
+                var editCourseRequest = new EditCourseRequest
+                {
+                    Id = course.Id,
+                    Code = course.Code,
+                    Name = course.Name,
+                    CreditHours = course.CreditHours,
+                    CourseType = course.CourseType,
+                    IsLab = course.IsLab,
+                    Description = course.Description,
+                    Departments = departments.Select(x => new SelectListItem
+                    {
+                        Text = x.Code + " - " + x.Name,
+                        Value = x.Id.ToString()
+                    }),
+                    selectedDepartments = course.Departments.Select(x => x.Id).ToArray()
+                };
+                return View(editCourseRequest);
+            }
+            return View(null);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditCourseRequest editCourseRequest)
+        {
+            if (ModelState.IsValid)
+            {
+                editCourseRequest.Description ??= "";
+
+                var course = new Courses
+                {
+                    Id = editCourseRequest.Id,
+                    Name = editCourseRequest.Name,
+                    Code = editCourseRequest.Code,
+                    CreditHours = editCourseRequest.CreditHours,
+                    CourseType = editCourseRequest.CourseType,
+                    IsLab = editCourseRequest.IsLab,
+                    Description = editCourseRequest.Description.Trim(),
+                };
+
+                var selectedDepartments = new List<Departments>();
+                foreach (var departmentId in editCourseRequest.selectedDepartments)
+                {
+                    var department = await _departmentRepository.GetAsync(departmentId);
+                    if (department != null)
+                    {
+                        selectedDepartments.Add(department);
+                    }
+                }
+                course.Departments = selectedDepartments;
+
+                var updatedCourse = await _courseRepository.UpdateAsync(course);
+                if (updatedCourse != null)
+                {
+                    TempData["Success"] = "Course updated successfully";
+                }
+                else
+                {
+                    TempData["Error"] = "An error occurred while updating the course";
+                }
+                return RedirectToAction("List");
+            }
+
+            return RedirectToAction("Edit", new { id = editCourseRequest.Id });
+            //return View();
+        }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
@@ -91,7 +173,6 @@ namespace Uni_Sphere.Areas.Admin.Controllers
             {
                 return Json(new { success = false, message = "An error occurred while deleting the course" });
             }
-
         }
 
         #region API CALLS

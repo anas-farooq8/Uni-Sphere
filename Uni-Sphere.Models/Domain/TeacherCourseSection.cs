@@ -25,5 +25,9 @@ namespace Uni_Sphere.Models.Domain
         public int SectionId { get; set; }
         [ForeignKey("SectionId")]
         public Sections Section { get; set; }
+
+        // Batch
+        [Required]
+        public int Batch { get; set; }
     }
 }
