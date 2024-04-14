@@ -1,0 +1,52 @@
+﻿@model List<Uni_Sphere.Models.DTO.CourseDTO>
+@{
+    ViewData["Title"] = "Courses";
+}
+
+<style>
+    .description {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 250px; /* Adjust based on your layout */
+        display: block;
+    }
+</style>
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1 class="text-center">Courses</h1>
+    </div>
+</div>
+
+<div class="container py-5">
+    @if (Model != null && Model.Any())
+    {
+        <table id="tblDataCourse" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Code</th>
+                    <th>Credit Hours</th>
+                    <th>Course Type</th>
+                    <th>Lab</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No Courses found.</p>
+    }
+</div>
+
+
+@section Scripts {
+    <script src="~/js/course.js">
+    </script>
+}

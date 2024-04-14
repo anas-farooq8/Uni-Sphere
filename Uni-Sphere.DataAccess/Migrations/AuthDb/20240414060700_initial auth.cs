@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Uni_Sphere.DataAccess.Migrations.AuthDb
 {
     /// <inheritdoc />
-    public partial class Auth : Migration
+    public partial class initialauth : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -171,7 +171,7 @@ namespace Uni_Sphere.DataAccess.Migrations.AuthDb
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "2082dbd3-90ce-428c-98bd-53deaf2baad6", 0, "d3ff8aff-1a41-4deb-bff2-0181b1174912", "admin@unisphere.com", false, false, null, "ADMIN@UNISPHERE.COM", "ADMIN@UNISPHERE.COM", "AQAAAAIAAYagAAAAEIck5jCqIrkY9yCmFynPqfVQ7AmsZFkHwpnX0UveUSmCY/3hJTBiqZkbacLKQiOypQ==", null, false, "ead3680c-a781-44ca-95f0-623f949ccd4d", false, "admin@unisphere.com" });
+                values: new object[] { "2082dbd3-90ce-428c-98bd-53deaf2baad6", 0, "7a1920fd-259b-4207-b823-6b818c19ade3", "admin@unisphere.com", false, false, null, "ADMIN@UNISPHERE.COM", "ADMIN@UNISPHERE.COM", "AQAAAAIAAYagAAAAEBXcIWoDj758dk6D8bySFBSGqqVMCKoHhy2w/aGPJY8vGouQVzleZcTZMakOsR+MjQ==", null, false, "28d88465-2542-4344-b570-b50cbf6f3395", false, "admin@unisphere.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

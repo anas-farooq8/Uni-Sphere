@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Uni_Sphere.Models.Enum;
 
 namespace Uni_Sphere.Models.Domain
 {
@@ -54,6 +55,9 @@ namespace Uni_Sphere.Models.Domain
         public int SectionsId { get; set; }
         [ForeignKey("SectionsId")]
         public Sections Section { get; set; }
+
+        // Many to Many Relationship with Courses
+        public ICollection<Courses> Courses { get; set; }
 
     }
 }

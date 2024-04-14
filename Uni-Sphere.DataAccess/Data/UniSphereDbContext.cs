@@ -83,6 +83,8 @@ namespace Uni_Sphere.DataAccess.Data
         public DbSet<Teachers> Teachers { get; set; }
         public DbSet<Departments> Departments { get; set; }
         public DbSet<Sections> Sections { get; set; }
+        public DbSet<Courses> Courses { get; set; }
+        public DbSet<TeacherCourseSection> TeacherCourseSections { get; set; }
 
     }
 }

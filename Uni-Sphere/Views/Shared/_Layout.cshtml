@@ -82,6 +82,21 @@
                                     </li>
                                 </ul>
                             </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Manage Courses
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="AdminCourse" asp-action="Add">Add Course</a>
+                                    </li>
+                                    <li> <hr class="dropdown-divider"> </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="AdminCourse" asp-action="List">View Courses</a>
+                                    </li>
+                                </ul>
+                            </li>
                         }
 
                     </ul>
