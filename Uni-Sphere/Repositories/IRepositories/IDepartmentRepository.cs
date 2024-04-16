@@ -7,6 +7,7 @@ namespace Uni_Sphere.Repositories.IRepositories
     {
         Task<IEnumerable<DepartmentDTO>> GetAllAsync();
         Task<IEnumerable<SectionDTO>> GetAllSectionsAsync();
+        Task<IEnumerable<Departments>> GetDepartmentWithInfoAsync(int? departmentId);
         Task<Departments?> GetAsync(int id);
         Task<Departments> AddAsync(Departments department);
         Task<Departments?> UpdateAsync(Departments department);

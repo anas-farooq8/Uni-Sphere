@@ -30,6 +30,13 @@ builder.Services.Configure<IdentityOptions>(options =>
     //options.Password.RequiredUniqueChars = 1;
 });
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = $"/Shared/Account/Login";
+    options.LogoutPath = $"/Shared/Account/Logout";
+    options.AccessDeniedPath = "/Shared/Account/AccessDenied";
+});
+
 // Repository Injection
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();

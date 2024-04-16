@@ -1,4 +1,5 @@
-﻿using Uni_Sphere.Models.Domain;
+﻿using NuGet.DependencyResolver;
+using Uni_Sphere.Models.Domain;
 using Uni_Sphere.Models.DTO;
 
 namespace Uni_Sphere.Repositories.IRepositories
@@ -8,6 +9,7 @@ namespace Uni_Sphere.Repositories.IRepositories
         Task<IEnumerable<TeacherDTO>> GetAllAsync();
         Task<Teachers?> GetAsync(int id);
         Task<Teachers> AddAsync(Teachers teacher);
+        Task<IEnumerable<Teachers>> GetTeachersByDepartment(int departmentId);
         Task<bool> CreateAccount(string username, string email, string password);
         Task<bool> DeleteAccount(string username);
         Task<Teachers?> UpdateAsync(Teachers teacher);

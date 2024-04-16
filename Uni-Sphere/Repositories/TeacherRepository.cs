@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Uni_Sphere.Repositories.IRepositories;
 using Uni_Sphere.Models.DTO;
 using Uni_Sphere.Utility;
+using NuGet.DependencyResolver;
 
 namespace Uni_Sphere.Repositories
 {
@@ -23,8 +24,14 @@ namespace Uni_Sphere.Repositories
         {
             await _uniSphereDbContext.Teachers.AddAsync(teacher);
             await _uniSphereDbContext.SaveChangesAsync();
-
             return teacher;
+        }
+
+        public async Task<IEnumerable<Teachers>> GetTeachersByDepartment(int departmentId)
+        {
+            return await _uniSphereDbContext.Teachers
+                .Where(t => t.DepartmentsId == departmentId)
+                .ToListAsync();
         }
 
         public async Task<bool> CreateAccount(string username, string email, string password)

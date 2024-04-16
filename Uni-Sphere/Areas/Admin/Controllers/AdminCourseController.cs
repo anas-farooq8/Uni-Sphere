@@ -161,6 +161,91 @@ namespace Uni_Sphere.Areas.Admin.Controllers
             //return View();
         }
 
+        // Assign course to teacher
+        [HttpGet]
+        public async Task<IActionResult> AssignCourse()
+        {
+            // Display the empty page with select list items
+            var departments = await _departmentRepository.GetDepartmentWithInfoAsync(null);
+            var firstdepartment = departments.FirstOrDefault();
+
+            var model = new AssignCourseRequest
+            {
+                Departments = departments.Select(x => new SelectListItem
+                {
+                    Text = x.Code + " - " + x.Name,
+                    Value = x.Id.ToString()
+                }),
+                Courses = firstdepartment != null ? firstdepartment.Courses.Select(x => new SelectListItem
+                {
+                    Text = x.Code + " - " + x.Name,
+                    Value = x.Id.ToString()
+                }) : null,
+                Teachers = firstdepartment != null ? firstdepartment.Teachers.Select(x => new SelectListItem
+                {
+                    Text = x.FullName + " - " + x.Designation,
+                    Value = x.Id.ToString()
+                }) : null,
+                Sections = firstdepartment != null ? firstdepartment.Sections.Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                }) : null
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AssignCourse(AssignCourseRequest assignCourseRequest)
+        {
+            if (ModelState.IsValid)
+            {
+                // mapping sections from the selected section ids
+                foreach (var sectionId in assignCourseRequest.SectionsIds)
+                {
+                    var teacherCourseSection = new TeacherCourseSection
+                    {
+                        TeacherId = assignCourseRequest.TeachersId,
+                        CourseId = assignCourseRequest.CoursesId,
+                        SectionId = sectionId,
+                        Batch = assignCourseRequest.Batch
+                    };
+                    await _courseRepository.AssignCourse(teacherCourseSection);
+                }
+
+                TempData["Success"] = "Course assigned successfully";
+                return RedirectToAction("AssignCourse");
+            }
+
+            return View();
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetTeachersAndCourses(int departmentId)
+        {
+            // Fetch teachers and courses based on the selected department
+            var teachers = await _teacherRepository.GetTeachersByDepartment(departmentId);
+            var courses = await _courseRepository.GetCoursesByDepartment(departmentId);
+
+            // Convert teachers and courses to the SelectListItem format
+            var teachersSelectList = teachers.Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.FullName + " - " + x.Designation,
+            });
+
+            var coursesSelectList = courses.Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.Code + " - " + x.Name,
+            });
+
+            // Return JSON data containing teachers and courses
+            return Json(new { teachers = teachersSelectList, courses = coursesSelectList });
+        }
+
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {

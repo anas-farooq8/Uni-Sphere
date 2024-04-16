@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CloudinaryDotNet;
+using Microsoft.EntityFrameworkCore;
 using Uni_Sphere.DataAccess.Data;
 using Uni_Sphere.Models.Domain;
 using Uni_Sphere.Models.DTO;
@@ -37,6 +38,13 @@ namespace Uni_Sphere.Repositories
                 return course;
             }
             return null;
+        }
+
+        public async Task<IEnumerable<Courses>> GetCoursesByDepartment(int departmentId)
+        {
+            return await _uniSphereDbContext.Courses
+                .Where(c => c.Departments.Any(d => d.Id == departmentId))
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<CourseDTO>> GetAllAsync()
@@ -80,6 +88,12 @@ namespace Uni_Sphere.Repositories
             }
 
             return null;
+        }
+
+        public async Task AssignCourse(TeacherCourseSection teacherCourseSection)
+        {
+            await _uniSphereDbContext.TeacherCourseSections.AddAsync(teacherCourseSection);
+            await _uniSphereDbContext.SaveChangesAsync();
         }
     }
 }

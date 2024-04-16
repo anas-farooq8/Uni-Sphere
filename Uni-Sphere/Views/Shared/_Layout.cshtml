@@ -13,8 +13,11 @@
     @* toastr from https://codeseven.github.io/toastr/ *@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
 
-    @* Data Tables from https://datatables.net/ *@
+    @* Data Tables from https://select2.org/ *@
     <link rel="stylesheet" href="//cdn.datatables.net/2.0.3/css/dataTables.dataTables.min.css" />
+
+    @* Select List search from https://datatables.net/ *@
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     <!-- Froala Editor -->
     <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
@@ -95,6 +98,10 @@
                                     <li class="nav-item">
                                         <a class="dropdown-item" asp-area="Admin" asp-controller="AdminCourse" asp-action="List">View Courses</a>
                                     </li>
+                                    <li> <hr class="dropdown-divider"> </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="AdminCourse" asp-action="AssignCourse">Assign Courses</a>
+                                    </li>
                                 </ul>
                             </li>
                         }
@@ -145,6 +152,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         function logout(logoutUrl) {
             Swal.fire({
@@ -162,6 +170,11 @@
                 }
             });
         }
+
+        // In your Javascript (external .js resource or <script> tag)
+        $(document).ready(function () {
+            $('.form-select').select2();
+        });
 
     </script>
     <script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js" asp-append-version="true"></script>

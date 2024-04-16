@@ -1,0 +1,88 @@
+﻿@using Uni_Sphere.Models.Domain
+@using Uni_Sphere.Models.Enum
+@model Uni_Sphere.Models.ViewModels.AssignCourseRequest
+@{
+    ViewData["Title"] = "Assign Course";
+}
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1 class="text-center">Assign Course</h1>
+    </div>
+</div>
+
+<div class="container py-3">
+    <form method="post">
+        <div class="mb-3">
+            <label for="Batch" class="form-label">Batch</label>
+            <select class="form-select" id="Batch" name="Batch" required>
+                @{
+                    for (int year = DateTime.Now.Year % 100; year >= 19; year--)
+                    {
+                        <option value="@year">20@(year.ToString().PadLeft(2, '0'))</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="Department" class="form-label">Department</label>
+            <select class="form-select" asp-items="Model.Departments" asp-for="DepartmentsId">
+            </select>
+            <span class="text-danger" asp-validation-for="DepartmentsId"></span>
+        </div>
+        <div class="mb-3">
+            <label for="Course" class="form-label">Course</label>
+            <select class="form-select" asp-items="Model.Courses" asp-for="CoursesId">
+            </select>
+            <span class="text-danger" asp-validation-for="CoursesId"></span>
+        </div>
+        <div class="mb-3">
+            <label for="Teacher" class="form-label">Teacher</label>
+            <select class="form-select" asp-items="Model.Teachers" asp-for="TeachersId">
+            </select>
+            <span class="text-danger" asp-validation-for="TeachersId"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Sections</label>
+            <select class="form-select"
+                    asp-for="SectionsIds"
+                    asp-items="@Model.Sections"
+                    required>
+            </select>
+            <span class="text-danger" asp-validation-for="SectionsIds"></span>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+
+@* Client Side Validation using jScript *@
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+    <script>
+        $(document).ready(function () {
+            // Add event listener to department dropdown
+            $("#Departments").change(function () {
+                var departmentId = $(this).val();
+
+                // Make AJAX call to fetch teachers and courses
+                $.get("/Admin/AdminCourse/GetTeachersAndCourses", { departmentId: departmentId }, function (data) {
+                    // Update teachers dropdown
+                    $("#Teachers").empty();
+                    $.each(data.teachers, function (index, item) {
+                        $("#Teachers").append('<option value="' + item.value + '">' + item.text + '</option>');
+                    });
+
+                    // Update courses dropdown
+                    $("#Courses").empty();
+                    $.each(data.courses, function (index, item) {
+                        $("#Courses").append('<option value="' + item.value + '">' + item.text + '</option>');
+                    });
+                });
+            });
+        });
+    </script>
+}

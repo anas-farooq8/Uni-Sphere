@@ -2,10 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.Json;
-using System.Text.Json;
-using Uni_Sphere.DataAccess.Data;
 using Uni_Sphere.Models.Domain;
 using Uni_Sphere.Models.ViewModels;
 using Uni_Sphere.Repositories.IRepositories;
@@ -31,6 +27,7 @@ namespace Uni_Sphere.Areas.Admin.Controllers
         {
             var departments = await _departmentRepository.GetAllAsync();
             var sections = await _departmentRepository.GetAllSectionsAsync();
+
             var model = new AddStudentRequest
             {
                 Departments = departments.Select(x => new SelectListItem

@@ -73,9 +73,32 @@ namespace Uni_Sphere.Repositories
                 Id = x.Id,
                 Name = x.Name
             }).ToListAsync();
-
             return sectionsDTO;
         }
+
+        public async Task<IEnumerable<Departments>> GetDepartmentWithInfoAsync(int? departmentId)
+        {
+            // If id is not provided, return the first department with their teachers, sections, and courses
+            if (departmentId == null)
+            {
+                return await _uniSphereDbContext.Departments
+                    .Include(x => x.Teachers)
+                    .Include(x => x.Sections)
+                    .Include(x => x.Courses)
+                    .ToListAsync();
+            }
+
+            // If id is provided, return the department with the provided id
+            return await _uniSphereDbContext.Departments
+                .Include(x => x.Teachers)
+                .Include(x => x.Sections)
+                .Include(x => x.Courses)
+                .Where(x => x.Id == departmentId)
+                .ToListAsync();
+        }
+
+
+
 
         public async Task<Departments?> GetAsync(int id)
         {
