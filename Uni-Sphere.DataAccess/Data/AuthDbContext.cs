@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Uni_Sphere.Utility;
 
 namespace Uni_Sphere.DataAccess.Data
 {
@@ -26,22 +27,22 @@ namespace Uni_Sphere.DataAccess.Data
             {
                 new IdentityRole
                 {
-                    Name = "Admin",
-                    NormalizedName = "Admin",
+                    Name = SD.Role_Admin,
+                    NormalizedName = SD.Role_Admin,
                     Id = adminRoleId,
                     ConcurrencyStamp = adminRoleId
                 },
                 new IdentityRole
                 {
-                    Name = "Teacher",
-                    NormalizedName = "Teacher",
+                    Name = SD.Role_Teacher,
+                    NormalizedName = SD.Role_Teacher,
                     Id = teacherRoleId,
                     ConcurrencyStamp = teacherRoleId
                 },
                 new IdentityRole
                 {
-                    Name = "Student",
-                    NormalizedName = "Student",
+                    Name = SD.Role_Student,
+                    NormalizedName = SD.Role_Student,
                     Id = studentRoleId,
                     ConcurrencyStamp = studentRoleId
                 }

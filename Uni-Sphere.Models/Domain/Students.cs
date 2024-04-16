@@ -58,7 +58,5 @@ namespace Uni_Sphere.Models.Domain
 
         // Many to Many Relationship with Courses
         public ICollection<Courses> Courses { get; set; }
-
-
     }
 }

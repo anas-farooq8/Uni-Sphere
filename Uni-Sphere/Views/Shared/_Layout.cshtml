@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Uni_Sphere.Utility
 @inject SignInManager<IdentityUser> SignInManager
 
 
@@ -39,71 +40,101 @@
                         </li>
 
                         <!--Admin Functionality-->
-                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        @if (SignInManager.IsSignedIn(User))
                         {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Manage Students
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li class="nav-item">
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="AdminStudent" asp-action="Add">Add Student</a>
-                                    </li>
-                                    <li> <hr class="dropdown-divider"> </li>
-                                    <li class="nav-item">
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="AdminStudent" asp-action="List">View Students</a>
-                                    </li>
-                                </ul>
-                            </li>
+                            if (User.IsInRole(SD.Role_Admin))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Manage Students
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="Admin" asp-controller="AdminStudent" asp-action="Add">Add Student</a>
+                                        </li>
+                                        <li> <hr class="dropdown-divider"> </li>
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="Admin" asp-controller="AdminStudent" asp-action="List">View Students</a>
+                                        </li>
+                                    </ul>
+                                </li>
 
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Manage Teachers
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li class="nav-item">
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="AdminTeacher" asp-action="Add">Add Teacher</a>
-                                    </li>
-                                    <li> <hr class="dropdown-divider"> </li>
-                                    <li class="nav-item">
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="AdminTeacher" asp-action="List">View Teachers</a>
-                                    </li>
-                                </ul>
-                            </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Manage Teachers
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="Admin" asp-controller="AdminTeacher" asp-action="Add">Add Teacher</a>
+                                        </li>
+                                        <li> <hr class="dropdown-divider"> </li>
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="Admin" asp-controller="AdminTeacher" asp-action="List">View Teachers</a>
+                                        </li>
+                                    </ul>
+                                </li>
 
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Manage Departments
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li class="nav-item">
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="AdminDepartment" asp-action="Add">Add Department</a>
-                                    </li>
-                                    <li> <hr class="dropdown-divider"> </li>
-                                    <li class="nav-item">
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="AdminDepartment" asp-action="List">View Departments</a>
-                                    </li>
-                                </ul>
-                            </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Manage Departments
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="Admin" asp-controller="AdminDepartment" asp-action="Add">Add Department</a>
+                                        </li>
+                                        <li> <hr class="dropdown-divider"> </li>
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="Admin" asp-controller="AdminDepartment" asp-action="List">View Departments</a>
+                                        </li>
+                                    </ul>
+                                </li>
 
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Manage Courses
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li class="nav-item">
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="AdminCourse" asp-action="Add">Add Course</a>
-                                    </li>
-                                    <li> <hr class="dropdown-divider"> </li>
-                                    <li class="nav-item">
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="AdminCourse" asp-action="List">View Courses</a>
-                                    </li>
-                                    <li> <hr class="dropdown-divider"> </li>
-                                    <li class="nav-item">
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="AdminCourse" asp-action="AssignCourse">Assign Courses</a>
-                                    </li>
-                                </ul>
-                            </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Manage Courses
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="Admin" asp-controller="AdminCourse" asp-action="Add">Add Course</a>
+                                        </li>
+                                        <li> <hr class="dropdown-divider"> </li>
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="Admin" asp-controller="AdminCourse" asp-action="List">View Courses</a>
+                                        </li>
+                                        <li> <hr class="dropdown-divider"> </li>
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="Admin" asp-controller="AdminCourse" asp-action="AssignCourse">Assign Courses</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+                            else if(User.IsInRole(SD.Role_Teacher))
+                            {
+                                <li class="nav-item">
+									<a class="nav-link text-dark" asp-area="Teacher" asp-controller="TeacherCourse" asp-action="List">My Courses</a>
+								</li>
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Classrooms
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="Teacher" asp-controller="TeacherClassroom" asp-action="Add">Create a Classroom</a>
+                                        </li>
+                                        <li> <hr class="dropdown-divider"> </li>
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="Teacher" asp-controller="TeacherClassroom" asp-action="List">View Classrooms</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+							}
+							else if(User.IsInRole(SD.Role_Student)) {
+								<li class="nav-item">
+									<a class="nav-link text-dark" asp-area="Student" asp-controller="StudentCourse" asp-action="List">My Courses</a>
+								</li>
+                            }
                         }
 
                     </ul>

@@ -26,7 +26,7 @@ namespace Uni_Sphere.Models.Domain
         [Required]
         public bool IsLab { get; set; }
 
-        [MaxLength(500)]
+        [MaxLength(1000)]
         public string? Description { get; set; }
 
         // Many-to-Many Relationship with Departments

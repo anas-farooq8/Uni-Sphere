@@ -1,8 +1,42 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using Uni_Sphere.Utility
+@inject SignInManager<IdentityUser> SignInManager
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!--Admin Functionality-->
+@if (SignInManager.IsSignedIn(User))
+{
+
+    @if (User.IsInRole(SD.Role_Admin))
+    {
+        <div class="text-center">
+            <h1 class="display-4">Welcome</h1>
+            <h2>Admin</h2>
+        </div>
+
+    }
+    else if (User.IsInRole(SD.Role_Teacher))
+    {
+        <div class="text-center">
+            <h1 class="display-4">Welcome</h1>
+            <h2>Teacher</h2>
+        </div>
+    }
+    else if (User.IsInRole(SD.Role_Student))
+    {
+        <div class="text-center">
+            <h1 class="display-4">Welcome</h1>
+            <h2>Student</h2>
+        </div>
+    }
+}
+else
+{
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    </div>
+}

@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Student\Controllers\" />
-    <Folder Include="Areas\Teacher\Controllers\" />
   </ItemGroup>
 
   <ItemGroup>
