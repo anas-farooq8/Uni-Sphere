@@ -37,7 +37,6 @@ namespace Uni_Sphere.Models.ViewModels
 
         public string? ProfileImageUrl { get; set; }
 
-
         // Display Departments in a dropdown list
         public IEnumerable<SelectListItem>? Departments { get; set; }
         // Selected Department

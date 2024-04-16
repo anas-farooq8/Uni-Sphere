@@ -1,7 +1,69 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Uni_Sphere.Models.ViewModels.AddClassroomRequest
+
 @{
+    ViewData["Title"] = "Create Classroom";
 }
 
-<h1>classroom</h1>
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1 class="text-center">Create Classroom</h1>
+    </div>
+</div>
+
+
+<div class="container py-3">
+    <form method="post">
+        <div class="mb-3">
+            <label for="Name" class="form-label">Classroom Name</label>
+            <input type="text" class="form-control" id="Name" asp-for="Name" placeholder="Enter Classroom Name" required>
+            <span class="text-danger" asp-validation-for="Name"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="Courses" class="form-label">Courses</label>
+            <select class="form-select" asp-items="Model.Courses" asp-for="CourseId" onchange="fetchCourseDetails()">
+            </select>
+            <span class="text-danger" asp-validation-for="CourseId"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="Batch" class="form-label">Batch</label>
+            <input type="text" class="form-control" id="Batch" asp-for="Batch" readonly>
+            <span class="text-danger" asp-validation-for="Batch"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="Sections" class="form-label">Sections</label>
+            <input type="text" class="form-control" id="Sections" asp-for="Sections" readonly>
+            <span class="text-danger" asp-validation-for="Sections"></span>
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Create Classroom</button>
+        </div>
+    </form>
+</div>
+
+@* Client Side Validation using jScript *@
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+    <script>
+        function fetchCourseDetails() {
+            var courseId = $("#CourseId").val();
+            $.ajax({
+                url: "/Teacher/TeacherClassroom/GetCourseDetails?courseId=" + courseId,
+                type: "GET",
+                success: function (data) {
+                    $("#Batch").val(data.batch);
+                    $("#Sections").val(data.sections.join(', '));
+                },
+                error: function () {
+                    console.log("Error occurred while fetching course details.");
+                }
+            });
+        }
+    </script>
+}
+

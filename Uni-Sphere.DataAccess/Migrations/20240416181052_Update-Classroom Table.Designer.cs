@@ -12,8 +12,8 @@ using Uni_Sphere.DataAccess.Data;
 namespace Uni_Sphere.DataAccess.Migrations
 {
     [DbContext(typeof(UniSphereDbContext))]
-    [Migration("20240414060545_initial")]
-    partial class initial
+    [Migration("20240416181052_Update-Classroom Table")]
+    partial class UpdateClassroomTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,21 @@ namespace Uni_Sphere.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("ClassroomsStudents", b =>
+                {
+                    b.Property<int>("ClassroomsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ClassroomsId", "StudentsId");
+
+                    b.HasIndex("StudentsId");
+
+                    b.ToTable("ClassroomsStudents");
+                });
 
             modelBuilder.Entity("CoursesDepartments", b =>
                 {
@@ -722,6 +737,36 @@ namespace Uni_Sphere.DataAccess.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Uni_Sphere.Models.Domain.Classrooms", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Batch")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("Classrooms");
+                });
+
             modelBuilder.Entity("Uni_Sphere.Models.Domain.Courses", b =>
                 {
                     b.Property<int>("Id")
@@ -743,8 +788,8 @@ namespace Uni_Sphere.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<bool>("IsLab")
                         .HasColumnType("bit");
@@ -773,8 +818,8 @@ namespace Uni_Sphere.DataAccess.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(350)
-                        .HasColumnType("nvarchar(350)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1048,6 +1093,9 @@ namespace Uni_Sphere.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("Batch")
+                        .HasColumnType("int");
+
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
@@ -1121,6 +1169,21 @@ namespace Uni_Sphere.DataAccess.Migrations
                     b.ToTable("Teachers");
                 });
 
+            modelBuilder.Entity("ClassroomsStudents", b =>
+                {
+                    b.HasOne("Uni_Sphere.Models.Domain.Classrooms", null)
+                        .WithMany()
+                        .HasForeignKey("ClassroomsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Uni_Sphere.Models.Domain.Students", null)
+                        .WithMany()
+                        .HasForeignKey("StudentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("CoursesDepartments", b =>
                 {
                     b.HasOne("Uni_Sphere.Models.Domain.Courses", null)
@@ -1164,6 +1227,25 @@ namespace Uni_Sphere.DataAccess.Migrations
                         .HasForeignKey("SectionsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Uni_Sphere.Models.Domain.Classrooms", b =>
+                {
+                    b.HasOne("Uni_Sphere.Models.Domain.Courses", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Uni_Sphere.Models.Domain.Teachers", "Teacher")
+                        .WithMany("Classrooms")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("Uni_Sphere.Models.Domain.Students", b =>
@@ -1228,6 +1310,11 @@ namespace Uni_Sphere.DataAccess.Migrations
                     b.Navigation("Students");
 
                     b.Navigation("Teachers");
+                });
+
+            modelBuilder.Entity("Uni_Sphere.Models.Domain.Teachers", b =>
+                {
+                    b.Navigation("Classrooms");
                 });
 #pragma warning restore 612, 618
         }

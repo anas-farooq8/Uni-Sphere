@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Uni_Sphere.DataAccess.Data;
+using Uni_Sphere.Models.Domain;
 using Uni_Sphere.Models.DTO;
 using Uni_Sphere.Repositories.IRepositories;
 
@@ -39,6 +40,17 @@ namespace Uni_Sphere.Repositories
                 // Log or handle exceptions
                 throw new Exception("Error occurred while fetching courses by teacher.", ex);
             }
+        }
+
+        public async Task<IEnumerable<Students>> GetStudentsByCourseBatchSectionsAsync(int courseId, int batch, string sections)
+        {
+
+            // Query to retrieve students based on the provided criteria
+            var students = await _uniSphereDbContext.Students
+                .Where(s => s.Courses.Any(c => c.Id == courseId) && s.Batch == batch && sections.Contains(s.Section.Name))
+                .ToListAsync();
+
+            return students;
         }
     }
 }

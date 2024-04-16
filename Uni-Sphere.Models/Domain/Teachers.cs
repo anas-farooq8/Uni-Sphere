@@ -47,5 +47,8 @@ namespace Uni_Sphere.Models.Domain
         [ForeignKey("DepartmentsId")]
         public Departments Department { get; set; }
 
+        // One to Many Realtionship with Classrooms
+        public ICollection<Classrooms> Classrooms { get; set; }
+
     }
 }

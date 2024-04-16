@@ -5,14 +5,14 @@
 namespace Uni_Sphere.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class teachercoursesection : Migration
+    public partial class UpdateClassroomTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<int>(
                 name: "Batch",
-                table: "TeacherCourseSections",
+                table: "Classrooms",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
@@ -23,7 +23,7 @@ namespace Uni_Sphere.DataAccess.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "Batch",
-                table: "TeacherCourseSections");
+                table: "Classrooms");
         }
     }
 }

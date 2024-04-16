@@ -67,20 +67,27 @@
 
 <div class="container mt-5">
     <div class="card-container">
-        @foreach (var course in Model)
+        @if (Model != null && Model.Any())
         {
-            <div class="course-card">
-                <div class="card-body">
-                    <h5 class="course-name">@course.Name</h5>
-                    <h6 class="course-code">@course.Code</h6>
-                    <p class="course-detail description-text">@course.Description</p>
-                    <p class="course-detail">Credit Hours: @course.CreditHours</p>
-                    <p class="course-detail">Course Type: @course.CourseType</p>
-                    <p class="course-detail">Lab: @(course.IsLab ? "Yes" : "No")</p>
-                    <p class="course-detail">Sections: @string.Join(", ", course.Sections)</p>
-                    <p class="course-detail">Batch: @course.Batch</p>
+            foreach (var course in Model)
+            {
+                <div class="course-card">
+                    <div class="card-body">
+                        <h5 class="course-name">@course.Name</h5>
+                        <h6 class="course-code">@course.Code</h6>
+                        <p class="course-detail description-text">@course.Description</p>
+                        <p class="course-detail">Credit Hours: @course.CreditHours</p>
+                        <p class="course-detail">Course Type: @course.CourseType</p>
+                        <p class="course-detail">Lab: @(course.IsLab ? "Yes" : "No")</p>
+                        <p class="course-detail">Sections: @string.Join(", ", course.Sections)</p>
+                        <p class="course-detail">Batch: @course.Batch</p>
+                    </div>
                 </div>
-            </div>
+            }
+        }
+        else
+        {
+            <p>No Courses found.</p>
         }
     </div>
 </div>
