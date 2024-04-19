@@ -77,7 +77,7 @@
                                     <span class="teacher-name">@Model.TeacherName</span>
                                     <div>
                                         <a href="@Url.Action("EditPost", "TeacherClassroom", new { classroomId = Model.Id, postId = post.Id })" class="btn btn-primary btn-sm mr-2">Edit</a>
-<a href="#" onclick="confirmDelete('@Model.Id', '@post.Id')" class="btn btn-danger btn-sm">Delete</a>
+                                        <a href="#" onclick="confirmDelete('@Model.Id', '@post.Id')" class="btn btn-danger btn-sm">Delete</a>
                                     </div>
                                 </div>
                                 <div class="card-body">

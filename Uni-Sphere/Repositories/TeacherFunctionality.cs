@@ -52,5 +52,14 @@ namespace Uni_Sphere.Repositories
 
             return students;
         }
+
+        public async Task<int> GetTeacherIdByUserEmailAsync(string email)
+        {
+            var teacher = await _uniSphereDbContext.Teachers
+                .Where(t => t.Email == email)
+                .FirstOrDefaultAsync();
+
+            return teacher.Id;
+        }
     }
 }

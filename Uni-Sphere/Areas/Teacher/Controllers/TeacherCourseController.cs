@@ -9,17 +9,27 @@ namespace Uni_Sphere.Areas.Teacher.Controllers
 {
     [Area("Teacher")]
     [Authorize(Roles = "Teacher")]
-    public class TeacherCourseController(ITeacherFunctionality teacherFunctionality) : Controller
+    public class TeacherCourseController(ITeacherFunctionality teacherFunctionality, SignInManager<IdentityUser> signInManager, 
+        UserManager<IdentityUser> userManager) : Controller
     {
         private readonly ITeacherFunctionality _teacherFunctionality = teacherFunctionality;
+        private readonly SignInManager<IdentityUser> _signInManager = signInManager;
+        private readonly UserManager<IdentityUser> _userManager = userManager;
 
         public async Task<IActionResult> List()
         {
-            // Get the teacher's id who is currently logged-in
-            var teacherId = 2;
-            var courses = await _teacherFunctionality.GetCoursesByTeacherAsync(teacherId);
+            if(_signInManager.IsSignedIn(User))
+            {
+                var userEmail = _userManager.GetUserAsync(User).Result.Email;
+                // Get the teacher's id who is currently logged-in
+                var teacherId = await _teacherFunctionality.GetTeacherIdByUserEmailAsync(userEmail);
 
-            return View(courses);
+                var courses = await _teacherFunctionality.GetCoursesByTeacherAsync(teacherId);
+
+                return View(courses);
+            }
+
+            return RedirectToAction("Login", "Account", new { area = "Shared" });
         }
     }
 }

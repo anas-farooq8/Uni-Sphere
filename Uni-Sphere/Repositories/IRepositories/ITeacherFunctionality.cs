@@ -7,5 +7,6 @@ namespace Uni_Sphere.Repositories.IRepositories
     {
         Task<IEnumerable<CourseDisplayDTO>> GetCoursesByTeacherAsync(int teacherId);
         Task<IEnumerable<Students>> GetStudentsByCourseBatchSectionsAsync(int courseId, int batch, string sections);
+        Task<int> GetTeacherIdByUserEmailAsync(string email);
     }
 }
