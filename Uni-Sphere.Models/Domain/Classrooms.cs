@@ -31,5 +31,8 @@ namespace Uni_Sphere.Models.Domain
         // Many-to-many relationship with Students
         public ICollection<Students> Students { get; set; }
 
+        // One-to-many relationship with DiscussionPost
+        public ICollection<DiscussionPost> DiscussionPosts { get; set; }
+
     }
 }

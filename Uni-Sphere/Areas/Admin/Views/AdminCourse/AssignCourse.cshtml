@@ -26,7 +26,7 @@
         </div>
         <div class="mb-3">
             <label for="Department" class="form-label">Department</label>
-            <select class="form-select" asp-items="Model.Departments" asp-for="DepartmentsId">
+            <select class="form-select" asp-items="Model.Departments" asp-for="DepartmentsId" onchange="fetchRelatedDetails()">
             </select>
             <span class="text-danger" asp-validation-for="DepartmentsId"></span>
         </div>
@@ -62,27 +62,41 @@
     @{
         <partial name="_ValidationScriptsPartial" />
     }
+
     <script>
-        $(document).ready(function () {
-            // Add event listener to department dropdown
-            $("#Departments").change(function () {
-                var departmentId = $(this).val();
+        function fetchRelatedDetails() {
+            var departmentId = $("#DepartmentsId").val();
+            console.log(departmentId);
+            $.ajax({
+                url: "/Admin/AdminCourse/GetTeachersAndCourses?departmentId=" + departmentId,
+                type: "GET",
+                success: function (data) {
+                    // Clear existing options
+                    $("#CoursesId").empty();
+                    $("#TeachersId").empty();
 
-                // Make AJAX call to fetch teachers and courses
-                $.get("/Admin/AdminCourse/GetTeachersAndCourses", { departmentId: departmentId }, function (data) {
-                    // Update teachers dropdown
-                    $("#Teachers").empty();
-                    $.each(data.teachers, function (index, item) {
-                        $("#Teachers").append('<option value="' + item.value + '">' + item.text + '</option>');
-                    });
+                    console.log(data);
 
-                    // Update courses dropdown
-                    $("#Courses").empty();
+                    // Add new options for courses
                     $.each(data.courses, function (index, item) {
-                        $("#Courses").append('<option value="' + item.value + '">' + item.text + '</option>');
+                        $("#CoursesId").append($('<option>', {
+                            value: item.value,
+                            text: item.text
+                        }));
                     });
-                });
+
+                    // Add new options for teachers
+                    $.each(data.teachers, function (index, item) {
+                        $("#TeachersId").append($('<option>', {
+                            value: item.value,
+                            text: item.text
+                        }));
+                    });
+                },
+                error: function () {
+                    console.log("Error occurred while fetching course details.");
+                }
             });
-        });
+        }
     </script>
 }

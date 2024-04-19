@@ -129,7 +129,7 @@ namespace Uni_Sphere.Repositories
                 existingStudent.FullName = student.FullName;
                 existingStudent.Gender = student.Gender;
                 existingStudent.PhoneNo = student.PhoneNo;
-                existingStudent.Section = student.Section;
+                existingStudent.SectionsId = student.SectionsId;
                 existingStudent.Degree = student.Degree;
                 existingStudent.CurrentSemester = student.CurrentSemester;
                 existingStudent.Gpa = student.Gpa;

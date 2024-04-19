@@ -20,9 +20,7 @@
     @* Select List search from https://datatables.net/ *@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-    <!-- Froala Editor -->
-    <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
-    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
+
 </head>
 <body>
     <header>
@@ -209,6 +207,8 @@
 
     </script>
     <script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js" asp-append-version="true"></script>
+    <script src="https://cdn.tiny.cloud/1/wll7gmtihiy0fx9twu15iciw0e9q15ynk0o2axsashvpojsr/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

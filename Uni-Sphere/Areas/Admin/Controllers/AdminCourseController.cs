@@ -192,7 +192,7 @@ namespace Uni_Sphere.Areas.Admin.Controllers
                     Value = x.Id.ToString()
                 }) : null
             };
-
+            
             return View(model);
         }
 
@@ -221,6 +221,27 @@ namespace Uni_Sphere.Areas.Admin.Controllers
             return View();
         }
 
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var course = await _courseRepository.DeleteAsync(id);
+            if (course != null)
+            {
+                return Json(new { success = true, message = "Course deleted successfully" });
+            }
+            else
+            {
+                return Json(new { success = false, message = "An error occurred while deleting the course" });
+            }
+        }
+
+        #region API CALLS
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var courses = await _courseRepository.GetAllAsync();
+            return Json(new { data = courses });
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetTeachersAndCourses(int departmentId)
@@ -246,27 +267,6 @@ namespace Uni_Sphere.Areas.Admin.Controllers
             return Json(new { teachers = teachersSelectList, courses = coursesSelectList });
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var course = await _courseRepository.DeleteAsync(id);
-            if (course != null)
-            {
-                return Json(new { success = true, message = "Course deleted successfully" });
-            }
-            else
-            {
-                return Json(new { success = false, message = "An error occurred while deleting the course" });
-            }
-        }
-
-        #region API CALLS
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var courses = await _courseRepository.GetAllAsync();
-            return Json(new { data = courses });
-        }
         #endregion
     }
 }

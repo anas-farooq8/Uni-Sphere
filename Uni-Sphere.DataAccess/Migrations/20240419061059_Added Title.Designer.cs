@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Uni_Sphere.DataAccess.Data;
 
@@ -11,9 +12,11 @@ using Uni_Sphere.DataAccess.Data;
 namespace Uni_Sphere.DataAccess.Migrations
 {
     [DbContext(typeof(UniSphereDbContext))]
-    partial class UniSphereDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240419061059_Added Title")]
+    partial class AddedTitle
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -878,9 +881,6 @@ namespace Uni_Sphere.DataAccess.Migrations
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
                         .IsRequired()

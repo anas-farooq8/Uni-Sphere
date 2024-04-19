@@ -1,0 +1,37 @@
+﻿@model List<Uni_Sphere.Models.DTO.ClassroomDTO>
+@{
+    ViewData["Title"] = "My Classrooms";
+}
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1 class="text-center">My Classrooms</h1>
+    </div>
+</div>
+
+<div class="container mt-5">
+    @if (Model != null && Model.Any())
+    {
+        <div class="row">
+            @foreach (var classroom in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">@classroom.Name</h5>
+                            <p class="card-text">Course: @classroom.CourseName</p>
+                            <p class="card-text">Teacher: @classroom.TeacherName</p>
+                            <p class="card-text">Batch: @classroom.Batch</p>
+                            <p class="card-text">Students: @classroom.NoOfStudents</p>
+                            <a asp-area="Teacher" asp-controller="TeacherClassroom" asp-action="Classroom" asp-route-classroomId="@classroom.Id" class="btn btn-primary">Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>No classrooms exist.</p>
+    }
+</div>

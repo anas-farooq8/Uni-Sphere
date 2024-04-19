@@ -1,0 +1,123 @@
+﻿@model Uni_Sphere.Models.DTO.ClassroomDTO
+
+@{
+    ViewData["Title"] = "Classroom Details";
+}
+
+<style>
+    /* Custom CSS for discussion post cards */
+    .discussion-card {
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+        transition: box-shadow 0.3s ease-in-out;
+    }
+
+        .discussion-card:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .discussion-card .card-header {
+            background-color: #f8f9fa;
+            border-bottom: none;
+        }
+
+        .discussion-card .card-body {
+            padding: 1.5rem;
+        }
+
+        .discussion-card .card-header .teacher-name {
+            font-weight: bold;
+        }
+
+        .discussion-card .card-body .post-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .discussion-card .card-body .post-content {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .discussion-card .card-footer {
+            background-color: #f8f9fa;
+            border-top: none;
+            font-size: 0.9rem;
+        }
+</style>
+
+<div class="container py-3">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h1 class="card-title">@Model.Name</h1>
+                    <p class="card-text">Course: @Model.CourseName</p>
+                    <p class="card-text">Teacher: @Model.TeacherName</p>
+                    <p class="card-text">Batch: @Model.Batch</p>
+                    <p class="card-text">Number of Students: @Model.NoOfStudents</p>
+                    <div class="text-center">
+                        <a asp-area="Teacher" asp-controller="TeacherClassroom" asp-action="DisplayStudents" asp-route-classroomId="@Model.Id" class="btn btn-primary">View Students</a>
+                        <a asp-area="Teacher" asp-controller="TeacherClassroom" asp-action="CreatePost" asp-route-classroomId="@Model.Id" class="btn btn-success">Create Post</a>
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.DiscussionPosts != null && Model.DiscussionPosts.Any())
+            {
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Discussion Posts</h2>
+                    </div>
+                    <div class="card-body">
+                        @foreach (var post in Model.DiscussionPosts.OrderByDescending(p => p.CreatedAt))
+                        {
+                            <div class="card mb-3 discussion-card">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <span class="teacher-name">@Model.TeacherName</span>
+                                    <div>
+                                        <a href="@Url.Action("EditPost", "TeacherClassroom", new { classroomId = Model.Id, postId = post.Id })" class="btn btn-primary btn-sm mr-2">Edit</a>
+<a href="#" onclick="confirmDelete('@Model.Id', '@post.Id')" class="btn btn-danger btn-sm">Delete</a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title post-title">@post.Title</h5>
+                                    <hr>
+                                    <p class="card-text post-content">@Html.Raw(post.Content)</p>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <span>@post.CreatedAt.ToString("MMMM dd, yyyy - hh:mm tt")</span>
+                                </div>
+                                <input type="hidden" name="classroomId" value="@Model.Id" />
+                                <input type="hidden" name="postId" value="@post.Id" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <p>No discussion posts available.</p>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmDelete(classroomId, postId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If user confirms deletion, redirect to the delete action
+                window.location.href = '@Url.Action("DeletePost", "TeacherClassroom")' + '?classroomId=' + classroomId + '&postId=' + postId;
+            }
+        });
+    }
+</script>

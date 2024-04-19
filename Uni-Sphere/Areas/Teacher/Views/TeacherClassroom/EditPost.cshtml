@@ -1,0 +1,52 @@
+﻿@model Uni_Sphere.Models.ViewModels.EditPostRequest
+
+@{
+    ViewData["Title"] = "Edit Post";
+}
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1 class="text-center">Edit Post</h1>
+    </div>
+</div>
+
+<div class="container py-3">
+    <form method="post">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="ClassRoomsId" />
+        <div class="mb-3">
+            <label for="Title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="Title" asp-for="Title" placeholder="Enter Title" required>
+            <span class="text-danger" asp-validation-for="Title"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Content" class="form-label">Content</label>
+            <textarea class="form-control" id="Content" asp-for="Content" placeholder="Enter Content" rows="5">@Model.Content</textarea>
+            <span class="text-danger" asp-validation-for="Content"></span>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+    </form>
+</div>
+
+@* Client Side Validation using jScript *@
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            mergetags_list: [
+                { value: 'First.Name', title: 'First Name' },
+                { value: 'Email', title: 'Email' },
+            ],
+            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+        });
+    </script>
+}
