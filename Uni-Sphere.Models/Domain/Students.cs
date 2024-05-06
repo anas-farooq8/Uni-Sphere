@@ -61,5 +61,8 @@ namespace Uni_Sphere.Models.Domain
 
         // Many to Many Relationship with Classrooms
         public ICollection<Classrooms> Classrooms { get; set; }
+
+        // One to Many Relationship with Attendance
+        public ICollection<Attendance> Attendance { get; set; }
     }
 }

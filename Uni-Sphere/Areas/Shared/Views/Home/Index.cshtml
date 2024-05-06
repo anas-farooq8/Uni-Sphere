@@ -6,32 +6,33 @@
     ViewData["Title"] = "Home Page";
 }
 
-<!--Admin Functionality-->
+
+<!-- Admin Functionality -->
 @if (SignInManager.IsSignedIn(User))
 {
+    string userEmail = User?.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value;
 
-    @if (User.IsInRole(SD.Role_Admin))
-    {
-        <div class="text-center">
-            <h1 class="display-4">Welcome</h1>
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+
+        @if (User.IsInRole(SD.Role_Admin))
+        {
             <h2>Admin</h2>
-        </div>
-
-    }
-    else if (User.IsInRole(SD.Role_Teacher))
-    {
-        <div class="text-center">
-            <h1 class="display-4">Welcome</h1>
+        }
+        else if (User.IsInRole(SD.Role_Teacher))
+        {
             <h2>Teacher</h2>
-        </div>
-    }
-    else if (User.IsInRole(SD.Role_Student))
-    {
-        <div class="text-center">
-            <h1 class="display-4">Welcome</h1>
+        }
+        else if (User.IsInRole(SD.Role_Student))
+        {
             <h2>Student</h2>
-        </div>
-    }
+        }
+
+        @if (!string.IsNullOrEmpty(userEmail))
+        {
+            <p>Email: @userEmail</p>
+        }
+    </div>
 }
 else
 {

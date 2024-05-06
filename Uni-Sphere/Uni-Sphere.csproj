@@ -19,10 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Student\Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Uni-Sphere.DataAccess\Uni-Sphere.DataAccess.csproj" />
     <ProjectReference Include="..\Uni-Sphere.Models\Uni-Sphere.Models.csproj" />
     <ProjectReference Include="..\Uni-Sphere.Utility\Uni-Sphere.Utility.csproj" />

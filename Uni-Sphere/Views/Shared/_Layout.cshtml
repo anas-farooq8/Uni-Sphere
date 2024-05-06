@@ -127,11 +127,34 @@
                                     </ul>
                                 </li>
 
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="Teacher" asp-controller="TeacherAttendance" asp-action="MarkAttendance">Mark Attendance</a>
+                                </li>
+
 							}
 							else if(User.IsInRole(SD.Role_Student)) {
-								<li class="nav-item">
-									<a class="nav-link text-dark" asp-area="Student" asp-controller="StudentCourse" asp-action="List">My Courses</a>
-								</li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Courses
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="Student" asp-controller="StudentCourse" asp-action="RegisterCourse">Register in a Course</a>
+                                        </li>
+                                        <li> <hr class="dropdown-divider"> </li>
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="Student" asp-controller="StudentCourse" asp-action="List">View Courses</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="Student" asp-controller="StudentClassroom" asp-action="List">My Classrooms</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="Student" asp-controller="StudentAttendance" asp-action="ViewAttendance">My Attendance</a>
+                                </li>
                             }
                         }
 
@@ -207,8 +230,7 @@
 
     </script>
     <script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js" asp-append-version="true"></script>
-    <script src="https://cdn.tiny.cloud/1/wll7gmtihiy0fx9twu15iciw0e9q15ynk0o2axsashvpojsr/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
-
+    <script src="https://cdn.tiny.cloud/1/cmm46pnhqz1ltglqjt86of3lzx7nfvyr9ggqmt8ls038qszx/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

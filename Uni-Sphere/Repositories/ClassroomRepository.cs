@@ -93,14 +93,14 @@ namespace Uni_Sphere.Repositories
         {
             await _uniSphereDbContext.DiscussionPosts.AddAsync(post);
             await _uniSphereDbContext.SaveChangesAsync();
-            
+
             return true;
         }
 
         public async Task<bool> DeletePostAsync(int postId)
         {
             var post = await _uniSphereDbContext.DiscussionPosts.FindAsync(postId);
-            if(post != null)
+            if (post != null)
             {
                 _uniSphereDbContext.DiscussionPosts.Remove(post);
                 await _uniSphereDbContext.SaveChangesAsync();
@@ -112,7 +112,7 @@ namespace Uni_Sphere.Repositories
         public async Task<DiscussionPost?> GetPostByIdAsync(int postId)
         {
             var post = await _uniSphereDbContext.DiscussionPosts.FindAsync(postId);
-            if(post != null)
+            if (post != null)
                 return post;
             else
                 return null;
@@ -121,7 +121,7 @@ namespace Uni_Sphere.Repositories
         public async Task<bool> EditPostAsync(DiscussionPost post)
         {
             var existingPost = await _uniSphereDbContext.DiscussionPosts.FindAsync(post.Id);
-            if(existingPost != null)
+            if (existingPost != null)
             {
                 existingPost.Title = post.Title;
                 existingPost.Content = post.Content;
@@ -136,5 +136,28 @@ namespace Uni_Sphere.Repositories
                 return false;
             }
         }
+
+        public async Task<IEnumerable<ClassroomDTO>> GetAllByStudentIdAsync(int studentId)
+        {
+            var classrooms = await _uniSphereDbContext.Classrooms
+                .Include(c => c.Course)
+                .Include(c => c.Students)
+                .Where(c => c.Students.Any(s => s.Id == studentId))
+                .Select(c => new ClassroomDTO
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    CourseId = c.CourseId,
+                    CourseName = c.Course.Name,
+                    TeacherId = c.TeacherId,
+                    Batch = c.Batch,
+                    TeacherName = c.Teacher.FullName,
+                    NoOfStudents = c.Students.Count,
+                })
+                .ToListAsync();
+
+            return classrooms;
+        }
+
     }
 }

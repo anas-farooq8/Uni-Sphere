@@ -1,0 +1,28 @@
+﻿@model Uni_Sphere.Models.ViewModels.RegisterCourseRequest
+@{
+    ViewData["Title"] = "Register Courses";
+}
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1 class="text-center">Register Course</h1>
+    </div>
+</div>
+
+
+<div class="container py-3">
+    <form method="post">
+        <div class="mb-3">
+            <label class="form-label">Courses</label>
+            <select class="form-select"
+                    asp-for="CoursesIds"
+                    asp-items="@Model.Courses"
+                    required>
+            </select>
+            <span class="text-danger" asp-validation-for="CoursesIds"></span>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Register</button>
+        </div>
+    </form>
+</div>

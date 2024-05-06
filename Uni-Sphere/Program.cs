@@ -45,6 +45,9 @@ builder.Services.AddScoped<IImageRepository, CloudinaryImageRepository>();
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<ITeacherFunctionality, TeacherFunctionality>();
 builder.Services.AddScoped<IClassroomRepository, ClassroomRepository>();
+builder.Services.AddScoped<ITeacherAttendanceRepository, TeacherAttendanceRepository>();
+builder.Services.AddScoped<IStudentFunctionality, StudentFunctionality>();
+builder.Services.AddScoped<IStudentCoursesRepository, StudentCoursesRepository>();
 
 
 var app = builder.Build();

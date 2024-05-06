@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Uni_Sphere.Models.DTO.StudentDTO>
+
+@{
+    ViewData["Title"] = "Students in Classroom";
+}
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1 class="text-center">Students in Classroom</h1>
+    </div>
+</div>
+
+<div class="container py-5">
+    @if (Model != null && Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Roll No</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    <th>Batch</th>
+                    <th>Section</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var student in Model)
+                {
+                    <tr>
+                        <td>@student.FullName</td>
+                        <td>@student.RollNo</td>
+                        <td>@student.Email</td>
+                        <td>@student.Gender</td>
+                        <td>@student.Batch</td>
+                        <td>@student.Section.Name</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No students in this classroom.</p>
+    }
+</div>

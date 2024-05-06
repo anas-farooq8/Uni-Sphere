@@ -1,0 +1,91 @@
+﻿@model IEnumerable<Uni_Sphere.Models.DTO.CourseDisplayDTO>
+
+@{
+    ViewData["Title"] = "My Courses";
+}
+
+<style>
+    /* Style for the card container */
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    /* Style for the individual card */
+    .course-card {
+        max-width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+    }
+
+        /* Hover effect on the card */
+        .course-card:hover {
+            transform: translateY(-5px);
+        }
+
+    /* Style for the card body */
+    .card-body {
+        padding: 20px;
+    }
+
+    /* Style for the course name */
+    .course-name {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    /* Style for the course code */
+    .course-code {
+        font-size: 1rem;
+        color: #666;
+    }
+
+    /* Style for other course details */
+    .course-detail {
+        font-size: 1rem;
+        margin-bottom: 5px;
+    }
+
+    /* Style for the description text */
+    .description-text {
+        color: #4CAF50; /* Change to your desired color */
+    }
+
+</style>
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1 class="text-center">My Courses</h1>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="card-container">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var course in Model)
+            {
+                <div class="course-card">
+                    <div class="card-body">
+                        <h5 class="course-name">@course.Name</h5>
+                        <h6 class="course-code">@course.Code</h6>
+                        <p class="course-detail description-text">@course.Description</p>
+                        <p class="course-detail">Credit Hours: @course.CreditHours</p>
+                        <p class="course-detail">Course Type: @course.CourseType</p>
+                        <p class="course-detail">Lab: @(course.IsLab ? "Yes" : "No")</p>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No Courses found.</p>
+        }
+    </div>
+</div>

@@ -66,7 +66,6 @@
     <script>
         function fetchRelatedDetails() {
             var departmentId = $("#DepartmentsId").val();
-            console.log(departmentId);
             $.ajax({
                 url: "/Admin/AdminCourse/GetTeachersAndCourses?departmentId=" + departmentId,
                 type: "GET",

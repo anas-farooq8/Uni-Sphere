@@ -98,8 +98,6 @@ namespace Uni_Sphere.Repositories
         }
 
 
-
-
         public async Task<Departments?> GetAsync(int id)
         {
             return await _uniSphereDbContext.Departments.FindAsync(id);

@@ -1,0 +1,239 @@
+﻿@model Uni_Sphere.Models.ViewModels.AddAttendanceRequest
+
+@{
+    ViewData["Title"] = "Mark Attendance";
+}
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1 class="text-center">Mark Attendance</h1>
+    </div>
+</div>
+
+<div class="container py-3">
+    <form method="post">
+        <div class="mb-3">
+            <label for="Batch" class="form-label">Batch</label>
+            <select class="form-select" id="Batch" name="Batch" asp-for="Batch" required onchange="onBatchChange()">
+                @{
+                    for (int year = DateTime.Now.Year % 100; year >= 19; year--)
+                    {
+                        <option value="@year">20@(year.ToString().PadLeft(2, '0'))</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="course" class="form-label">Select Course</label>
+            <select class="form-select" asp-items="Model.Courses" asp-for="CoursesId" onchange="onCourseChange()">
+            </select>
+            <span class="text-danger" asp-validation-for="CoursesId"></span>
+        </div>
+
+        <!-- Display Course Details -->
+        <div class="mb-3" id="courseDetails">
+            <h3>Course Details</h3>
+            <p><strong>Name:</strong> @Model.Name</p>
+            <p><strong>Code:</strong> @Model.Code</p>
+            <p><strong>Credit Hours:</strong> @Model.CreditHours</p>
+            <p><strong>Course Type:</strong> @Model.CourseType</p>
+            <p><strong>Batch:</strong> @Model.Batch</p>
+        </div>
+
+        <!-- Date Selector -->
+        <div class="mb-3">
+            <label for="attendanceDate" class="form-label">Add Attendance</label>
+            <input type="date" class="form-control" id="attendanceDate" asp-for="Date" required>
+            <span class="text-danger" asp-validation-for="Date"></span>
+        </div>
+
+
+        <!-- Select Section -->
+        <div class="mb-3">
+            <label for="section" class="form-label">Select Section</label>
+            <select class="form-select" asp-items="Model.Sections" asp-for="SectionsId" onchange="onSectionChange()"></select>
+            <span class="text-danger" asp-validation-for="SectionsId"></span>
+        </div>
+
+        <!-- Student List -->
+        <div class="mb-3" id="studentList">
+            @if (Model.Students != null && Model.Students.Any())
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Roll No</th>
+                            <th>Full Name</th>
+                            <th>Attendance</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentListBody">
+                        @foreach (var student in Model.Students)
+                        {
+                            <tr>
+                                <td>@student.RollNo</td>
+                                <td>@student.FullName</td>
+                                <td>
+                                    <select class="form-select" name="Attendance[@student.Id]">
+                                        <option value="True">P</option>
+                                        <option value="False" selected>A</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No students in this section.</p>
+            }
+        </div>
+
+
+        <!-- Submit Button -->
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        // Get the current date
+        var currentDate = new Date().toISOString().split('T')[0];
+
+        // Set the current date as the value of the date input
+        document.getElementById('attendanceDate').value = currentDate;
+
+        function updateStudentTable(students) {
+            var studentsHtml = "";
+            if (students.length > 0) {
+                students.forEach(student => {
+                    studentsHtml += `
+                                        <tr>
+                                            <td>${student.rollNo}</td>
+                                            <td>${student.fullName}</td>
+                                            <td>
+                                                <select class="form-select" name="Attendance[${student.id}]">
+                                                <option value="True">P</option>
+                                                    <option value="Flase" selected>A</option>
+                                                </select>
+                                            </td>
+                                        </tr>`;
+                });
+            } else {
+                studentsHtml = `<tr><td colspan="3">No students in this section.</td></tr>`;
+            }
+            document.getElementById('studentListBody').innerHTML = studentsHtml;
+        }
+
+        function onSectionChange() {
+            var courseId = $("#CoursesId").val();
+            var sectionId = $("#SectionsId").val();
+            var batch = $("#Batch").val();
+
+            $.ajax({
+                url: "/Teacher/TeacherAttendance/UpdateStudents?courseId=" + courseId + "&batch=" + batch + "&sectionId=" + sectionId,
+                type: "GET",
+                success: function (data) {
+                    updateStudentTable(data.students);
+                },
+                error: function () {
+                    console.log("Error occurred while fetching details.");
+                }
+            });
+		}
+
+
+        function onCourseChange(){
+            var courseId = $("#CoursesId").val();
+            var batch = $("#Batch").val();
+
+            $.ajax({
+                url: "/Teacher/TeacherAttendance/UpdateStudentsSections?courseId=" + courseId + "&batch=" + batch,
+                type: "GET",
+                success: function (data) {
+                    // Update course details
+                    $("#courseDetails").html(`
+                                        <h3>Course Details</h3>
+                                        <p><strong>Name:</strong> ${data.course.name}</p>
+                                        <p><strong>Code:</strong> ${data.course.code}</p>
+                                        <p><strong>Credit Hours:</strong> ${data.course.creditHours}</p>
+                                        <p><strong>Course Type:</strong> ${data.course.courseType}</p>
+                                        <p><strong>Batch:</strong> ${data.course.batch}</p>
+                                    `);
+
+                    // Clear existing options
+                    $("#SectionsId").empty();
+
+                    // Add new options for sections
+                    $.each(data.sections, function (index, item) {
+                        $("#SectionsId").append($('<option>', {
+                            value: item.value,
+                            text: item.text
+                        }));
+                    });
+
+                    // Update course details and sections
+                    updateStudentTable(data.students);
+
+                    $("#studentList").html(studentsHtml);
+                },
+                error: function () {
+                    console.log("Error occurred while fetching details.");
+                }
+            });
+        }
+
+        function onBatchChange() {
+            var courseId = $("#CoursesId").val();
+            var batch = $("#Batch").val();
+
+            $.ajax({
+                url: "/Teacher/TeacherAttendance/UpdateStudentsSectionsCourses?courseId=" + courseId + "&batch=" + batch,
+                type: "GET",
+                success: function (data) {
+                    // Update course details
+                    $("#courseDetails").html(`
+                                <h3>Course Details</h3>
+                                <p><strong>Name:</strong> ${data.course.name ?? "Nothing"}</p>
+                                <p><strong>Code:</strong> ${data.course.code ?? "Nothing"}</p>
+                                <p><strong>Credit Hours:</strong> ${data.course.creditHours}</p>
+                                <p><strong>Course Type:</strong> ${data.course.courseType ?? "Nothing"}</p>
+                                <p><strong>Batch:</strong> ${data.course.batch}</p>
+                            `);
+
+                    // Clear existing options
+                    $("#SectionsId").empty();
+                    $("#CoursesId").empty();
+
+                    // Add new options for Courses
+                    $.each(data.courses, function (index, item) {
+                        $("#CoursesId").append($('<option>', {
+                            value: item.value,
+                            text: item.text
+                        }));
+                    });
+
+                    // Add new options for sections
+                    $.each(data.sections, function (index, item) {
+                        $("#SectionsId").append($('<option>', {
+                            value: item.value,
+                            text: item.text
+                        }));
+                    });
+
+                    // Update student list
+                    updateStudentTable(data.students);
+                    $("#studentList").html(studentsHtml);
+                },
+                error: function () {
+                    console.log("Error occurred while fetching details.");
+                }
+            });
+        }
+    </script>
+}

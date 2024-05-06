@@ -1,0 +1,89 @@
+﻿@model Uni_Sphere.Models.ViewModels.ViewAttendanceRequest
+
+@{
+    ViewData["Title"] = "View Attendance";
+}
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1 class="text-center">My Attendance</h1>
+    </div>
+</div>
+
+<div class="container py-3">
+    <div class="mb-3">
+        <label for="Course" class="form-label">Course</label>
+        <select class="form-select" asp-items="Model.Courses" asp-for="CoursesId" onchange="fetchRelatedDetails()">
+        </select>
+        <span class="text-danger" asp-validation-for="CoursesId"></span>
+    </div>
+
+    <div id="attendance-table">
+        @if (Model.Attendances.Any())
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>S. No.</th>
+                        <th>Date</th>
+                        <th>Present</th>
+                    </tr>
+                </thead>
+                <tbody id="attendance-data">
+                    @{
+                        int serialNumber = 1;
+                    }
+                    @foreach (var attendance in Model.Attendances)
+                    {
+                        <tr>
+                            <td>@serialNumber</td>
+                            <td>@attendance.Date.ToString("yyyy-MM-dd")</td>
+                            <td>@(attendance.IsPresent ? "Yes" : "No")</td>
+                            @{
+                                serialNumber++;
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No attendance data available.</p>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function fetchRelatedDetails() {
+            var courseId = $("#CoursesId").val();
+            $.ajax({
+                url: "/Student/StudentAttendance/GetAttendanceOfCourse",
+                type: "GET",
+                data: { courseId: courseId },
+                success: function (data) {
+                    var attendanceData = "";
+                    var serialNumber = 1;
+
+                    if (data && data.length > 0) {
+                        data.forEach(function (attendance) {
+                            attendanceData += `<tr>
+                                        <td>${serialNumber++}</td>
+                                        <td>${attendance.date}</td>
+                                        <td>${attendance.isPresent ? "Yes" : "No"}</td>
+                                    </tr>`;
+                        });
+                    } else {
+                        attendanceData = "<tr><td colspan='3'>No attendance data available.</td></tr>";
+                    }
+
+                    $("#attendance-data").html(attendanceData);
+                },
+                error: function () {
+                    console.log("Error occurred while fetching course details.");
+                }
+            });
+        }
+    </script>
+}

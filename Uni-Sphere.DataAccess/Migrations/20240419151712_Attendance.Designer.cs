@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Uni_Sphere.DataAccess.Data;
 
@@ -11,9 +12,11 @@ using Uni_Sphere.DataAccess.Data;
 namespace Uni_Sphere.DataAccess.Migrations
 {
     [DbContext(typeof(UniSphereDbContext))]
-    partial class UniSphereDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240419151712_Attendance")]
+    partial class Attendance
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -745,14 +748,11 @@ namespace Uni_Sphere.DataAccess.Migrations
                     b.Property<int>("CoursesId")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("Date")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsPresent")
                         .HasColumnType("bit");
-
-                    b.Property<int>("SectionsId")
-                        .HasColumnType("int");
 
                     b.Property<int>("StudentsId")
                         .HasColumnType("int");
@@ -760,8 +760,6 @@ namespace Uni_Sphere.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CoursesId");
-
-                    b.HasIndex("SectionsId");
 
                     b.HasIndex("StudentsId");
 
@@ -1297,12 +1295,6 @@ namespace Uni_Sphere.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Uni_Sphere.Models.Domain.Sections", "Section")
-                        .WithMany()
-                        .HasForeignKey("SectionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Uni_Sphere.Models.Domain.Students", "Student")
                         .WithMany("Attendance")
                         .HasForeignKey("StudentsId")
@@ -1310,8 +1302,6 @@ namespace Uni_Sphere.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Course");
-
-                    b.Navigation("Section");
 
                     b.Navigation("Student");
                 });
